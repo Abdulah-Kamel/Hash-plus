@@ -6,8 +6,8 @@ import FaqList from './FaqList';
 const Faq = () => {
   return (
     <section className="py-16 px-4 lg:px-20 bg-gray-50">
-      <div className="mx-auto ">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 items-start">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
           {/* Right Side - Header */}
           <div className="lg:col-span-2">
             <FaqHeader content={faqContent} />

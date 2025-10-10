@@ -2,36 +2,31 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronLeft } from 'lucide-react';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const CategoryCard = ({ category }) => {
   return (
-    <div className="flex-1 bg-white rounded-3xl px-6 py-5 shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
-      <div className="flex flex-col h-full gap-y-8">
-        <div className="space-y-2">
-          {/* Title */}
-          <h3 className="text-3xl font-bold text-gray-900 mt-3">
-            {category.title}
-          </h3>
-
-          {/* Description */}
-          <p className="text-sm text-gray-600">
-            {category.description}
-          </p>
-        </div>
-
-        <div className="flex justify-between items-center mt-auto">
-          {/* Arrow Button */}
-          <Link href={`/courses?category=${category.title}`} className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors">
+    <Card className="flex-1 flex flex-col rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+      <CardHeader className="flex-grow">
+        <CardTitle className="text-3xl font-bold text-gray-900 mt-3">
+          {category.title}
+        </CardTitle>
+        <CardDescription className="text-sm">
+          {category.description}
+        </CardDescription>
+      </CardHeader>
+      <CardFooter className="flex justify-between items-center">
+        <Button asChild variant="ghost" size="icon" className="rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors">
+          <Link href={`/courses?category=${category.title}`}>
             <ChevronLeft className="w-5 h-5" />
           </Link>
-
-          {/* Icon */}
-          <div className={`w-22 h-22 flex items-center justify-center ${category.bgColor} rounded-full`}>
-            <Image src={category.icon} alt={category.title} className="w-full h-full object-contain" width={88} height={88} />
-          </div>
+        </Button>
+        <div className={`w-22 h-22 flex items-center justify-center ${category.bgColor} rounded-full p-2`}>
+          <Image src={category.icon} alt={category.title} className="w-full h-full object-contain" width={80} height={80} />
         </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };
 

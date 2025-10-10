@@ -2,10 +2,10 @@ import React from 'react';
 
 const SuccessGauge = ({ percentage }) => {
   return (
-    <div className="absolute -top-8 -left-8 bg-white rounded-2xl shadow-xl ring-1 ring-black/5 p-1 w-60">
+    <div className="absolute -top-14 sm:-top-8 -left-3 sm:-left-8 bg-white rounded-2xl shadow-xl ring-1 ring-black/5 p-1 w-30 sm:w-60">
       <div className="flex items-center justify-center">
         {/* semicircle gauge */}
-        <svg viewBox="0 0 200 100" className="w-40 h-20">
+        <svg viewBox="0 0 200 100" className="w-20 h-10 sm:w-40 sm:h-20">
           {/* Background gray arc */}
           <path
             d="M20,100 A80,80 0 0,1 180,100"
@@ -27,7 +27,7 @@ const SuccessGauge = ({ percentage }) => {
         </svg>
       </div>
       <div className="text-center mt-1">
-        <div className="text-2xl font-bold text-gray-900">{percentage}%</div>
+        <div className="text-xl sm:text-2xl font-bold text-gray-900">{percentage}%</div>
         <div className="text-sm text-gray-500">نسبة النجاح</div>
       </div>
     </div>

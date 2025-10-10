@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const StudentsCard = ({ profiles }) => {
   return (
-    <div className="absolute -bottom-8 -right-8 bg-white rounded-2xl shadow-xl ring-1 ring-black/5 p-4 w-53 backdrop-blur">
+    <div className="absolute -bottom-10 sm:-bottom-8 -right-4 sm:-right-8 bg-white rounded-2xl shadow-xl ring-1 ring-black/5 p-4 w-53 backdrop-blur">
       <div className="flex flex-col items-center gap-3">
         {/* avatars */}
         <div className="flex -space-x-2 rtl:space-x flex-row-reverse">

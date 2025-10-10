@@ -5,20 +5,38 @@ import CourseDescription from './CourseDescription';
 import CourseRequirements from './CourseRequirements';
 import CourseOutcomes from './CourseOutcomes';
 import CourseStats from './CourseStats';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const CourseHero = ({ data }) => {
   return (
-    <div className="">
-      <div className="px-2 lg:px-4 py-4">
-        <div className="mx-auto">
-          <CourseVideo video={data.video} />
-          <CourseTabs />
-          <CourseDescription description={data.description} />
-          <CourseRequirements requirements={data.requirements} />
-          <CourseOutcomes outcomes={data.outcomes} />
-          <CourseStats />
-        </div>
-      </div>
+    <div className="space-y-6">
+        <CourseVideo video={data.video} />
+        <CourseTabs />
+        <Card>
+            <CardHeader>
+                <CardTitle>عن الدورة</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <CourseDescription description={data.description} />
+            </CardContent>
+        </Card>
+        <Card>
+            <CardHeader>
+                <CardTitle>متطلبات الدورة</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <CourseRequirements requirements={data.requirements} />
+            </CardContent>
+        </Card>
+        <Card>
+            <CardHeader>
+                <CardTitle>ماذا ستتعلم</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <CourseOutcomes outcomes={data.outcomes} />
+            </CardContent>
+        </Card>
+        <CourseStats />
     </div>
   );
 };

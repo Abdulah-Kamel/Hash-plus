@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Facebook, MessageCircle, Youtube } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
 const FooterContact = ({ contact, social }) => {
   const getSocialIcon = (iconName) => {
@@ -17,21 +18,21 @@ const FooterContact = ({ contact, social }) => {
   };
 
   return (
-    <div>
+    <div className="text-center md:text-right">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">{contact.title}</h3>
-      <p className="text-gray-600 mb-4">{contact.email}</p>
+      <p className="text-muted-foreground mb-4">{contact.email}</p>
       
       {/* Social Icons */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 justify-center md:justify-start">
         {social.map((item) => (
-          <Link
-            key={item.id}
-            href={item.href}
-            className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center  hover:bg-primary hover:text-white hover:border-primary transition-colors"
-            aria-label={item.name}
-          >
-            {getSocialIcon(item.icon)}
-          </Link>
+          <Button asChild key={item.id} variant="outline" size="icon" className="rounded-full">
+            <Link
+              href={item.href}
+              aria-label={item.name}
+            >
+              {getSocialIcon(item.icon)}
+            </Link>
+          </Button>
         ))}
       </div>
     </div>

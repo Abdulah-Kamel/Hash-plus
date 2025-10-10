@@ -5,67 +5,62 @@ import { Clock, BookOpenText } from 'lucide-react';
 import Rating from '../shared/Rating';
 import courseProfile from "../../assets/courseProfile.png";
 import saRyal from "../../assets/saRyal.svg";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const CourseCard = ({ course }) => {
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-2xl shadow-sm p-4 flex flex-col">
-      <Link href={`/courses/${course.id}`}>
-        <Image className="w-full rounded-xl object-cover h-48" src={course.image} alt={course.title} width={384} height={192} />
+    <Card className="w-full max-w-sm flex flex-col overflow-hidden rounded-2xl">
+      <Link href={`/courses/${course.id}`} className="block">
+        <Image className="w-full rounded-t-xl object-cover h-48" src={course.image} alt={course.title} width={384} height={192} />
       </Link>
-      <div className="flex-grow flex flex-col">
+      <CardHeader className="flex-grow">
         {/* Rating Section */}
-        <div className="flex items-center mt-2.5 mb-5">
-          <span className="text-base font-light px-2.5 py-0.5 rounded-sm">
-            ({course.reviews})
-          </span>
+        <div className="flex items-center justify-between mb-2">
           <div className="flex items-center">
             <Rating rating={course.rating} />
-            <span className="text-base font-light px-2.5 py-0.5 rounded-sm ms-1">
+            <span className="text-muted-foreground text-base ml-2">
               {course.rating.toFixed(1)}
             </span>
           </div>
+          <span className="text-muted-foreground text-base">
+            ({course.reviews} مراجعات)
+          </span>
         </div>
 
         {/* Title */}
-        <div className="my-2">
-          <h2 className="text-2xl font-medium">{course.title}</h2>
-        </div>
+        <CardTitle className="text-2xl font-medium">{course.title}</CardTitle>
 
         {/* Instructor */}
         <div className="mt-4 flex items-center gap-2">
-          <div className="bg-[#F0F0F0] w-8 h-8 flex justify-center items-center rounded-full me-2">
-            <Image className="rounded-full" src={courseProfile} alt="Instructor avatar" width={32} height={32} />
-          </div>
+          <Image className="rounded-full bg-gray-100" src={courseProfile} alt="Instructor avatar" width={32} height={32} />
           <p className="text-base font-light">{course.instructor}</p>
         </div>
-
+      </CardHeader>
+      <CardContent className="border-y py-4">
         {/* Course Info */}
-        <div className="mt-4 flex items-center justify-between me-6 border-b border-[#E6E6E6] py-2.5">
-          <div className="text-qusecondary flex items-center gap-2">
-            <Clock className="text-qusecondary" />
+        <div className="flex items-center justify-between">
+          <div className="text-muted-foreground flex items-center gap-2">
+            <Clock className="w-5 h-5" />
             <p>{course.duration}</p>
           </div>
-          <div className="text-qusecondary flex items-center gap-2">
-            <BookOpenText className="text-qusecondary" />
-            <p>{course.lessons} lessons</p>
+          <div className="text-muted-foreground flex items-center gap-2">
+            <BookOpenText className="w-5 h-5" />
+            <p>{course.lessons} درس</p>
           </div>
         </div>
-
+      </CardContent>
+      <CardFooter className="pt-6">
         {/* Price and CTA */}
-        <div className="flex items-center justify-between mt-auto pt-4">
+        <div className="flex items-center justify-between w-full">
           <div className="text-3xl font-semibold text-gray-900 flex gap-1 items-center">
             <span>{course.price}</span>
             <Image src={saRyal} alt="سعر الدورة" width={24} height={24} />
           </div>
-          <button
-            type="button"
-            className="border border-[#E6E6E6] rounded-full hover:bg-primary hover:text-white transition-colors focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-6 py-3 text-center"
-          >
-            اضف الى السلة
-          </button>
+          <Button variant="outline">اضف الى السلة</Button>
         </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };
 

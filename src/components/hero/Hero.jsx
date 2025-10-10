@@ -6,7 +6,7 @@ import Container  from "@/components/container";
 
 const Hero = () => {
  return (
- <Container className="min-h-[85vh] bg-transparent flex max-lg:flex-col max-lg:items-center max-lg:justify-center justify-between gap-8 px-5 lg:px-20 pt-12">
+ <Container className="min-h-[85vh] bg-transparent flex max-lg:flex-col max-lg:items-center max-lg:justify-center justify-between gap-20 px-5 lg:px-20 pt-12">
  <HeroContent stats={heroStats} />
  <HeroIllustration
  successPercentage={successPercentage}

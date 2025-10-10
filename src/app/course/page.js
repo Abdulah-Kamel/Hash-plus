@@ -4,7 +4,9 @@ import { NavBar } from "@/components/navbar";
 import { CourseHero, CourseSidebar } from "@/components/course-page";
 import { courseHeroData, courseSidebarData } from '@/data/coursePageData';
 import Footer from "@/components/footer";
-import {Star, Share2} from "lucide-react";
+import { Star, Share2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const CoursePage = () => {
     return (
@@ -12,11 +14,11 @@ const CoursePage = () => {
             <NavBar />
 
             <div className="bg-white min-h-screen">
-                <div className="px-4 lg:px-8 py-4">
+                <div className="container mx-auto px-4 lg:px-8 py-4">
                     {/* Header with Title and Breadcrumb Tabs */}
-                    <div className="flex max-sm:flex-col items-center justify-between mb-6 flex-wrap gap-3 border-y py-4 border-gray-200">
+                    <div className="flex flex-col md:flex-row items-center justify-between mb-6 flex-wrap gap-3 border-y py-4 border-gray-200">
                         {/* Title */}
-                        <h1 className="text-xl md:text-2xl font-bold text-gray-900">
+                        <h1 className="text-xl md:text-2xl font-bold text-gray-900 text-center md:text-right">
                             {courseHeroData.title}
                         </h1>
 
@@ -26,28 +28,34 @@ const CoursePage = () => {
                                 <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-semibold text-gray-600">0%</div>
                                 <p className="text-xs sm:text-sm">تقدمك</p>
                             </div>
-                            <div className="flex items-center gap-1.5">
-                                <Star className="w-8 h-8 text-[#E4E4E7]"/>
+                            <Button variant="outline" className="flex items-center gap-1.5">
+                                <Star className="w-5 h-5 text-yellow-400"/>
                                 <p className="text-xs sm:text-sm">قيم الدورة</p>
-                            </div>
-                            <button className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-50 duration-200">
+                            </Button>
+                            <Button variant="outline" className="flex items-center gap-1.5">
                                 <Share2 className="w-4 h-4 text-gray-600"/>
                                 <p className="text-gray-700 text-xs sm:text-sm">شارك الدورة</p>
-                            </button>
+                            </Button>
                         </div>
                     </div>
-                    <div className="mx-auto">
-                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-                            {/* Main Content - 3 parts (60%) */}
-                            <div className="lg:col-span-3">
-                                <CourseHero data={courseHeroData} />
-                            </div>
+                        {/* Main Content */}
+                        <div className="lg:col-span-8">
+                            <Card>
+                                <CardContent className="p-0">
+                                    <CourseHero data={courseHeroData} />
+                                </CardContent>
+                            </Card>
+                        </div>
 
-                            {/* Sidebar - 2 parts (40%) */}
-                            <div className="lg:col-span-2">
-                                <CourseSidebar data={courseSidebarData} />
-                            </div>
+                        {/* Sidebar */}
+                        <div className="lg:col-span-4">
+                            <Card>
+                                <CardContent>
+                                    <CourseSidebar data={courseSidebarData} />
+                                </CardContent>
+                            </Card>
                         </div>
                     </div>
                 </div>

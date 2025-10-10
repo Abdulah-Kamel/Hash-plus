@@ -1,35 +1,26 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const CourseTabs = () => {
-  const [activeTab, setActiveTab] = useState(1);
   const tabs = [
-    { id: 1, label: 'الملخص', active: true },
-    { id: 2, label: 'المعلم', active: false },
-    { id: 3, label: 'التقييمات', active: false },
-    { id: 4, label: 'الملحقات', active: false },
-    { id: 5, label: 'مجتمع الدورة', active: false },
+    { id: 1, value: "summary", label: 'الملخص' },
+    { id: 2, value: "instructor", label: 'المعلم' },
+    { id: 3, value: "reviews", label: 'التقييمات' },
+    { id: 4, value: "attachments", label: 'الملحقات' },
+    { id: 5, value: "community", label: 'مجتمع الدورة' },
   ];
 
   return (
-    <div className="border-b border-gray-200 mb-4">
-      <ul className="flex flex-wrap justify-start gap-2 -mb-px text-xs sm:text-sm font-medium text-center">
+    <Tabs defaultValue="summary" className="w-full mb-4">
+      <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
         {tabs.map((tab) => (
-          <li key={tab.id}>
-            <button
-              onClick={() => setActiveTab(tab.id)}
-              className={`inline-block px-3 sm:px-4 py-2 border-b-2 transition-colors ${
-                activeTab === tab.id
-                  ? 'text-primary border-primary'
-                  : 'text-gray-500 border-transparent hover:border-primary hover:text-primary'
-              }`}
-            >
-              {tab.label}
-            </button>
-          </li>
+          <TabsTrigger key={tab.id} value={tab.value}>
+            {tab.label}
+          </TabsTrigger>
         ))}
-      </ul>
-    </div>
+      </TabsList>
+    </Tabs>
   );
 };
 

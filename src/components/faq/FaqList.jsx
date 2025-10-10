@@ -1,14 +1,24 @@
 'use client';
 import React from 'react';
-import FaqItem from './FaqItem';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const FaqList = ({ faqs }) => {
   return (
-    <div className="p-6">
-      {faqs.map((faq, index) => (
-        <FaqItem key={faq.id} faq={faq} isFirst={index === 0} />
+    <Accordion type="single" collapsible className="w-full">
+      {faqs.map((faq) => (
+        <AccordionItem value={`item-${faq.id}`} key={faq.id}>
+          <AccordionTrigger>{faq.question}</AccordionTrigger>
+          <AccordionContent>
+            {faq.answer}
+          </AccordionContent>
+        </AccordionItem>
       ))}
-    </div>
+    </Accordion>
   );
 };
 
