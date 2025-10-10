@@ -5,58 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ef517e6-f3bf-489a-81dd-9d9b2d8b69ac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/login/page.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/otp/page.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/register/page.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/login/loginForm.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/otp/otpForm.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/register/registerForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/shop/page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/course/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/course/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/categories/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/categories/Categories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/categories/CategoryCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/categories/CategoryCard.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/container.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseDescription.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseDescription.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseHero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseHero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseOutcomes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseOutcomes.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseRequirements.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseRequirements.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseSidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseSidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseTabs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseTabs.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseVideo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseVideo.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/courses/CourseCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/courses/CourseCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/courses/Courses.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/courses/Courses.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cta/Cta.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cta/Cta.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/cta/CtaContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/cta/CtaContent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/faq/Faq.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/faq/Faq.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/faq/FaqList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/faq/FaqList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/features/FeatureItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/features/FeatureItem.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/features/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/features/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/footer/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/footer/Footer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/footer/FooterBrand.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/footer/FooterBrand.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/footer/FooterContact.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/footer/FooterContact.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/footer/FooterLinks.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/footer/FooterLinks.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/growth/Growth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/growth/Growth.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/growth/GrowthContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/growth/GrowthContent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/hero/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hero/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/hero/HeroContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hero/HeroContent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/hero/HeroIllustration.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hero/HeroIllustration.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/hero/HeroStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hero/HeroStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/hero/StudentsCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hero/StudentsCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/hero/SuccessGauge.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hero/SuccessGauge.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/navbar/DesktopMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbar/DesktopMenu.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/navbar/MobileMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbar/MobileMenu.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/navbar/NavBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbar/NavBar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/online-courses/OnlineCourseCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/online-courses/OnlineCourseCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/online-courses/OnlineCourses.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/online-courses/OnlineCourses.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/LogoCarousel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/LogoCarousel.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/testimonials/TestimonialCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/testimonials/TestimonialCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/testimonials/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/testimonials/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/testimonials/TestimonialsCarousel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/testimonials/TestimonialsCarousel.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +37,9 @@
   "associatedIndex": 1
 }]]></component>
   <component name="ProjectId" id="33pmRagDD2hOFl7MTu1x34zaCII" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -103,8 +60,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.android.studio.ml.bot.mainConfigurable",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
     "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/home/godzilla/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -137,7 +95,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760022381981</updated>
-      <workItem from="1760022385899" duration="16534000" />
+      <workItem from="1760022385899" duration="30671000" />
     </task>
     <servers />
   </component>
