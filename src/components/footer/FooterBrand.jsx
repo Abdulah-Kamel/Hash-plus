@@ -21,10 +21,10 @@ const FooterBrand = ({ brand, appDownload }) => {
       {/* App Download Buttons */}
       <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
         <Link href={appDownload.googlePlay} className="block">
-          <Image src={googlePlay} alt="Get it on Google Play" className="h-12 w-auto" width={162} height={48} />
+          <Image src={googlePlay} alt="Get it on Google Play" className="h-12 w-full" width={162} height={48} />
         </Link>
         <Link href={appDownload.appStore} className="block">
-          <Image src={appStore} alt="Download on App Store" className="h-12 w-auto" width={144} height={48} />
+          <Image src={appStore} alt="Download on App Store" className="h-12 w-full" width={144} height={48} />
         </Link>
       </div>
     </div>
