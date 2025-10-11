@@ -14,6 +14,36 @@ import Container from "@/components/container";
 import Link from "next/link";
 import {Mail} from "lucide-react";
 
+export const metadata = {
+  title: "تأكيد الحساب - رمز التحقق",
+  description: "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني لتأكيد حسابك وإكمال عملية التسجيل في Hash Plus.",
+  keywords: [
+    "تأكيد الحساب",
+    "رمز التحقق",
+    "OTP",
+    "تفعيل الحساب",
+    "تأكيد البريد الإلكتروني",
+    "رمز الأمان"
+  ],
+  openGraph: {
+    title: "Hash Plus - تأكيد الحساب",
+    description: "أدخل رمز التحقق لتأكيد حسابك وإكمال التسجيل",
+    url: "https://hashplus.com/otp",
+    images: [
+      {
+        url: "/og-otp.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Hash Plus - تأكيد الحساب",
+      },
+    ],
+  },
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default function OtpPage() {
     return (
         <>

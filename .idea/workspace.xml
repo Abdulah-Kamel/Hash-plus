@@ -6,8 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="4ef517e6-f3bf-489a-81dd-9d9b2d8b69ac" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/course/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/course/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/login/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/login/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/otp/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/otp/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/register/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/register/page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shop/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shop/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/footer/FooterBrand.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/footer/FooterBrand.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/container.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/navbar/DesktopMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbar/DesktopMenu.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/accordion.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/accordion.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,12 +33,12 @@
     &quot;assignee&quot;: &quot;Abdulah-Kamel&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Abdulah-Kamel/Hash-plus.git&quot;,
-    &quot;accountId&quot;: &quot;78cd09b0-802d-4241-bf51-631dcfef063c&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ihashplus/platform_hashplus_frontend.git",
+    "accountId": "78cd09b0-802d-4241-bf51-631dcfef063c"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
@@ -41,28 +51,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/godzilla/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "junie.project.settings",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/home/godzilla/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
@@ -93,7 +103,7 @@
       <option name="presentableId" value="Default" />
       <updated>1760022381981</updated>
       <workItem from="1760022385899" duration="30934000" />
-      <workItem from="1760186621106" duration="3719000" />
+      <workItem from="1760186621106" duration="19433000" />
     </task>
     <servers />
   </component>

@@ -12,7 +12,7 @@ import {
   CourseGrid,
   ShopPagination
 } from '@/components/shop';
-import {Button} from "@/components/ui/button";
+
 // Mock data for courses
 const coursesData = [
   {

@@ -56,12 +56,14 @@ const DesktopMenu = ({ navLinks }) => {
 
             return (
               <NavigationMenuItem key={link.id}>
-                <Link href={link.href} legacyBehavior passHref>
-                  <NavigationMenuLink
-                    className={`${navigationMenuTriggerStyle()} ${link.isActive ? 'bg-accent text-accent-foreground' : ''}`}>
+                <NavigationMenuLink asChild>
+                  <Link 
+                    href={link.href}
+                    className={`${navigationMenuTriggerStyle()} ${link.isActive ? 'bg-accent text-accent-foreground' : ''}`}
+                  >
                     {link.label}
-                  </NavigationMenuLink>
-                </Link>
+                  </Link>
+                </NavigationMenuLink>
               </NavigationMenuItem>
             );
           })}
