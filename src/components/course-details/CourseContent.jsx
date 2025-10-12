@@ -2,12 +2,33 @@ import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import {Play, Star, CircleCheckBig, Lock, LockKeyhole} from 'lucide-react';
+import {
+    Play,
+    Star,
+    CircleCheckBig,
+    Lock,
+    LockKeyhole,
+    BookHeart,
+    GraduationCap,
+    SquarePlay,
+    ChevronDown
+} from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Link from "next/link";
 import { coursesData } from '@/data/coursesData';
 import HorizontalCourseCard from "@/components/course-details/HorizontalCourseCard";
 import {Button} from "@/components/ui/button";
+import Image from "next/image";
+import instructorAvatar from "@/assets/courseProfile.png"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue
+} from "@/components/ui/select";
 const CourseContent = () => {
   return (
     <div className="space-y-6">
@@ -253,51 +274,55 @@ const CourseContent = () => {
         <TabsContent value="instructor" className="space-y-6">
           <Card className="border-none shadow-none">
             <CardContent className="p-6">
-              <div className="flex items-start gap-6">
-                <Avatar className="w-20 h-20">
-                  <AvatarFallback className="text-2xl bg-primary text-white">و</AvatarFallback>
-                </Avatar>
-                
-                <div className="flex-1 space-y-4">
-                  <div>
-                    <h3 className="text-xl font-bold">ولاء القحطاني</h3>
-                    <p className="text-gray-600">مطور Full Stack ومدرب معتمد</p>
+              <div className="flex items-center gap-6">
+                  <div className="flex flex-col items-start">
+                      <div>
+                          <h3 className="text-lg font-semibold text-primary">ولاء القحطاني</h3>
+                          <p className="text-muted-foreground mt-1">مبرمجه</p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                          <Avatar className="w-26 h-26 bg-gray-100 mt-2">
+                              <Image src={instructorAvatar} alt={"instructor image"} objectFit={"cover"}/>
+                          </Avatar>
+                          <ul className="flex flex-col gap-2">
+                              <li className="flex items-center text-muted-foreground gap-2">
+                                  <Star />
+                                  <span>4.6 تقييم المعلم</span>
+                              </li>
+                              <li className="flex items-center text-muted-foreground gap-2">
+                                  <BookHeart />
+                                  <span>4.6 تقييم المعلم</span>
+                              </li>
+                              <li className="flex items-center text-muted-foreground gap-2">
+                                  <GraduationCap />
+                                  <span>4.6 تقييم المعلم</span>
+                              </li>
+                              <li className="flex items-center text-muted-foreground gap-2">
+                                  <SquarePlay />
+                                  <span>4.6 تقييم المعلم</span>
+                              </li>
+                          </ul>
+                      </div>
+                      <div>
+                          <h4 className="mt-6 text-lg font-bold">عن المعلم</h4>
+                          <p>معسكرات وبرامج احترافية بالشراكة مع كبرى الجهات العالمية؛ لتطوير مهاراتك في مجالات التقنيات الحديثة، بمنهجيّة تعلُّم قائمة على التطبيقات العملية، ضمن بيئة تعليمية محفزة وتنافسية. معسكرات وبرامج احترافية بالشراكة مع كبرى الجهات العالمية؛ لتطوير مهاراتك في مجالات التقنيات الحديثة، بمنهجيّة تعلُّم قائمة على التطبيقات العملية، ضمن بيئة تعليمية محفزة وتنافسية.</p>
+                          <div className="mt-3">
+                              <Button variant={"ghost"} className="bg-gray-50 text-secondary hover:text-secondary py-4 px-12" >
+                                  عرض المزيد
+                                  <ChevronDown/>
+                              </Button>
+                          </div>
+                      </div>
+                      <div className="rounded-lg mt-6 w-full flex flex-col gap-6">
+                          <h3 className="text-xl font-bold">دورات لها علاقة</h3>
+                          {
+                              coursesData.slice(0,3).map((course)=>(
+                                  <HorizontalCourseCard key={course.id} course={course} isHorizontal={true}/>
+                              ))
+                          }
+                      </div>
                   </div>
-                  
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div>
-                      <div className="text-2xl font-bold text-primary">4.8</div>
-                      <div className="text-sm text-gray-600">تقييم المدرب</div>
-                    </div>
-                    
-                    <div>
-                      <div className="text-2xl font-bold text-primary">1,234</div>
-                      <div className="text-sm text-gray-600">تقييم</div>
-                    </div>
-                    
-                    <div>
-                      <div className="text-2xl font-bold text-primary">12,345</div>
-                      <div className="text-sm text-gray-600">طالب</div>
-                    </div>
-                    
-                    <div>
-                      <div className="text-2xl font-bold text-primary">15</div>
-                      <div className="text-sm text-gray-600">دورة</div>
-                    </div>
-                  </div>
-                  
-                  <div className="prose prose-sm max-w-none">
-                    <p className="text-gray-700">
-                      مطور ويب متخصص مع أكثر من 8 سنوات من الخبرة في تطوير التطبيقات. 
-                      حاصل على شهادات متعددة في تقنيات الويب الحديثة ولديه شغف كبير لتعليم البرمجة.
-                    </p>
-                    
-                    <p className="text-gray-700">
-                      عمل مع شركات تقنية رائدة وساهم في تطوير العديد من المشاريع الناجحة. 
-                      يؤمن بأن التعلم العملي هو أفضل طريقة لإتقان البرمجة.
-                    </p>
-                  </div>
-                </div>
+
               </div>
             </CardContent>
           </Card>
@@ -309,15 +334,17 @@ const CourseContent = () => {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-bold">تقييمات الطلاب</h3>
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="font-bold">4.8</span>
-                  <span className="text-gray-600">(1,234 تقييم)</span>
-                </div>
+                  <Select dir={"rtl"}>
+                      <SelectTrigger className="py-5 px-8 border-gray-800 rounded-full">
+                          <SelectValue placeholder="ترتيب حسب" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          <SelectGroup>
+                              <SelectItem value="newest">الاحدث</SelectItem>
+                              <SelectItem value="old">الاقدم</SelectItem>
+                          </SelectGroup>
+                      </SelectContent>
+                  </Select>
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -327,21 +354,21 @@ const CourseContent = () => {
                   <Avatar>
                     <AvatarFallback>أ</AvatarFallback>
                   </Avatar>
-                  
+
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center justify-between">
                       <h4 className="font-medium">أحمد محمد</h4>
                       <span className="text-sm text-gray-500">منذ أسبوع</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-1">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
-                    
+
                     <p className="text-gray-700">
-                      دورة ممتازة جداً! المحتوى واضح ومفصل والمدرب يشرح بطريقة سهلة ومفهومة. 
+                      دورة ممتازة جداً! المحتوى واضح ومفصل والمدرب يشرح بطريقة سهلة ومفهومة.
                       استفدت كثيراً من المشاريع العملية.
                     </p>
                   </div>
@@ -354,21 +381,21 @@ const CourseContent = () => {
                   <Avatar>
                     <AvatarFallback>س</AvatarFallback>
                   </Avatar>
-                  
+
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center justify-between">
                       <h4 className="font-medium">سارة أحمد</h4>
                       <span className="text-sm text-gray-500">منذ أسبوعين</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-1">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
-                    
+
                     <p className="text-gray-700">
-                      أنصح بهذه الدورة لكل من يريد تعلم JavaScript. المحتوى منظم بشكل ممتاز 
+                      أنصح بهذه الدورة لكل من يريد تعلم JavaScript. المحتوى منظم بشكل ممتاز
                       والتمارين العملية تساعد على فهم المفاهيم بشكل أفضل.
                     </p>
                   </div>
@@ -381,22 +408,22 @@ const CourseContent = () => {
                   <Avatar>
                     <AvatarFallback>م</AvatarFallback>
                   </Avatar>
-                  
+
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center justify-between">
                       <h4 className="font-medium">محمد علي</h4>
                       <span className="text-sm text-gray-500">منذ شهر</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-1">
                       {[...Array(4)].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                       ))}
                       <Star className="w-4 h-4 text-gray-300" />
                     </div>
-                    
+
                     <p className="text-gray-700">
-                      دورة جيدة جداً للمبتدئين. المدرب محترف ويجيب على جميع الأسئلة. 
+                      دورة جيدة جداً للمبتدئين. المدرب محترف ويجيب على جميع الأسئلة.
                       أتمنى لو كان هناك المزيد من المشاريع المتقدمة.
                     </p>
                   </div>
