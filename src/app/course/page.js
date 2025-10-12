@@ -43,17 +43,17 @@ const CoursePage = () => {
             {/* Main Content */}
             <Container className="py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Sidebar - Right Column */}
+                    <div className="lg:col-span-1">
+                        <CourseSidebar />
+                    </div>
+
                     <div className="lg:col-span-2 space-y-14">
                         {/* Course Hero Section */}
                         <CourseHero />
                     {/* Course Content */}
                         <CourseContent />
                     </div>
-                    {/* Sidebar - Right Column */}
-                    <div className="lg:col-span-1">
-                        <CourseSidebar />
-                    </div>
-
                 </div>
             </Container>
             <Footer />
