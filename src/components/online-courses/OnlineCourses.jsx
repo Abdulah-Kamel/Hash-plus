@@ -9,7 +9,7 @@ const OnlineCourses = () => {
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Right Side - Course Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 order-2 lg:order-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-4 order-2 lg:order-1 place-items-center">
             {onlineCoursesData.map((course) => (
               <OnlineCourseCard key={course.id} course={course} />
             ))}

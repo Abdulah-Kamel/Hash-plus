@@ -14,7 +14,7 @@ const HorizontalCourseCard = ({ course }) => {
         <Card className="w-full rounded-2xl p-0">
             <div className="flex flex-col xl:flex-row gap-4 p-4">
                 {/* Course Image */}
-                <Link href={`/courses/${course.id}`} className="block flex-shrink-0">
+                <Link href={`/course`} className="block flex-shrink-0">
                     <Image className="w-full xl:w-64 h-full object-cover rounded-lg" src={course.image} alt={course.title} width={192} height={128} />
                 </Link>
                 
@@ -51,7 +51,9 @@ const HorizontalCourseCard = ({ course }) => {
 
                         {/* Instructor */}
                         <div className="flex items-center gap-2">
-                            <Image className="rounded-full bg-gray-100" src={courseProfile} alt="Instructor avatar" width={32} height={32} />
+                            <Link href={`/teacher/${course.instructorId || 1}`}>
+                                <Image className="rounded-full bg-gray-100 cursor-pointer" src={courseProfile} alt="Instructor avatar" width={32} height={32} />
+                            </Link>
                             <p className="text-base font-light">{course.instructor}</p>
                         </div>
                         {/* Course Info */}

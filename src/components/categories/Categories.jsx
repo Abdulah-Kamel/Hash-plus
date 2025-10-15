@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const Categories = () => {
     return (
         <section className="py-16 px-4 lg:px-12">
-            <div className="mx-auto max-w-7xl">
+            <div className="mx-auto">
                 <Card className="relative bg-primary rounded-3xl overflow-hidden border-0">
                     {/* Background decorative elements */}
                     <div className="absolute inset-0 opacity-10">
@@ -22,7 +22,7 @@ const Categories = () => {
                         </div>
 
                         {/* Cards Section */}
-                        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
                             {categoriesData.map((category) => (
                                 <CategoryCard key={category.id} category={category} />
                             ))}

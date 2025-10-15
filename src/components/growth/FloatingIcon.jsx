@@ -10,9 +10,9 @@ const FloatingIcon = ({ Icon, color, rotation, position, hasColor }) => {
     };
 
     return (
-        <div className={`hidden lg:block ${positionClasses[position]} ${rotation} transform transition-transform hover:scale-110`}>
-            <div className={`${hasColor ? color : ''} py-3 rounded-3xl ${hasColor ? 'shadow-xl' : ''}`}>
-                <Image src={Icon} className="w-full h-full" alt="Growth icon" width={64} height={64} />
+        <div className={`lg:block ${positionClasses[position]} ${rotation} transform transition-transform hover:scale-110`}>
+            <div className={`${hasColor ? color : ''} lg:py-3 rounded-3xl ${hasColor ? 'shadow-xl' : ''}`}>
+                <Image src={Icon} className="max-lg:w-12 max-lg:h-12" alt="Growth icon" />
             </div>
         </div>
     );

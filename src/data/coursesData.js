@@ -12,6 +12,7 @@ export const coursesData = [
     rating: 4.5,
     reviews: 625,
     price: 50,
+    lessons:40,
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ export const coursesData = [
     rating: 4.5,
     reviews: 625,
     price: 50,
+      lessons:40,
   },
   {
     id: 3,
@@ -34,6 +36,7 @@ export const coursesData = [
     rating: 4.5,
     reviews: 625,
     price: 50,
+      lessons:40,
   },
   {
     id: 4,
@@ -45,6 +48,7 @@ export const coursesData = [
     rating: 4.5,
     reviews: 625,
     price: 50,
+      lessons:40,
   },
   {
     id: 5,
@@ -56,6 +60,7 @@ export const coursesData = [
     rating: 4.5,
     reviews: 625,
     price: 50,
+      lessons:40,
   },
   {
     id: 6,
@@ -67,6 +72,7 @@ export const coursesData = [
     rating: 4.5,
     reviews: 625,
     price: 50,
+      lessons:40,
   },
   {
     id: 7,
@@ -78,6 +84,7 @@ export const coursesData = [
     rating: 4.5,
     reviews: 625,
     price: 50,
+      lessons:40,
   },
   {
     id: 8,
@@ -89,5 +96,6 @@ export const coursesData = [
     rating: 4.5,
     reviews: 625,
     price: 50,
+      lessons:40,
   },
 ];

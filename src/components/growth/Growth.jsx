@@ -9,7 +9,7 @@ const Growth = () => {
     <section className="py-8 md:py-16 px-4 lg:px-12">
       <div className="mx-auto max-w-7xl">
         <Card className="relative rounded-2xl md:rounded-3xl overflow-hidden">
-          <CardContent className="px-6 md:px-10 py-12 md:py-20 lg:py-32">
+          <CardContent className="px-4 md:px-10 py-12 md:py-20 lg:py-32">
             {/* Floating Icons */}
             {growthIcons.map((iconData) => (
               <FloatingIcon

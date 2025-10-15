@@ -8,7 +8,7 @@ export const navLinks = [
   {
     id: 2,
     label: 'الدورات',
-    href: '/course',
+    href: '/shop',
   },
   {
     id: 3,

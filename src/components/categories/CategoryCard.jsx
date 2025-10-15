@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/button";
 
 const CategoryCard = ({ category }) => {
   return (
-    <Card className="flex-1 flex flex-col rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+    <Card className="flex-1 p-4 flex flex-col rounded-3xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
       <CardHeader className="flex-grow">
-        <CardTitle className="text-3xl font-bold text-gray-900 mt-3">
+        <CardTitle className="text-3xl font-bold text-gray-900">
           {category.title}
         </CardTitle>
-        <CardDescription className="text-sm">
+        <CardDescription className="text-sm mt-1">
           {category.description}
         </CardDescription>
       </CardHeader>

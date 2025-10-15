@@ -11,7 +11,7 @@ import {
     BookHeart,
     GraduationCap,
     SquarePlay,
-    ChevronDown
+    ChevronDown, StarHalf
 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Link from "next/link";
@@ -281,7 +281,7 @@ const CourseContent = () => {
                           <p className="text-muted-foreground mt-1">مبرمجه</p>
                       </div>
                       <div className="flex items-center gap-4">
-                          <Avatar className="w-26 h-26 bg-gray-100 mt-2">
+                          <Avatar className="w-22 h-22 bg-gray-100 mt-2">
                               <Image src={instructorAvatar} alt={"instructor image"} objectFit={"cover"}/>
                           </Avatar>
                           <ul className="flex flex-col gap-2">
@@ -347,87 +347,81 @@ const CourseContent = () => {
                   </Select>
               </div>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4">
               {/* Review Item */}
-              <div className="border-b pb-6">
-                <div className="flex items-start gap-4">
-                  <Avatar>
-                    <AvatarFallback>أ</AvatarFallback>
-                  </Avatar>
-
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium">أحمد محمد</h4>
-                      <span className="text-sm text-gray-500">منذ أسبوع</span>
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                        <Avatar className="w-16 h-16 bg-gray-100">
+                            <Image src={instructorAvatar} alt={"instructor image"} objectFit={"cover"}/>
+                        </Avatar>
+                        <h4 className="text-lg font-semibold">محمد على</h4>
                     </div>
-
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      ))}
+                    <div className="flex items-center gap-2">
+                        <p className="text-muted-foreground font-light">منذ 3 اسابيع</p>
+                        <div className="flex items-center gap-1">
+                            <StarHalf className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                        </div>
                     </div>
-
-                    <p className="text-gray-700">
-                      دورة ممتازة جداً! المحتوى واضح ومفصل والمدرب يشرح بطريقة سهلة ومفهومة.
-                      استفدت كثيراً من المشاريع العملية.
-                    </p>
-                  </div>
                 </div>
+                  <p className="text-muted-foreground mt-3 leading-loose">
+                      معسكرات وبرامج احترافية بالشراكة مع كبرى الجهات العالمية؛ لتطوير مهاراتك في مجالات التقنيات الحديثة، بمنهجيّة تعلُّم قائمة على التطبيقات العملية، ضمن بيئة تعليمية محفزة وتنافسية. معسكرات وبرامج احترافية بالشراكة مع كبرى الجهات العالمية؛ لتطوير مهاراتك في مجالات التقنيات الحديثة، بمنهجيّة تعلُّم قائمة على التطبيقات العملية، ضمن بيئة تعليمية محفزة وتنافسية
+                  <span role={"button"} className="border-none text-secondary ms-2 cursor-pointer">عرض المزيد .</span>
+                  </p>
               </div>
-
-              {/* Review Item */}
-              <div className="border-b pb-6">
-                <div className="flex items-start gap-4">
-                  <Avatar>
-                    <AvatarFallback>س</AvatarFallback>
-                  </Avatar>
-
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium">سارة أحمد</h4>
-                      <span className="text-sm text-gray-500">منذ أسبوعين</span>
+                {/* Review Item */}
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                        <Avatar className="w-16 h-16 bg-gray-100">
+                            <Image src={instructorAvatar} alt={"instructor image"} objectFit={"cover"}/>
+                        </Avatar>
+                        <h4 className="text-lg font-semibold">محمد على</h4>
                     </div>
-
-                    <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      ))}
+                    <div className="flex items-center gap-2">
+                        <p className="text-muted-foreground font-light">منذ 3 اسابيع</p>
+                        <div className="flex items-center gap-1">
+                            <StarHalf className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                        </div>
                     </div>
-
-                    <p className="text-gray-700">
-                      أنصح بهذه الدورة لكل من يريد تعلم JavaScript. المحتوى منظم بشكل ممتاز
-                      والتمارين العملية تساعد على فهم المفاهيم بشكل أفضل.
-                    </p>
-                  </div>
                 </div>
+                  <p className="text-muted-foreground mt-3 leading-loose">
+                      معسكرات وبرامج احترافية بالشراكة مع كبرى الجهات العالمية؛ لتطوير مهاراتك في مجالات التقنيات الحديثة، بمنهجيّة تعلُّم قائمة على التطبيقات العملية، ضمن بيئة تعليمية محفزة وتنافسية. معسكرات وبرامج احترافية بالشراكة مع كبرى الجهات العالمية؛ لتطوير مهاراتك في مجالات التقنيات الحديثة، بمنهجيّة تعلُّم قائمة على التطبيقات العملية، ضمن بيئة تعليمية محفزة وتنافسية
+                  <span role={"button"} className="border-none text-secondary ms-2 cursor-pointer">عرض المزيد .</span>
+                  </p>
               </div>
-
-              {/* Review Item */}
-              <div>
-                <div className="flex items-start gap-4">
-                  <Avatar>
-                    <AvatarFallback>م</AvatarFallback>
-                  </Avatar>
-
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-medium">محمد علي</h4>
-                      <span className="text-sm text-gray-500">منذ شهر</span>
+                {/* Review Item */}
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                        <Avatar className="w-16 h-16 bg-gray-100">
+                            <Image src={instructorAvatar} alt={"instructor image"} objectFit={"cover"}/>
+                        </Avatar>
+                        <h4 className="text-lg font-semibold">محمد على</h4>
                     </div>
-
-                    <div className="flex items-center gap-1">
-                      {[...Array(4)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      ))}
-                      <Star className="w-4 h-4 text-gray-300" />
+                    <div className="flex items-center gap-2">
+                        <p className="text-muted-foreground font-light">منذ 3 اسابيع</p>
+                        <div className="flex items-center gap-1">
+                            <StarHalf className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400"/>
+                        </div>
                     </div>
-
-                    <p className="text-gray-700">
-                      دورة جيدة جداً للمبتدئين. المدرب محترف ويجيب على جميع الأسئلة.
-                      أتمنى لو كان هناك المزيد من المشاريع المتقدمة.
-                    </p>
-                  </div>
                 </div>
+                  <p className="text-muted-foreground mt-3 leading-loose">
+                      معسكرات وبرامج احترافية بالشراكة مع كبرى الجهات العالمية؛ لتطوير مهاراتك في مجالات التقنيات الحديثة، بمنهجيّة تعلُّم قائمة على التطبيقات العملية، ضمن بيئة تعليمية محفزة وتنافسية. معسكرات وبرامج احترافية بالشراكة مع كبرى الجهات العالمية؛ لتطوير مهاراتك في مجالات التقنيات الحديثة، بمنهجيّة تعلُّم قائمة على التطبيقات العملية، ضمن بيئة تعليمية محفزة وتنافسية
+                  <span role={"button"} className="border-none text-secondary ms-2 cursor-pointer">عرض المزيد .</span>
+                  </p>
               </div>
             </CardContent>
           </Card>
