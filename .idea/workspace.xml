@@ -5,33 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ef517e6-f3bf-489a-81dd-9d9b2d8b69ac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/teacher/[id]/page.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/course-page/assignment/page.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/AI/AiDialog.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/AI/MessageInput.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/course-page/AskAi.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/course-page/CourseHeader.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/course-page/assignment/Assignment.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/course-page/assignment/FinalAssignment.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/course-page/assignment/RichTextEditor.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/categories/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/categories/Categories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/categories/CategoryCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/categories/CategoryCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-details/CourseContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-details/CourseContent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-details/HorizontalCourseCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-details/HorizontalCourseCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseDescription.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseDescription.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseHero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseHero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseOutcomes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseOutcomes.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseRequirements.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseRequirements.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseSidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseSidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseStats.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseStats.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseTabs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseTabs.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/course-page/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/course-page/page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/course-page/CommentInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CommentInput.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseVideo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseVideo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/courses/CourseCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/courses/CourseCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/faq/FaqList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/faq/FaqList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/growth/FloatingIcon.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/growth/FloatingIcon.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/growth/Growth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/growth/Growth.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/online-courses/OnlineCourseCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/online-courses/OnlineCourseCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/online-courses/OnlineCourses.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/online-courses/OnlineCourses.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/testimonials/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/testimonials/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/accordion.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/accordion.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/coursePageData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/coursePageData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/coursesData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/coursesData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/navigationData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/navigationData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/textarea.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/textarea.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +59,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
@@ -87,6 +76,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="n" />
+    </option>
+  </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
@@ -121,7 +115,9 @@
       <workItem from="1760281120689" duration="7469000" />
       <workItem from="1760433198707" duration="1683000" />
       <workItem from="1760448432595" duration="7251000" />
-      <workItem from="1760545683632" duration="11747000" />
+      <workItem from="1760545683632" duration="12564000" />
+      <workItem from="1760624771016" duration="12262000" />
+      <workItem from="1760705617831" duration="7287000" />
     </task>
     <servers />
   </component>

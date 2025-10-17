@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const CourseVideo = ({ video }) => {
     return (
-        <div className="relative  mx-auto rounded-xl overflow-hidden mb-4 w-full max-w-[841px] max-h-[470px]">
+        <div className="relative  mx-auto rounded-xl overflow-hidden mb-4 w-full max-h-[490px]">
             <Image
                 src={video}
                 alt="Course video"

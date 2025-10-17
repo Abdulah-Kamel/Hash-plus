@@ -48,7 +48,7 @@ const CommentInput = ({btnClassName,isTextArea}) => {
                     </Button>
                 </div>
                 {showEmojiPicker && (
-                    <div ref={emojiPickerRef} className="absolute bottom-full left-0 z-10">
+                    <div ref={emojiPickerRef} className="absolute bottom-full max-lg:-left-[60%] left-0 z-10">
                         <EmojiPicker onEmojiClick={onEmojiClick} />
                     </div>
                 )}
