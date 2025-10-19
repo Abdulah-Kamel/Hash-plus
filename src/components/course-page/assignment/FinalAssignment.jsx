@@ -1,10 +1,8 @@
 import React from 'react';
 import {Button} from "@/components/ui/button";
 import {ArrowLeft, File, Link, SquareArrowOutUpLeft} from "lucide-react";
-import {Card, CardContent, CardHeader} from "@/components/ui/card";
-import {Checkbox} from "@/components/ui/checkbox";
-import {Label} from "@/components/ui/label";
 import RichTextEditor from "@/components/course-page/assignment/RichTextEditor";
+import UploadDropzone from "@/components/UploadDropzone";
 
 const FinalAssignment = () => {
     return (
@@ -64,6 +62,9 @@ const FinalAssignment = () => {
                 </div>
                 <div className="mt-4">
                     <RichTextEditor/>
+                </div>
+                <div>
+                    <UploadDropzone/>
                 </div>
                 <div className="flex justify-end">
                     <Button variant={"outline"} className="font-normal px-16 py-6 rounded-full bg-primary hover:bg-primary/90 text-white hover:text-white">ارسال</Button>

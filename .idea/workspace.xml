@@ -5,21 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ef517e6-f3bf-489a-81dd-9d9b2d8b69ac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/course-page/assignment/page.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/AI/AiDialog.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/AI/MessageInput.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/course-page/AskAi.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/course-page/CourseHeader.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/course-page/assignment/Assignment.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/course-page/assignment/FinalAssignment.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/course-page/assignment/RichTextEditor.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/course-page/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/course-page/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CommentInput.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CommentInput.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/course-page/CourseVideo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/course-page/CourseVideo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/textarea.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/textarea.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +106,10 @@
       <workItem from="1760448432595" duration="7251000" />
       <workItem from="1760545683632" duration="12564000" />
       <workItem from="1760624771016" duration="12262000" />
-      <workItem from="1760705617831" duration="7287000" />
+      <workItem from="1760705617831" duration="10329000" />
+      <workItem from="1760793607423" duration="11970000" />
+      <workItem from="1760878705839" duration="10024000" />
+      <workItem from="1760899701695" duration="692000" />
     </task>
     <servers />
   </component>
