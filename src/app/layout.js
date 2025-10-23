@@ -1,5 +1,6 @@
 import { Alexandria } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner"
 
 const alexandria = Alexandria({
   variable: "--font-alexandria",
@@ -84,7 +85,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl" className={alexandria.variable}>
       <body className="antialiased">
-        {children}
+      <Toaster />
+      {children}
       </body>
     </html>
   );

@@ -1,15 +1,16 @@
 "use client"
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import {Controller,useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as z from "zod"
 import { toast } from "sonner"
+import { Field, FieldLabel, FieldDescription, FieldError } from "@/components/ui/field"
 import PhoneInput, { isValidPhoneNumber, getCountryCallingCode } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import { Field, FieldLabel, FieldError } from "@/components/ui/field"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -45,7 +46,7 @@ const CustomPhoneInput = React.forwardRef(({ className, placeholder, ...props },
 ));
 CustomPhoneInput.displayName = "CustomPhoneInput";
 
-const RegisterForm = ({role}) => {
+const RegisterForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [value, setValue] = useState(""); // Phone number value
@@ -55,18 +56,16 @@ const RegisterForm = ({role}) => {
         email: z.string().email("البريد الإلكتروني غير صحيح"),
         phone: z.string().min(1, "رقم الهاتف مطلوب"),
         password: z.string().min(8, "كلمة السر يجب أن تكون 8 أحرف على الأقل").max(255),
-        confirmPassword: z.string(),
-        terms: z.boolean().refine(val => val === true, "يجب الموافقة على الشروط والأحكام"),
-        role:z.string()
+        confirmPassword: z.string().min(8).max(255),
+        terms: z.boolean().refine(val => val === true, "يجب الموافقة على الشروط والأحكام")
     }).refine((data) => data.password === data.confirmPassword, {
+        message: "كلمات السر غير متطابقة",
         path: ["confirmPassword"],
-        error: "كلمات السر غير متطابقة"
     });
 
-    const {handleSubmit, control,reset} = useForm({
+    const {handleSubmit, control} = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            role: role,
             fullName: '',
             email: '',
             phone: '',
@@ -75,19 +74,6 @@ const RegisterForm = ({role}) => {
             terms: false,
         },
     })
-
-    useEffect(() => {
-        reset({
-            role: role,
-            fullName: '',
-            email: '',
-            phone: '',
-            password: '',
-            confirmPassword: '',
-            terms: false,
-        });
-        setValue(""); // Reset phone input value
-    }, [role, reset]);
 
     function onSubmit(data) {
         console.log(data)
@@ -110,13 +96,18 @@ const RegisterForm = ({role}) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
-                {/* Full Name */}
+                {/* Full Name Field */}
                 <Controller
                     name="fullName"
                     control={control}
                     render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>الاسم الكامل</FieldLabel>
+                        <div className="grid gap-2">
+                            <Label
+                                htmlFor={field.name}
+                                data-invalid={fieldState.invalid}
+                            >
+                                الاسم الكامل
+                            </Label>
                             <Input
                                 {...field}
                                 id={field.name}
@@ -126,39 +117,57 @@ const RegisterForm = ({role}) => {
                                 aria-invalid={fieldState.invalid}
                                 autoComplete="name"
                             />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
+                            {fieldState.invalid && fieldState.error && (
+                                <p className="text-sm text-red-500 mt-1">
+                                    {fieldState.error.message}
+                                </p>
+                            )}
+                        </div>
                     )}
                 />
 
-                {/* Email */}
+                {/* Email Field */}
                 <Controller
                     name="email"
                     control={control}
                     render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>البريد الإلكتروني</FieldLabel>
+                        <div className="grid gap-2">
+                            <Label
+                                htmlFor={field.name}
+                                data-invalid={fieldState.invalid}
+                            >
+                                البريد الالكترونى
+                            </Label>
                             <Input
                                 {...field}
                                 id={field.name}
                                 type="email"
-                                placeholder="example@email.com"
+                                placeholder="البريد الالكترونى"
                                 className="h-10 sm:h-12"
                                 aria-invalid={fieldState.invalid}
                                 autoComplete="email"
                             />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
+                            {fieldState.invalid && fieldState.error && (
+                                <p className="text-sm text-red-500 mt-1">
+                                    {fieldState.error.message}
+                                </p>
+                            )}
+                        </div>
                     )}
                 />
 
-                {/* Phone */}
+                {/* Phone Field */}
                 <Controller
                     name="phone"
                     control={control}
                     render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>رقم الهاتف</FieldLabel>
+                        <div className="grid gap-2">
+                            <Label
+                                htmlFor={field.name}
+                                data-invalid={fieldState.invalid}
+                            >
+                                رقم الهاتف
+                            </Label>
                             <div className="flex">
                                 <PhoneInput
                                     {...field}
@@ -242,24 +251,33 @@ const RegisterForm = ({role}) => {
                                     )}
                                 />
                             </div>
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
+                            {fieldState.invalid && fieldState.error && (
+                                <p className="text-sm text-red-500 mt-1">
+                                    {fieldState.error.message}
+                                </p>
+                            )}
+                        </div>
                     )}
                 />
 
-                {/* Password */}
+                {/* Password Field */}
                 <Controller
                     name="password"
                     control={control}
                     render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>كلمة السر</FieldLabel>
+                        <div className="grid gap-2">
+                            <Label
+                                htmlFor={field.name}
+                                data-invalid={fieldState.invalid}
+                            >
+                                كلمه السر
+                            </Label>
                             <div className="relative">
                                 <Input
                                     {...field}
                                     id={field.name}
                                     type={showPassword ? 'text' : 'password'}
-                                    placeholder="كلمة السر"
+                                    placeholder="كلمه السر"
                                     className="h-10 sm:h-12 pr-10"
                                     aria-invalid={fieldState.invalid}
                                     autoComplete="new-password"
@@ -272,24 +290,33 @@ const RegisterForm = ({role}) => {
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
+                            {fieldState.invalid && fieldState.error && (
+                                <p className="text-sm text-red-500 mt-1">
+                                    {fieldState.error.message}
+                                </p>
+                            )}
+                        </div>
                     )}
                 />
 
-                {/* Confirm Password */}
+                {/* Confirm Password Field */}
                 <Controller
                     name="confirmPassword"
                     control={control}
                     render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>تأكيد كلمة السر</FieldLabel>
+                        <div className="grid gap-2">
+                            <Label
+                                htmlFor={field.name}
+                                data-invalid={fieldState.invalid}
+                            >
+                                تأكيد كلمه السر
+                            </Label>
                             <div className="relative">
                                 <Input
                                     {...field}
                                     id={field.name}
                                     type={showConfirmPassword ? 'text' : 'password'}
-                                    placeholder="تأكيد كلمة السر"
+                                    placeholder="تأكيد كلمه السر"
                                     className="h-10 sm:h-12 pr-10"
                                     aria-invalid={fieldState.invalid}
                                     autoComplete="new-password"
@@ -302,8 +329,12 @@ const RegisterForm = ({role}) => {
                                     {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
+                            {fieldState.invalid && fieldState.error && (
+                                <p className="text-sm text-red-500 mt-1">
+                                    {fieldState.error.message}
+                                </p>
+                            )}
+                        </div>
                     )}
                 />
 
@@ -312,7 +343,7 @@ const RegisterForm = ({role}) => {
                     name="terms"
                     control={control}
                     render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
+                        <div className="grid gap-2">
                             <div className="flex items-center space-x-2">
                                 <Checkbox
                                     id={field.name}
@@ -320,15 +351,20 @@ const RegisterForm = ({role}) => {
                                     onCheckedChange={field.onChange}
                                     aria-invalid={fieldState.invalid}
                                 />
-                                <FieldLabel
+                                <Label
                                     htmlFor={field.name}
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                    data-invalid={fieldState.invalid}
                                 >
                                     أوافق على الشروط والأحكام
-                                </FieldLabel>
+                                </Label>
                             </div>
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
+                            {fieldState.invalid && fieldState.error && (
+                                <p className="text-sm text-red-500 mt-1">
+                                    {fieldState.error.message}
+                                </p>
+                            )}
+                        </div>
                     )}
                 />
 

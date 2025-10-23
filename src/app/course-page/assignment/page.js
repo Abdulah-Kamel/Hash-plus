@@ -7,7 +7,7 @@ import Assignment from "@/components/course-page/assignment/Assignment";
 import FinalAssignment from "@/components/course-page/assignment/FinalAssignment";
 
 const AssignmentPage = () => {
-    const isFinal = true;
+    const isFinal = false;
     return (
         <>
             <NavBar />
