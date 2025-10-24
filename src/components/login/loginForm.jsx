@@ -1,61 +1,125 @@
 "use client"
-import React, { useState } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import React, {useEffect, useState} from 'react';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import googleIcon from "@/assets/google-icon.svg";
+import Image from "next/image";
+import { handleLogin } from "@/components/login/loginActions";
+import FormField from "@/components/form/FormField";
+import PasswordField from "@/components/form/PasswordField";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import { Controller } from 'react-hook-form';
+import {Spinner} from "@/components/ui/spinner";
 
-const LoginForm = () => {
-    const [showPassword, setShowPassword] = useState(false);
+const LoginForm = ({ role }) => {
+    const [loading,setLoading] = useState(false);
+    const [value, setValue] = useState("");
+
+    const formSchema = z.object({
+        email: z.email("البريد الإلكتروني غير صحيح"),
+        password: z.string().min(1, "كلمة السر مطلوبة"),
+        rememberMe: z.boolean().refine(val => val === true, "يجب الموافقة على الشروط والأحكام"),
+
+        role: z.string()
+    })
+
+    const { handleSubmit, control, reset } = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+            rememberMe: false,
+            role: role,
+        },
+    });
+
+    useEffect(() => {
+        reset({
+            email: '',
+            password: '',
+            rememberMe: false,
+            role: role,
+        });
+    }, [reset]);
+
+    async function onSubmit(data) {
+        setLoading(true)
+        const result = await handleLogin(data);
+        if (result.success) {
+            setLoading(false)
+            toast.success("تم تسجيل الدخول بنجاح", {
+                position: "top-right",
+                duration:3000,
+                classNames:"toast-success text-black mt-14"
+            });
+        } else {
+            setLoading(false)
+            toast.error("حدث خطأ أثناء تسجيل الدخول", {
+                position: "top-right",
+                duration:3000,
+                classNames:"toast-error text-black mt-14",
+                description: <p className="font-light text-black">{result.error}</p>,
+            });
+        }
+    }
 
     return (
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
-                <div className="grid gap-2">
-                    <Label htmlFor="email">البريد الالكترونى</Label>
-                    <Input
-                        id="email"
-                        type="email"
-                        placeholder="البريد الالكترونى"
-                        className="h-10 sm:h-12"
-                        required
-                    />
-                </div>
-                <div className="grid gap-2">
-                    <div className="flex items-center justify-between ">
-                        <Label htmlFor="password">كلمه السر</Label>
-                        <a
-                            href="#"
-                            className="text-primary inline-block text-sm underline-offset-4 hover:underline"
-                        >
-                            نسيت كلمه السر؟
-                        </a>
+                <FormField control={control} name="email" label="البريد الإلكتروني" placeholder="البريد الإلكتروني" type="email" autoComplete="email" />
+                <PasswordField control={control} name="password" label="كلمة السر" placeholder="ادخل كلمة السر" autoComplete="new-password" />
+                <Controller
+                    name="rememberMe"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <div className="flex items-center space-x-2">
+                                <Checkbox
+                                    id={field.name}
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                    aria-invalid={fieldState.invalid}
+                                />
+                                <FieldLabel
+                                    htmlFor={field.name}
+                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                   تذكرنى
+                                </FieldLabel>
+                            </div>
+                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                        </Field>
+                    )}
+                />
+
+                {/* Submit Buttons */}
+                <div className="flex-col gap-2">
+                    <Button type="submit" className="w-full cursor-pointer px-5 py-2 sm:py-6 rounded-lg max-sm:text-xs" disabled={loading}>
+                        {
+                            loading ?
+                                <Spinner className="size-8" />
+                                :
+                                "إنشاء حساب"
+                        }
+                    </Button>
+                    <Button variant="outline" className="w-full cursor-pointer px-5 py-2 sm:py-6 rounded-lg mt-2 max-sm:text-xs" disabled={loading}>
+                        {
+                            loading ?
+                                <Spinner className="size-8" />
+                                :
+                                "تسجيل الدخول عن طريق جوجل"
+                        }
+                        <Image src={googleIcon} alt="google logog icon" className="h-5 w-5"/>
+                    </Button>
+                    <div className="mt-3 max-sm:text-xs text-center mt-6 font-light">
+                        ليس لديك حساب؟
+                        <Link href="/login" className="ms-2 text-primary hover:underline">انشاء حساب</Link>
                     </div>
-                    <div className="relative">
-                        <Input
-                            id="password"
-                            type={showPassword ? 'text' : 'password'}
-                            placeholder="كلمه السر"
-                            required
-                            className="h-10 sm:h-12 pr-10"
-                        />
-                        <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="absolute inset-y-0 left-0 flex items-center px-3 text-gray-500"
-                        >
-                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                        </button>
-                    </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="remember-me" />
-                    <Label
-                        htmlFor="remember-me"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    >
-                        تذكرنى
-                    </Label>
                 </div>
             </div>
         </form>

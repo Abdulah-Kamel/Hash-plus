@@ -1,313 +1,96 @@
 "use client"
 import React, {useEffect, useState} from 'react';
-import { Eye, EyeOff } from 'lucide-react';
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import {Controller,useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import * as z from "zod"
-import { toast } from "sonner"
-import PhoneInput, { isValidPhoneNumber, getCountryCallingCode } from 'react-phone-number-input'
-import 'react-phone-number-input/style.css'
-import { Field, FieldLabel, FieldError } from "@/components/ui/field"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { ChevronDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import googleIcon from "@/assets/google-icon.svg"
+import googleIcon from "@/assets/google-icon.svg";
 import Image from "next/image";
+import { handleRegister } from "@/components/register/registerActions";
+import FormField from "@/components/form/FormField";
+import PasswordField from "@/components/form/PasswordField";
+import PhoneField from "@/components/form/PhoneField";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import { Controller } from 'react-hook-form';
+import PhoneInput, { isValidPhoneNumber,getCountryCallingCode } from 'react-phone-number-input';
+import {Spinner} from "@/components/ui/spinner";
 
-const CustomPhoneInput = React.forwardRef(({ className, placeholder, ...props }, ref) => (
-    <div className="relative flex-1">
-        <Input
-            name="phone"
-            {...props}
-            ref={ref}
-            placeholder=""
-            className="h-10 sm:h-12 rounded-r-none flex-1 border-r-0 text-right"
-            style={{direction: "ltr"}}
-        />
-        {/* Custom RTL placeholder */}
-        {!props.value && (
-            <div
-                className="absolute inset-0 flex items-center justify-end px-3 pointer-events-none text-muted-foreground"
-                style={{direction: "ltr"}}
-            >
-                {placeholder}
-            </div>
-        )}
-    </div>
-));
-CustomPhoneInput.displayName = "CustomPhoneInput";
-
-const RegisterForm = ({role}) => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [value, setValue] = useState(""); // Phone number value
+const RegisterForm = ({ role }) => {
+    const [loading,setLoading] = useState(false);
+    const [value, setValue] = useState("");
 
     const formSchema = z.object({
-        fullName: z.string().min(3, "الاسم يجب أن يكون 3 أحرف على الأقل").max(255),
-        email: z.string().email("البريد الإلكتروني غير صحيح"),
-        phone: z.string().min(1, "رقم الهاتف مطلوب"),
+        name: z.string().min(3, "الاسم يجب أن يكون 3 أحرف على الأقل").max(255),
+        email: z.email("البريد الإلكتروني غير صحيح"),
+        phone: z.string("رقم الهاتف مطلوب").min(1, "رقم الهاتف مطلوب").refine(val => isValidPhoneNumber(val), "رقم الهاتف غير صحيح"),
         password: z.string().min(8, "كلمة السر يجب أن تكون 8 أحرف على الأقل").max(255),
         confirmPassword: z.string(),
         terms: z.boolean().refine(val => val === true, "يجب الموافقة على الشروط والأحكام"),
-        role:z.string()
+        role: z.string()
     }).refine((data) => data.password === data.confirmPassword, {
         path: ["confirmPassword"],
-        error: "كلمات السر غير متطابقة"
+        message: "كلمات السر غير متطابقة"
     });
 
-    const {handleSubmit, control,reset} = useForm({
+    const { handleSubmit, control, reset } = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             role: role,
-            fullName: '',
+            name: '',
             email: '',
             phone: '',
             password: '',
             confirmPassword: '',
             terms: false,
         },
-    })
+    });
 
     useEffect(() => {
         reset({
             role: role,
-            fullName: '',
+            name: '',
             email: '',
             phone: '',
             password: '',
             confirmPassword: '',
             terms: false,
         });
-        setValue(""); // Reset phone input value
+        setValue("");
     }, [role, reset]);
 
-    function onSubmit(data) {
-        console.log(data)
-        toast("You submitted the following values:", {
-            description: (
-                <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-                    <code>{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-            position: "bottom-right",
-            classNames: {
-                content: "flex flex-col gap-2",
-            },
-            style: {
-                "--border-radius": "calc(var(--radius)  + 4px)",
-            }
-        })
+    async function onSubmit(data) {
+        setLoading(true)
+        const result = await handleRegister(data);
+        if (result.success) {
+            setLoading(false)
+            toast.success("تم إنشاء حساب بنجاح", {
+                position: "top-right",
+                duration:3000,
+                classNames:"toast-success text-black mt-14"
+            });
+        } else {
+            setLoading(false)
+            toast.error("حدث خطأ أثناء إنشاء الحساب", {
+                position: "top-right",
+                duration:3000,
+                classNames:"toast-error text-black mt-14",
+                description: <p className="font-light text-black">{result.error}</p>,
+            });
+        }
     }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
-                {/* Full Name */}
-                <Controller
-                    name="fullName"
-                    control={control}
-                    render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>الاسم الكامل</FieldLabel>
-                            <Input
-                                {...field}
-                                id={field.name}
-                                type="text"
-                                placeholder="الاسم الكامل"
-                                className="h-10 sm:h-12"
-                                aria-invalid={fieldState.invalid}
-                                autoComplete="name"
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
-                    )}
-                />
+                <FormField control={control} name="name" label="الاسم" placeholder="الاسم" autoComplete="name" />
+                <FormField control={control} name="email" label="البريد الإلكتروني" placeholder="البريد الإلكتروني" type="email" autoComplete="email" />
+                <PhoneField control={control} name="phone" label="رقم الهاتف" placeholder="رقم الهاتف" PhoneInput={PhoneInput} getCountryCallingCode={getCountryCallingCode} value={value} setValue={setValue}/>
+                <PasswordField control={control} name="password" label="كلمة السر" placeholder="ادخل كلمة السر" autoComplete="new-password" />
+                <PasswordField control={control} name="confirmPassword" label="اعد كتابة كلمة السر" placeholder="اعد كتابة كلمة السر" autoComplete="new-password" />
 
-                {/* Email */}
-                <Controller
-                    name="email"
-                    control={control}
-                    render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>البريد الإلكتروني</FieldLabel>
-                            <Input
-                                {...field}
-                                id={field.name}
-                                type="email"
-                                placeholder="example@email.com"
-                                className="h-10 sm:h-12"
-                                aria-invalid={fieldState.invalid}
-                                autoComplete="email"
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
-                    )}
-                />
-
-                {/* Phone */}
-                <Controller
-                    name="phone"
-                    control={control}
-                    render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>رقم الهاتف</FieldLabel>
-                            <div className="flex">
-                                <PhoneInput
-                                    {...field}
-                                    id={field.name}
-                                    international={false}
-                                    countryCallingCodeEditable={false}
-                                    defaultCountry="SA"
-                                    value={value}
-                                    onChange={(phoneValue) => {
-                                        setValue(phoneValue);
-                                        field.onChange(phoneValue);
-                                    }}
-                                    placeholder="رقم الهاتف"
-                                    className="flex w-full"
-                                    inputComponent={CustomPhoneInput}
-                                    withCountryCallingCode={false}
-                                    displayInitialValueAsLocalNumber={true}
-                                    aria-invalid={fieldState.invalid}
-                                    countrySelectComponent={({ value, onChange, options, ...rest }) => (
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button
-                                                    variant="outline"
-                                                    className="flex items-center gap-2 h-10 sm:h-12 px-3 rounded-l-none border-l hover:bg-gray-100 min-w-[80px]"
-                                                    type="button"
-                                                >
-                                                    <ChevronDown className="h-4 w-4" />
-                                                    <span className="text-sm">
-                                                        {value ? `+${getCountryCallingCode(value)}` : '+966'}
-                                                    </span>
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="start" className="w-56">
-                                                <DropdownMenuItem onClick={() => onChange('SA')}>
-                                                    <span className="flex items-center gap-2">
-                                                        🇸🇦 +966 السعودية
-                                                    </span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => onChange('AE')}>
-                                                    <span className="flex items-center gap-2">
-                                                        🇦🇪 +971 الإمارات
-                                                    </span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => onChange('KW')}>
-                                                    <span className="flex items-center gap-2">
-                                                        🇰🇼 +965 الكويت
-                                                    </span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => onChange('QA')}>
-                                                    <span className="flex items-center gap-2">
-                                                        🇶🇦 +974 قطر
-                                                    </span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => onChange('BH')}>
-                                                    <span className="flex items-center gap-2">
-                                                        🇧🇭 +973 البحرين
-                                                    </span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => onChange('OM')}>
-                                                    <span className="flex items-center gap-2">
-                                                        🇴🇲 +968 عمان
-                                                    </span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => onChange('JO')}>
-                                                    <span className="flex items-center gap-2">
-                                                        🇯🇴 +962 الأردن
-                                                    </span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => onChange('LB')}>
-                                                    <span className="flex items-center gap-2">
-                                                        🇱🇧 +961 لبنان
-                                                    </span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => onChange('EG')}>
-                                                    <span className="flex items-center gap-2">
-                                                        🇪🇬 +20 مصر
-                                                    </span>
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                    )}
-                                />
-                            </div>
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
-                    )}
-                />
-
-                {/* Password */}
-                <Controller
-                    name="password"
-                    control={control}
-                    render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>كلمة السر</FieldLabel>
-                            <div className="relative">
-                                <Input
-                                    {...field}
-                                    id={field.name}
-                                    type={showPassword ? 'text' : 'password'}
-                                    placeholder="كلمة السر"
-                                    className="h-10 sm:h-12 pr-10"
-                                    aria-invalid={fieldState.invalid}
-                                    autoComplete="new-password"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
-                                >
-                                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                                </button>
-                            </div>
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
-                    )}
-                />
-
-                {/* Confirm Password */}
-                <Controller
-                    name="confirmPassword"
-                    control={control}
-                    render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldLabel htmlFor={field.name}>تأكيد كلمة السر</FieldLabel>
-                            <div className="relative">
-                                <Input
-                                    {...field}
-                                    id={field.name}
-                                    type={showConfirmPassword ? 'text' : 'password'}
-                                    placeholder="تأكيد كلمة السر"
-                                    className="h-10 sm:h-12 pr-10"
-                                    aria-invalid={fieldState.invalid}
-                                    autoComplete="new-password"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
-                                >
-                                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                                </button>
-                            </div>
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
-                    )}
-                />
-
-                {/* Terms and Conditions */}
                 <Controller
                     name="terms"
                     control={control}
@@ -334,11 +117,21 @@ const RegisterForm = ({role}) => {
 
                 {/* Submit Buttons */}
                 <div className="flex-col gap-2">
-                    <Button type="submit" className="w-full cursor-pointer px-5 py-2 sm:py-6 rounded-lg max-sm:text-xs">
-                        إنشاء حساب
+                    <Button type="submit" className="w-full cursor-pointer px-5 py-2 sm:py-6 rounded-lg max-sm:text-xs" disabled={loading}>
+                        {
+                            loading ?
+                                <Spinner className="size-8" />
+                                :
+                                "إنشاء حساب"
+                        }
                     </Button>
-                    <Button variant="outline" className="w-full cursor-pointer px-5 py-2 sm:py-6 rounded-lg mt-2 max-sm:text-xs">
-                        تسجيل الدخول عن طريق جوجل
+                    <Button variant="outline" className="w-full cursor-pointer px-5 py-2 sm:py-6 rounded-lg mt-2 max-sm:text-xs" disabled={loading}>
+                        {
+                            loading ?
+                                <Spinner className="size-8" />
+                                :
+                                "تسجيل الدخول عن طريق جوجل"
+                        }
                         <Image src={googleIcon} alt="google logog icon" className="h-5 w-5"/>
                     </Button>
                     <div className="mt-3 max-sm:text-xs text-center mt-6 font-light">
