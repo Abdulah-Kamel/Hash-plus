@@ -17,11 +17,12 @@ import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Controller } from 'react-hook-form';
 import PhoneInput, { isValidPhoneNumber,getCountryCallingCode } from 'react-phone-number-input';
 import {Spinner} from "@/components/ui/spinner";
+import { useRouter } from 'next/navigation';
 
 const RegisterForm = ({ role }) => {
     const [loading,setLoading] = useState(false);
     const [value, setValue] = useState("");
-
+    const router = useRouter();
     const formSchema = z.object({
         name: z.string().min(3, "الاسم يجب أن يكون 3 أحرف على الأقل").max(255),
         email: z.email("البريد الإلكتروني غير صحيح"),
@@ -71,6 +72,7 @@ const RegisterForm = ({ role }) => {
                 duration:3000,
                 classNames:"toast-success text-black mt-14"
             });
+            router.push("/otp");
         } else {
             setLoading(false)
             toast.error("حدث خطأ أثناء إنشاء الحساب", {

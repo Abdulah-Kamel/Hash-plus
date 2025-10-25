@@ -13,6 +13,8 @@ import Footer from "@/components/footer";
 import Container from "@/components/container";
 import Link from "next/link";
 import {Mail} from "lucide-react";
+import OtpUserEmail from "@/components/otp/otpUserEmail";
+import OtpCounter from "@/components/otp/otpCounter";
 
 export const metadata = {
   title: "تأكيد الحساب - رمز التحقق",
@@ -58,19 +60,13 @@ export default function OtpPage() {
                             <Mail className="text-secondary w-14 sm:w-25 h-14 sm:h-25 mx-auto mb-4"/>
                            <div className="text-center my-5 text-base font-light">
                                <p className="text-[#4B5675]">أدخل رمز التحقق المرسل عبر الايميل</p>
-                               <p className="mt-2">mahmo****@gmail.com</p>
+                                <OtpUserEmail/>
                            </div>
                         </div>
                         <OtpForm/>
                     </CardContent>
                     <CardFooter className="flex-col gap-4">
-                        <div className="mb-3 text-sm max-sm:text-xs">
-                            لم يصلك الرمز؟ (37 ثانية)
-                            <Link href="#" className="ms-2 text-primary hover:underline">ارسل مرة اخرى</Link>
-                        </div>
-                        <Button type="submit" className="w-full px-5 py-2 sm:py-6 rounded-lg max-sm:text-xs">
-                            تاكيد
-                        </Button>
+                       <OtpCounter/>
                     </CardFooter>
                 </Card>
             </Container>

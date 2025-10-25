@@ -1,12 +1,15 @@
 "use server"
+import {cookies} from 'next/headers'
 
-import {cookies} from "next/headers";
-
-export const handleLogin = async (data) => {
+export const handleEmailConfirm = async (data) => {
+    const cookie = await cookies();
+    const user = JSON.parse(cookie.get('user').value)
+    console.log(user)
+    console.log({email: user.email, ...data})
     try {
-        const res = await fetch(`${process.env.baseApi}/api/v1/users/login`, {
+        const res = await fetch(`${process.env.baseApi}/api/v1/users/verify-email`, {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify({email: user.email, ...data}),
             headers: {
                 "Content-Type": "application/json"
             },
@@ -21,15 +24,6 @@ export const handleLogin = async (data) => {
 
         const final = await res.json();
         console.log(final);
-        const cookie = await cookies();
-        cookie.set("user-token", final.token, {
-            httpOnly: true,
-            sameSite: "strict"
-        })
-        cookie.set("user", JSON.stringify(final.data.user), {
-            httpOnly: true,
-            sameSite: "strict"
-        })
         // Return a success object
         return {success: true, data: final};
     } catch (err) {

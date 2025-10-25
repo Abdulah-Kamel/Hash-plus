@@ -1,4 +1,5 @@
 "use server"
+import { cookies } from 'next/headers'
 
 export const handleRegister = async (data) => {
     try {
@@ -19,6 +20,15 @@ export const handleRegister = async (data) => {
 
         const final = await res.json();
         console.log(final);
+        const cookie = await cookies();
+        cookie.set("user-token", final.token,{
+            httpOnly:true,
+            sameSite:"strict"
+        })
+        cookie.set("user", JSON.stringify(final.data.user),{
+            httpOnly:true,
+            sameSite:"strict"
+        })
         // Return a success object
         return { success: true, data: final };
     } catch (err) {
