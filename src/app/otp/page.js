@@ -1,49 +1,40 @@
-import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-    CardDescription
-} from "@/components/ui/card"
+import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card"
 import OtpForm from "@/components/otp/otpForm";
 import {NavBar} from "@/components/navbar";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
-import Link from "next/link";
 import {Mail} from "lucide-react";
 import OtpUserEmail from "@/components/otp/otpUserEmail";
 import OtpCounter from "@/components/otp/otpCounter";
 
 export const metadata = {
-  title: "تأكيد الحساب - رمز التحقق",
-  description: "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني لتأكيد حسابك وإكمال عملية التسجيل في Hash Plus.",
-  keywords: [
-    "تأكيد الحساب",
-    "رمز التحقق",
-    "OTP",
-    "تفعيل الحساب",
-    "تأكيد البريد الإلكتروني",
-    "رمز الأمان"
-  ],
-  openGraph: {
-    title: "Hash Plus - تأكيد الحساب",
-    description: "أدخل رمز التحقق لتأكيد حسابك وإكمال التسجيل",
-    url: "https://hashplus.com/otp",
-    images: [
-      {
-        url: "/og-otp.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Hash Plus - تأكيد الحساب",
-      },
+    title: "تأكيد الحساب - رمز التحقق",
+    description: "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني لتأكيد حسابك وإكمال عملية التسجيل في Hash Plus.",
+    keywords: [
+        "تأكيد الحساب",
+        "رمز التحقق",
+        "OTP",
+        "تفعيل الحساب",
+        "تأكيد البريد الإلكتروني",
+        "رمز الأمان"
     ],
-  },
-  robots: {
-    index: false,
-    follow: false,
-  },
+    openGraph: {
+        title: "Hash Plus - تأكيد الحساب",
+        description: "أدخل رمز التحقق لتأكيد حسابك وإكمال التسجيل",
+        url: "https://hashplus.com/otp",
+        images: [
+            {
+                url: "/og-otp.jpg",
+                width: 1200,
+                height: 630,
+                alt: "Hash Plus - تأكيد الحساب",
+            },
+        ],
+    },
+    robots: {
+        index: false,
+        follow: false,
+    },
 };
 
 export default function OtpPage() {
@@ -58,15 +49,15 @@ export default function OtpPage() {
                     <CardContent>
                         <div>
                             <Mail className="text-secondary w-14 sm:w-25 h-14 sm:h-25 mx-auto mb-4"/>
-                           <div className="text-center my-5 text-base font-light">
-                               <p className="text-[#4B5675]">أدخل رمز التحقق المرسل عبر الايميل</p>
+                            <div className="text-center my-5 text-base font-light">
+                                <p className="text-[#4B5675]">أدخل رمز التحقق المرسل عبر الايميل</p>
                                 <OtpUserEmail/>
-                           </div>
+                            </div>
                         </div>
                         <OtpForm/>
                     </CardContent>
                     <CardFooter className="flex-col gap-4">
-                       <OtpCounter/>
+                        <OtpCounter/>
                     </CardFooter>
                 </Card>
             </Container>

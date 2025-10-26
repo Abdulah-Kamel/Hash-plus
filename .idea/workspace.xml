@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4ef517e6-f3bf-489a-81dd-9d9b2d8b69ac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/otp/otpActions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/otp/otpCounter.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/otp/otpUserEmail.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/actions/forgetPasswordAction.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/actions/resetPasswordAction.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/forget-password/page.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/reset-password/page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/otp/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/otp/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/loginActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/loginActions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/login/loginForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/loginForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/otp/otpForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/otp/otpForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/register/registerActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/register/registerActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/register/registerForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/register/registerForm.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,13 +58,14 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "code.cleanup.on.save": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/media/godzilla/New Volume/projects/platform_hashplus_frontend/src/components/login",
+    "last_opened_file_path": "/media/godzilla/New Volume/projects/platform_hashplus_frontend/src/app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -84,6 +82,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app" />
+      <recent name="$PROJECT_DIR$/src/actions" />
       <recent name="$PROJECT_DIR$/src/components/login" />
     </key>
   </component>
@@ -92,7 +92,7 @@
       <command value="n" />
     </option>
   </component>
-  <component name="RunManager" selected="npm.Next.js: server-side">
+  <component name="RunManager" selected="JavaScript Debug.Next.js: debug client-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
     </configuration>
@@ -135,7 +135,8 @@
       <workItem from="1760972086261" duration="3421000" />
       <workItem from="1761228674639" duration="12323000" />
       <workItem from="1761311292689" duration="14653000" />
-      <workItem from="1761409377573" duration="8868000" />
+      <workItem from="1761409377573" duration="9183000" />
+      <workItem from="1761504798485" duration="4050000" />
     </task>
     <servers />
   </component>

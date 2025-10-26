@@ -10,15 +10,18 @@ import googleIcon from "@/assets/google-icon.svg";
 import Image from "next/image";
 import {handleLogin} from "@/components/login/loginActions";
 import FormField from "@/components/form/FormField";
-import PasswordField from "@/components/form/PasswordField";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Field, FieldError, FieldLabel} from "@/components/ui/field";
 import {Spinner} from "@/components/ui/spinner";
 import {useRouter} from "next/navigation";
+import {Input} from "@/components/ui/input";
+import {Eye, EyeOff} from "lucide-react";
+
 
 const LoginForm = ({role}) => {
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
 
     const formSchema = z.object({
@@ -75,8 +78,38 @@ const LoginForm = ({role}) => {
             <div className="flex flex-col gap-6">
                 <FormField control={control} name="email" label="البريد الإلكتروني" placeholder="البريد الإلكتروني"
                            type="email" autoComplete="email"/>
-                <PasswordField control={control} name="password" label="كلمة السر" placeholder="ادخل كلمة السر"
-                               autoComplete="new-password"/>
+                <Controller
+                    name="password"
+                    control={control}
+                    render={({field, fieldState}) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <div className="flex justify-between items-center">
+                                <FieldLabel htmlFor={field.name}>كلمة السر</FieldLabel>
+                                <Link href={"/forget-password"} className="text-primary hover:underline">نسيت كلمة
+                                    السر؟</Link>
+                            </div>
+                            <div className="relative">
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder="ادخل كلمة السر"
+                                    className="h-10 sm:h-12"
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete="new-password"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute inset-y-0 left-0 cursor-pointer flex items-center px-3 text-gray-500"
+                                >
+                                    {showPassword ? <EyeOff className="w-5 h-5"/> : <Eye className="w-5 h-5"/>}
+                                </button>
+                            </div>
+                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                        </Field>
+                    )}
+                />
                 <Controller
                     name="rememberMe"
                     control={control}
