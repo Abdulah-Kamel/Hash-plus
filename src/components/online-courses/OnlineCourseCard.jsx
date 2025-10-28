@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const OnlineCourseCard = ({ course }) => {
   return (
-    <Card className="w-full max-w-sm flex flex-col overflow-hidden rounded-2xl shadow-lg p-4 first:z-8 md:first:rotate-z-12 md:last:-rotate-z-12">
+    <Card className="w-full max-w-sm flex flex-col overflow-hidden rounded-3xl shadow-lg p-4 first:z-8 md:first:rotate-z-12 md:last:-rotate-z-12">
       <Link href={`/course`} className="block">
         <Image className="w-full rounded-t-xl object-cover h-48" src={course.image} alt={course.title} width={320} height={192} />
       </Link>
@@ -58,7 +58,7 @@ const OnlineCourseCard = ({ course }) => {
             <span>{course.price}</span>
            <SaudiRiyal className="w-5 h-5"/>
           </div>
-            <Button variant="outline" className="px-5 md:px-10 py-6 rounded-full">اضف الى السلة</Button>
+            <Button variant="outline" className="px-5 md:px-10 py-6 rounded-full cursor-pointer">اضف الى السلة</Button>
         </div>
       </CardFooter>
     </Card>

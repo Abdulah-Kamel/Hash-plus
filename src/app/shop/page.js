@@ -12,6 +12,7 @@ import {
   CourseGrid,
   ShopPagination
 } from '@/components/shop';
+import CustomPagination from "@/components/shared/CustomPagination";
 
 // Mock data for courses
 const coursesData = [
@@ -67,11 +68,9 @@ const ShopPage = () => {
     <section className="min-h-screen bg-primary">
       <NavBar />
       <ShopHero />
-
-      {/* Main Content */}
       <div className="bg-white">
         <Container className="py-8">
-          <ShopHeader 
+          <ShopHeader
             selectedSort={selectedSort}
             setSelectedSort={setSelectedSort}
             setSidebarOpen={setSidebarOpen}
@@ -79,17 +78,17 @@ const ShopPage = () => {
           <div className="flex flex-col xl:flex-row gap-8">
             <DesktopSidebar />
 
-            <MobileSidebar 
+            <MobileSidebar
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}
             />
 
             <CourseGrid courses={coursesData} />
           </div>
-            <ShopPagination />
+          <CustomPagination />
         </Container>
       </div>
-        <Footer/>
+      <Footer />
     </section>
   );
 };

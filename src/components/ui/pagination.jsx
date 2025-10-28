@@ -60,13 +60,13 @@ function PaginationLink({
 }
 
 function PaginationPrevious({
-    name = "Previous",
+    name = "السابق",
   className,
   ...props
 }) {
   return (
     <PaginationLink
-      aria-label="Go to previous page"
+      aria-label="السابق"
       size="default"
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}>
@@ -77,13 +77,13 @@ function PaginationPrevious({
 }
 
 function PaginationNext({
-  name = "Next",
+  name = "التالي",
   className,
   ...props
 }) {
   return (
     <PaginationLink
-      aria-label="Go to next page"
+      aria-label="التالي"
       size="default"
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}>
@@ -104,7 +104,7 @@ function PaginationEllipsis({
       className={cn("flex size-9 items-center justify-center", className)}
       {...props}>
       <MoreHorizontalIcon className="size-4" />
-      <span className="sr-only">More pages</span>
+      <span className="sr-only">المزيد</span>
     </span>
   );
 }

@@ -13,12 +13,12 @@ export const navLinks = [
   {
     id: 3,
     label: 'التعليم',
-    href: '#',
+    href: '/shop',
     hasDropdown: true,
     dropdownItems: [
-      { id: 'edu-1', label: 'البرامج الدراسيهية', href: '#' },
-      { id: 'edu-2', label: 'مذكرات', href: '#' },
-      { id: 'edu-3', label: 'معسكرات', href: '#' },
+      { id: 'edu-1', label: 'البرامج الدراسيهية', href: '/shop/?category=education' },
+      { id: 'edu-2', label: 'مذكرات', href: '/shop/?category=notes' },
+      { id: 'edu-3', label: 'معسكرات', href: '/shop/?category=quizzes' },
     ],
   },
   {
@@ -35,11 +35,11 @@ export const navLinks = [
   {
     id: 5,
     label: 'المركز الاعلامى',
-    href: '#',
+    href: '/about-us',
   },
   {
     id: 6,
     label: 'المقالات',
-    href: '#',
+    href: '/blog',
   },
 ];

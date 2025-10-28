@@ -2,11 +2,12 @@ import React from 'react';
 import { onlineCoursesData, onlineCoursesContent } from '../../data/onlineCoursesData';
 import OnlineCoursesHeader from './OnlineCoursesHeader';
 import OnlineCourseCard from './OnlineCourseCard';
+import Container from '../container';
 
 const OnlineCourses = () => {
   return (
     <section className="py-16 px-4 lg:px-12 bg-white">
-      <div className="mx-auto max-w-7xl">
+      <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Right Side - Course Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-4 order-2 lg:order-1 place-items-center">
@@ -20,7 +21,7 @@ const OnlineCourses = () => {
             <OnlineCoursesHeader content={onlineCoursesContent} />
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };
