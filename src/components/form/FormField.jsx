@@ -3,8 +3,9 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { cn } from '@/lib/utils';
 
-const FormField = ({ control, name, label, type = "text", placeholder, autoComplete }) => {
+const FormField = ({ control, name, label, type = "text", placeholder, autoComplete, className }) => {
     return (
         <Controller
             name={name}
@@ -17,7 +18,7 @@ const FormField = ({ control, name, label, type = "text", placeholder, autoCompl
                         id={field.name}
                         type={type}
                         placeholder={placeholder}
-                        className="h-10 sm:h-12"
+                        className={cn("h-10 sm:h-12", className)}
                         aria-invalid={fieldState.invalid}
                         autoComplete={autoComplete}
                     />
