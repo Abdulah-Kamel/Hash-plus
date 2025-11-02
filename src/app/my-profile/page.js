@@ -8,7 +8,9 @@ import { Progress } from "@/components/ui/progress";
 import {
   Share2,
   Edit,
+  Edit2,
   Plus,
+  Trash2,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
@@ -16,6 +18,10 @@ import {
   MapPin,
   Users,
   Award,
+  ArrowUpDown,
+  Heart,
+  MessageCircle,
+  Eye,
   BookOpen,
   Briefcase,
   Music2,
@@ -28,7 +34,6 @@ import {
   LucideLinkedin,
   Youtube,
   Dribbble,
-  Heart,
   Share,
 } from "lucide-react";
 import Container from "@/components/container";
@@ -36,7 +41,9 @@ import { NavBar } from "@/components/navbar";
 import Footer from "@/components/footer";
 import Link from "next/link";
 import MyProfileHeader from "@/components/my-profile/MyProfileHeader";
-
+import Image from "next/image";
+import blogImage from "@/assets/BlogImage.png";
+import InfoCard from "@/components/my-profile/ProfileCards/InfoCard";
 const MyProfile = () => {
   const [currentProjectPage, setCurrentProjectPage] = useState(1);
 
@@ -145,9 +152,9 @@ const MyProfile = () => {
     <>
       <NavBar />
       <Container>
-        <section className="py-12">
+        <section className="py-12 space-y-4">
           <MyProfileHeader />
-          <Card></Card>
+          <InfoCard/>
         </section>
       </Container>
       <Footer />
