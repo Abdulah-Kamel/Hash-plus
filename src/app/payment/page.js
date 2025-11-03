@@ -31,7 +31,6 @@ const PaymentPage = () => {
                     <div className="col-span-2">
                         <Accordion type="single" collapsible className="">
                             
-                            {/* Existing Visa Card */}
                             <AccordionItem 
                                 value="visa1"
                                 className="bg-gray-100 last:rounded-xl last:rounded-t-none first:rounded-xl first:rounded-b-none border-0 overflow-hidden"
@@ -82,7 +81,6 @@ const PaymentPage = () => {
                                 </AccordionContent>
                             </AccordionItem>
 
-                            {/* New Visa/Mastercard */}
                             <AccordionItem 
                                 value="visa2"
                                 className="bg-gray-100 last:rounded-xl last:rounded-t-none first:rounded-xl first:rounded-b-none border-0 overflow-hidden"
@@ -163,7 +161,6 @@ const PaymentPage = () => {
                                 </AccordionContent>
                             </AccordionItem>
 
-                            {/* Tabby */}
                             <AccordionItem 
                                 value="tabby"
                                 className="bg-gray-100 last:rounded-xl last:rounded-t-none first:rounded-xl first:rounded-b-none border-0 overflow-hidden"
@@ -202,7 +199,6 @@ const PaymentPage = () => {
                                     <div className="mt-4">
                                         <h4 className="text-sm font-medium text-gray-900 mb-3">جدولة الدفع</h4>
                                         <div className="space-y-3">
-                                            {/* Payment 1 - Today */}
                                             <div className="flex items-center justify-between p-3  rounded-lg">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center text-sm font-medium">
@@ -215,13 +211,11 @@ const PaymentPage = () => {
                                                 <SaudiRiyal className="size-6"/>
                                                 </span>
                                             </div>
-                                            {/*<Separator orientation={'vertical'} className="my-2"/>*/}
                                         </div>
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
 
-                            {/* Mada */}
                             <AccordionItem 
                                 value="mada"
                                 className="bg-gray-100 last:rounded-xl last:rounded-t-none first:rounded-xl first:rounded-b-none border-0 overflow-hidden"

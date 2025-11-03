@@ -38,26 +38,22 @@ export const metadata = {
 
 const CoursePage = () => {
     return (
-        <div className="min-h-screen bg-gray-50">
-            <NavBar />
-            {/* Main Content */}
-            <Container className="py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2 space-y-14 max-sm:order-2">
-                        {/* Course Hero Section */}
-                        <CourseHero />
-                    {/* Course Content */}
-                        <CourseContent />
-                    </div>
-                    {/* Sidebar - Right Column */}
-                    <div className="lg:col-span-1 max-sm:order-1">
-                        <CourseSidebar />
-                    </div>
-                </div>
-            </Container>
-            <Footer />
-        </div>
-    )
+      <div className="min-h-screen bg-gray-50">
+        <NavBar />
+        <Container className="py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-14 max-sm:order-2">
+              <CourseHero />
+              <CourseContent />
+            </div>
+            <div className="lg:col-span-1 max-sm:order-1">
+              <CourseSidebar />
+            </div>
+          </div>
+        </Container>
+        <Footer />
+      </div>
+    );
 }
 
 export default CoursePage;

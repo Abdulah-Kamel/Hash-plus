@@ -47,57 +47,55 @@ export default function UploadDropzone() {
     }
 
     return (
-        <div className="space-y-4">
-            {/* Upload Dropzone */}
-            <div
-                {...getRootProps()}
-                className={cn(
-                    "flex flex-col items-center justify-center w-full h-32 cursor-pointer rounded-2xl border-2 border-dashed transition",
-                    isDragActive
-                        ? "border-primary bg-primary/5"
-                        : "border-muted-foreground/20 hover:border-primary/40"
-                )}
-            >
-                <input {...getInputProps()} />
-                <Upload className="w-6 h-6 mb-2 text-muted-foreground" />
-                <p className="text-muted-foreground text-sm font-medium">
-                    ارفق الملف هنا
-                </p>
-            </div>
-
-            {/* Uploaded Files Display */}
-            {uploadedFiles.length > 0 && (
-                <div className="space-y-3">
-                    {uploadedFiles.map((fileItem) => (
-                        <div
-                            key={fileItem.id}
-                            className="flex items-center justify-between p-4 bg-teal-50/70 rounded-xl border"
-                        >
-                            <div className="flex items-center gap-3">
-                                <div className="flex-shrink-0 text-primary">
-                                    {getFileIcon(fileItem.type)}
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                    <p className="text-sm font-medium text-gray-900 truncate">
-                                        {fileItem.name}
-                                    </p>
-                                    <p className="text-xs text-gray-500">
-                                        {formatFileSize(fileItem.size)}
-                                    </p>
-                                </div>
-                            </div>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => removeFile(fileItem.id)}
-                                className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                            >
-                                <Trash2 className="w-4 h-4" />
-                            </Button>
-                        </div>
-                    ))}
-                </div>
-            )}
+      <div className="space-y-4">
+        <div
+          {...getRootProps()}
+          className={cn(
+            "flex flex-col items-center justify-center w-full h-32 cursor-pointer rounded-2xl border-2 border-dashed transition",
+            isDragActive
+              ? "border-primary bg-primary/5"
+              : "border-muted-foreground/20 hover:border-primary/40"
+          )}
+        >
+          <input {...getInputProps()} />
+          <Upload className="w-6 h-6 mb-2 text-muted-foreground" />
+          <p className="text-muted-foreground text-sm font-medium">
+            ارفق الملف هنا
+          </p>
         </div>
-    )
+
+        {uploadedFiles.length > 0 && (
+          <div className="space-y-3">
+            {uploadedFiles.map((fileItem) => (
+              <div
+                key={fileItem.id}
+                className="flex items-center justify-between p-4 bg-teal-50/70 rounded-xl border"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 text-primary">
+                    {getFileIcon(fileItem.type)}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-gray-900 truncate">
+                      {fileItem.name}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {formatFileSize(fileItem.size)}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => removeFile(fileItem.id)}
+                  className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
 }

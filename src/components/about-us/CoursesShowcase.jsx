@@ -36,7 +36,6 @@ const CoursesShowcase = () => {
   return (
     <section className="bg-gradient-to-br from-[#F9F9FF] via-white to-white py-16 lg:py-20">
       <Container>
-        {/* Header */}
         <div dir="rtl" className="text-center mb-12 lg:mb-14">
           <span className="inline-flex items-center justify-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-4">
             دوراتنا
@@ -50,7 +49,6 @@ const CoursesShowcase = () => {
           </p>
         </div>
 
-        {/* Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 mb-10">
           {courses.map((course, index) => (
             <div
@@ -58,7 +56,6 @@ const CoursesShowcase = () => {
               dir="rtl"
               className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100"
             >
-              {/* Course Icon/Image */}
               <div
                 className={`relative h-44 bg-gradient-to-br ${course.color} flex items-center justify-center`}
               >
@@ -70,7 +67,6 @@ const CoursesShowcase = () => {
                 )}
               </div>
 
-              {/* Course Content */}
               <div className="p-5 space-y-3.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -115,7 +111,6 @@ const CoursesShowcase = () => {
           ))}
         </div>
 
-        {/* CTA Buttons */}
         <div className="flex flex-wrap justify-center gap-4 mt-6">
           <button className="px-8 py-3.5 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg transition-all duration-300 shadow-md shadow-primary/30 hover:shadow-lg hover:shadow-primary/40 hover:-translate-y-0.5">
             عرض جميع الدورات

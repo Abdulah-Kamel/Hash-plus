@@ -42,7 +42,6 @@ const ContactSection = () => {
   return (
     <section className="bg-white py-16 lg:py-20 relative overflow-hidden">
       <Container className="relative z-10">
-        {/* Header */}
         <div
           dir="rtl"
           className="text-center mb-12 lg:mb-14 flex flex-col items-center gap-8"
@@ -61,9 +60,7 @@ const ContactSection = () => {
           </p>
         </div>
 
-        {/* Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 bg-[#F1F3FE] px-6 lg:px-10 py-6 lg:py-14 rounded-3xl">
-          {/* Support Info */}
           <div
             dir="rtl"
             className="order-2 lg:order-1 col-span-1 rounded-2xl p-8 text-right space-y-7"
@@ -93,7 +90,6 @@ const ContactSection = () => {
               </p>
             </div>
 
-            {/* Social Links */}
             <div>
               <h4 className="font-semibold text-gray-900 mb-3.5 text-base">
                 منصات التواصل الأجتماعي
@@ -154,7 +150,6 @@ const ContactSection = () => {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div dir="rtl" className="order-1 lg:order-2 col-span-2">
             <h3 className="text-2xl md:text-3xl font-normal text-gray-900">
               املأ الأستمارة
@@ -162,7 +157,6 @@ const ContactSection = () => {
             <Card className="mt-4 border-0 shadow-sm rounded-2xl">
               <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  {/* Name and Email Row */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label
@@ -202,7 +196,6 @@ const ContactSection = () => {
                     </div>
                   </div>
 
-                  {/* Subject Field */}
                   <div className="space-y-2">
                     <Label
                       htmlFor="subject"
@@ -222,7 +215,6 @@ const ContactSection = () => {
                     />
                   </div>
 
-                  {/* Message Field */}
                   <div className="space-y-2">
                     <Label
                       htmlFor="message"
@@ -241,7 +233,6 @@ const ContactSection = () => {
                     />
                   </div>
 
-                  {/* Submit Button */}
                   <Button
                     type="submit"
                     className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-6 transition-all duration-300 rounded-full cursor-pointer"
