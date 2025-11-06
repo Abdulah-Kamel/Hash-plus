@@ -11,11 +11,12 @@ export const handleRegister = async (data) => {
             },
         });
 
+        
         if (!res.ok) {
-            const errorText = await res.text();
-            console.error("Server returned an error:", errorText);
-            // Return an error object
-            return { success: false, error: errorText };
+          const error = await res.json();
+          console.log(error)
+          // Return an error object
+          return { success: false, error: error.message };
         }
 
         const final = await res.json();

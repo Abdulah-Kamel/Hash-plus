@@ -64,7 +64,7 @@ const LoginForm = ({role}) => {
 
         } else {
             setLoading(false)
-            toast.error("حدث خطأ أثناء تسجيل الدخول", {
+            toast.error(result.error, {
                 position: "top-right",
                 duration: 3000,
                 classNames: "toast-error text-black mt-14",

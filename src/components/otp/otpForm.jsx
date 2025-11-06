@@ -35,24 +35,26 @@ const OtpForm = () => {
     async function onSubmit(data) {
         setLoading(true)
         const result = await handleEmailConfirm(data);
-        if (result.status === "success") {
-            setLoading(false)
-            toast.success(result.message, {
-                position: "top-right",
-                duration: 3000,
-                classNames: "toast-success text-black mt-14"
-            });
-            router.push("/login");
-
+        console.log(result?.data?.status);
+        if (result?.data?.status === "success") {
+          setLoading(false);
+          toast.success(result.data.message, {
+            position: "top-right",
+            duration: 3000,
+            classNames: "toast-success text-black mt-14",
+          });
+          router.push("/login");
         } else {
-            console.log(result.error)
-            setLoading(false)
-            toast.error("حدث خطأ أثناء تسجيل الدخول", {
-                position: "top-right",
-                duration: 3000,
-                classNames: "toast-error text-black mt-14",
-                description: <p className="font-light text-black">{result.error}</p>,
-            });
+          console.log(result.error);
+          setLoading(false);
+          toast.error(result.error, {
+            position: "top-right",
+            duration: 3000,
+            classNames: "toast-error text-black mt-14",
+            description: (
+              <p className="font-light text-black">{result.error}</p>
+            ),
+          });
         }
     }
 

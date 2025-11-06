@@ -23,18 +23,32 @@ const RegisterForm = ({ role }) => {
     const [loading,setLoading] = useState(false);
     const [value, setValue] = useState("");
     const router = useRouter();
-    const formSchema = z.object({
+    const formSchema = z
+      .object({
         name: z.string().min(3, "الاسم يجب أن يكون 3 أحرف على الأقل").max(255),
         email: z.email("البريد الإلكتروني غير صحيح"),
-        phone: z.string("رقم الهاتف مطلوب").min(1, "رقم الهاتف مطلوب").refine(val => isValidPhoneNumber(val), "رقم الهاتف غير صحيح"),
-        password: z.string().min(8, "كلمة السر يجب أن تكون 8 أحرف على الأقل").max(255),
-        confirmPassword: z.string(),
-        terms: z.boolean().refine(val => val === true, "يجب الموافقة على الشروط والأحكام"),
-        role: z.string()
-    }).refine((data) => data.password === data.confirmPassword, {
-        path: ["confirmPassword"],
-        message: "كلمات السر غير متطابقة"
-    });
+        phone: z
+          .string("رقم الهاتف مطلوب")
+          .min(1, "رقم الهاتف مطلوب")
+          .refine((val) => isValidPhoneNumber(val), "رقم الهاتف غير صحيح"),
+        password: z
+          .string()
+          .min(8, "كلمة السر يجب أن تكون 8 أحرف على الأقل")
+          .max(255)
+          .regex(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
+            "كلمة السر يجب أن تحتوي على حرف كبير، حرف صغير، رقم ورمز خاص"
+          ),
+    //     confirmPassword: z.string(),
+    //     terms: z
+    //       .boolean()
+    //       .refine((val) => val === true, "يجب الموافقة على الشروط والأحكام"),
+    //     role: z.string(),
+    //   })
+    //   .refine((data) => data.password === data.confirmPassword, {
+    //     path: ["confirmPassword"],
+    //     message: "كلمات السر غير متطابقة",
+      });
 
     const { handleSubmit, control, reset } = useForm({
         resolver: zodResolver(formSchema),
@@ -44,8 +58,8 @@ const RegisterForm = ({ role }) => {
             email: '',
             phone: '',
             password: '',
-            confirmPassword: '',
-            terms: false,
+            // confirmPassword: '',
+            // terms: false,
         },
     });
 
@@ -56,8 +70,8 @@ const RegisterForm = ({ role }) => {
             email: '',
             phone: '',
             password: '',
-            confirmPassword: '',
-            terms: false,
+            // confirmPassword: '',
+            // terms: false,
         });
         setValue("");
     }, [role, reset]);
@@ -75,7 +89,7 @@ const RegisterForm = ({ role }) => {
             router.push("/otp");
         } else {
             setLoading(false)
-            toast.error("حدث خطأ أثناء إنشاء الحساب", {
+            toast.error(result.error, {
                 position: "top-right",
                 duration:3000,
                 classNames:"toast-error text-black mt-14",
@@ -91,7 +105,7 @@ const RegisterForm = ({ role }) => {
                 <FormField control={control} name="email" label="البريد الإلكتروني" placeholder="البريد الإلكتروني" type="email" autoComplete="email" />
                 <PhoneField control={control} name="phone" label="رقم الهاتف" placeholder="رقم الهاتف" PhoneInput={PhoneInput} getCountryCallingCode={getCountryCallingCode} value={value} setValue={setValue}/>
                 <PasswordField control={control} name="password" label="كلمة السر" placeholder="ادخل كلمة السر" autoComplete="new-password" />
-                <PasswordField control={control} name="confirmPassword" label="اعد كتابة كلمة السر" placeholder="اعد كتابة كلمة السر" autoComplete="new-password" />
+                {/* <PasswordField control={control} name="confirmPassword" label="اعد كتابة كلمة السر" placeholder="اعد كتابة كلمة السر" autoComplete="new-password" />
 
                 <Controller
                     name="terms"
@@ -115,7 +129,7 @@ const RegisterForm = ({ role }) => {
                             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                         </Field>
                     )}
-                />
+                /> */}
 
                 {/* Submit Buttons */}
                 <div className="flex-col gap-2">
@@ -136,7 +150,7 @@ const RegisterForm = ({ role }) => {
                         }
                         <Image src={googleIcon} alt="google logog icon" className="h-5 w-5"/>
                     </Button>
-                    <div className="mt-3 max-sm:text-xs text-center mt-6 font-light">
+                    <div className="max-sm:text-xs text-center mt-6 font-light">
                         لديك حساب بالفعل؟
                         <Link href="/login" className="ms-2 text-primary hover:underline">تسجيل الدخول</Link>
                     </div>

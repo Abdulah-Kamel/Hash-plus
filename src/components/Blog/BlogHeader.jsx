@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -9,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Filter } from 'lucide-react';
 
 const BlogHeader = () => {
   return (

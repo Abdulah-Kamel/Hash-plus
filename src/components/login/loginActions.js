@@ -13,10 +13,9 @@ export const handleLogin = async (data) => {
         });
 
         if (!res.ok) {
-            const errorText = await res.text();
-            console.error("Server returned an error:", errorText);
+            const error = await res.json();
             // Return an error object
-            return {success: false, error: errorText};
+            return {success: false, error: error.message};
         }
 
         const final = await res.json();

@@ -9,7 +9,7 @@ import MobileMenu from './MobileMenu';
 
 export function NavBar() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+ 
   return (
     <>
       <nav className="sticky w-full z-20 top-0 start-0 bg-white/80 backdrop-blur">

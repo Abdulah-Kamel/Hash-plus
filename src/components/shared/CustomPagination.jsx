@@ -19,7 +19,7 @@ const CustomPagination = ({
 
   return (
     <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <Pagination>
+      <Pagination className="sm:justify-start">
         <PaginationContent className="gap-1">
           <PaginationItem>
             <PaginationPrevious href="#" className="gap-2">

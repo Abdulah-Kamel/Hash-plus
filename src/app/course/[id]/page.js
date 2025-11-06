@@ -1,17 +1,18 @@
-import React from 'react';
+import React from "react";
 import { NavBar } from "@/components/navbar";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
-import { 
-  CourseHero, 
-  CourseSidebar, 
-  CourseContent, 
-  RelatedCourses 
+import {
+  CourseHero,
+  CourseSidebar,
+  CourseContent,
 } from "@/components/course-details";
+import CourseDetails from "@/components/course-details/CourseDetails";
 
 export const metadata = {
   title: "تفاصيل الدورة",
-  description: "تعرف على تفاصيل الدورة التدريبية، المحتوى، المدرب، والمتطلبات. احصل على معلومات شاملة قبل التسجيل في الدورة.",
+  description:
+    "تعرف على تفاصيل الدورة التدريبية، المحتوى، المدرب، والمتطلبات. احصل على معلومات شاملة قبل التسجيل في الدورة.",
   keywords: [
     "تفاصيل الدورة",
     "محتوى الدورة",
@@ -19,7 +20,7 @@ export const metadata = {
     "متطلبات الدورة",
     "تسجيل في الدورة",
     "مراجعات الطلاب",
-    "شهادة معتمدة"
+    "شهادة معتمدة",
   ],
   openGraph: {
     title: "Hash Plus - تفاصيل الدورة",
@@ -37,23 +38,15 @@ export const metadata = {
 };
 
 const CoursePage = () => {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <NavBar />
-        <Container className="py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-14 max-sm:order-2">
-              <CourseHero />
-              <CourseContent />
-            </div>
-            <div className="lg:col-span-1 max-sm:order-1">
-              <CourseSidebar />
-            </div>
-          </div>
-        </Container>
-        <Footer />
-      </div>
-    );
-}
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <NavBar />
+      <Container className="py-12">
+        <CourseDetails />
+      </Container>
+      <Footer />
+    </div>
+  );
+};
 
 export default CoursePage;
