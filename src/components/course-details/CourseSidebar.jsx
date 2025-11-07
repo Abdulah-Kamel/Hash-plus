@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import Image from "next/image";
 import courseImage from "@/assets/course1.png"
-const CourseSidebar = () => {
+const CourseSidebar = ({ courseDetails }) => {
   return (
     <div className="space-y-6">
       {/* Enrollment Card */}
@@ -18,11 +18,11 @@ const CourseSidebar = () => {
               <Image src={courseImage} alt="course image" className="w-full"/>
               <div className="flex items-center justify-center gap-4 mt-3">
                   <span className="text-3xl flex items-center gap-1">
-                      30
+                      {courseDetails?.price}
                       <SaudiRiyal width={36} height={36} />
                   </span>
                   <span className="text-2xl text-muted-foreground flex items-center gap-1">
-                      30
+                      {courseDetails?.price}
                       <SaudiRiyal width={28} height={28} />
                   </span>
               </div>

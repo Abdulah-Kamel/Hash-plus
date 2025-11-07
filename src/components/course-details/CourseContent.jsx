@@ -29,7 +29,7 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select";
-const CourseContent = () => {
+const CourseContent = ({ courseDetails }) => {
   return (
     <div className="space-y-6">
       <Card className="px-6">
@@ -62,47 +62,17 @@ const CourseContent = () => {
               </CardHeader>
               <CardContent>
                 <Card className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 px-5 mt-3">
-                  <div className="flex justify-center items-center gap-2 text-muted-foreground">
-                    <CircleCheckBig />
-                    محتوى تقنى ممتاز
-                  </div>
-                  <div className="flex justify-center items-center gap-2 text-muted-foreground">
-                    <CircleCheckBig />
-                    محتوى تقنى ممتاز
-                  </div>
-                  <div className="flex justify-center items-center gap-2 text-muted-foreground">
-                    <CircleCheckBig />
-                    محتوى تقنى ممتاز
-                  </div>
-                  <div className="flex justify-center items-center gap-2 text-muted-foreground">
-                    <CircleCheckBig />
-                    محتوى تقنى ممتاز
-                  </div>
-                  <div className="flex justify-center items-center gap-2 text-muted-foreground">
-                    <CircleCheckBig />
-                    محتوى تقنى ممتاز
-                  </div>
-                  <div className="flex justify-center items-center gap-2 text-muted-foreground">
-                    <CircleCheckBig />
-                    محتوى تقنى ممتاز
-                  </div>
-                  <div className="flex justify-center items-center gap-2 text-muted-foreground">
-                    <CircleCheckBig />
-                    محتوى تقنى ممتاز
-                  </div>
-                  <div className="flex justify-center items-center gap-2 text-muted-foreground">
-                    <CircleCheckBig />
-                    محتوى تقنى ممتاز
-                  </div>
-                  <div className="flex justify-center items-center gap-2 text-muted-foreground">
-                    <CircleCheckBig />
-                    محتوى تقنى ممتاز
-                  </div>
+                  {courseDetails?.whatYouWillLearn?.map((item) => (
+                    <div className="flex justify-start items-center gap-2 text-muted-foreground">
+                      <CircleCheckBig />
+                      {item}
+                    </div>
+                  ))}
                 </Card>
                 <div className="mt-6">
                   <h3 className="text-xl font-bold">محتوى الدوره</h3>
                   <p className="text-muted-foreground mt-3">
-                    12 قسم . 64 محاضرة . 11 ساعة
+                    {courseDetails?.totalModules} قسم . {courseDetails?.totalTests} اختبار . {courseDetails?.duration} ساعة
                   </p>
                   <Accordion
                     type="single"
@@ -280,24 +250,13 @@ const CourseContent = () => {
                 <div className="mt-6 bg-gray-50 p-6 rounded-lg">
                   <h3 className="text-xl font-bold">متطلبات البدء فى الدورة</h3>
                   <ul className="list-disc list-inside mt-3 space-y-3">
-                    <li className="text-muted-foreground">
-                      معرفه جيدة باللغة العربيه والانجليزية
-                    </li>
-                    <li className="text-muted-foreground">
-                      معرفه جيدة باللغة العربيه والانجليزية
-                    </li>
-                    <li className="text-muted-foreground">
-                      معرفه جيدة باللغة العربيه والانجليزية
-                    </li>
-                    <li className="text-muted-foreground">
-                      معرفه جيدة باللغة العربيه والانجليزية
-                    </li>
-                    <li className="text-muted-foreground">
-                      معرفه جيدة باللغة العربيه والانجليزية
-                    </li>
-                    <li className="text-muted-foreground">
-                      معرفه جيدة باللغة العربيه والانجليزية
-                    </li>
+                    {
+                      courseDetails?.requirements?.map((item) => (
+                        <li className="text-muted-foreground">
+                          {item}
+                        </li>
+                      ))
+                    }
                   </ul>
                 </div>
                 <div className="rounded-lg mt-6 w-full flex flex-col gap-6">

@@ -7,17 +7,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useCoursesStore } from "@/store/useCoursesStore";
 import { useEffect } from "react";
 import { getAllCourses } from "./CourseActions";
-
+import CourseCardSkeleton from "./CourseCardSkeleton";
 const Courses = () => {
-  const { courses, setCourses } = useCoursesStore();
+  const { courses, setCourses,setLoading,loading } = useCoursesStore();
   useEffect(() => {
     const fetchCourses = async () => {
+      setLoading(true);
       const res = await getAllCourses();
       if (res.success) {
         console.log(res.data);
         setCourses(res.data.data);
+        setLoading(false);
       } else {
         console.log(res.error);
+        setLoading(false);
       }
     };
     fetchCourses();
@@ -30,9 +33,13 @@ const Courses = () => {
           <CourseTabs />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center mt-8">
-            {courses.map((course) => (
+            {loading ? (
+              <CourseCardSkeleton />
+            ) : (
+              courses.map((course) => (
               <CourseCard key={course.id} course={course} />
-            ))}
+            ))
+            )}
           </div>
         </CardContent>
       </Card>

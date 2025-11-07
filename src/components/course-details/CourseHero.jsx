@@ -6,6 +6,7 @@ import Image from 'next/image';
 import codeIcon from "@/assets/code-circle.svg"
 import instrctorAvatar from "@/assets/courseProfile.png"
 const CourseHero = ({ courseDetails }) => {
+  console.log(courseDetails);
   return (
     <div className="space-y-6 lg:col-span-2 col-span-1 bg-primary px-8 py-5 rounded-lg text-white shadow-lg backdrop-blur-md">
       <div className="space-y-3">
@@ -16,11 +17,11 @@ const CourseHero = ({ courseDetails }) => {
         />
 
         <h1 className="text-3xl md:text-5xl font-bold leading-tight">
-          {courseDetails.title}
+          {courseDetails?.title}
         </h1>
 
         <p className="text-lg text-blue-100 leading-relaxed sm:pe-32">
-          {courseDetails.description}
+          {courseDetails?.description}
         </p>
       </div>
 
@@ -36,7 +37,7 @@ const CourseHero = ({ courseDetails }) => {
               />
             ))}
           </div>
-          <span className="font-medium">{courseDetails.stats.totalRatings || 4.5}</span>
+          <span className="font-medium">{courseDetails?.stats?.totalRatings || 4.5}</span>
         </div>
       </div>
 
@@ -45,7 +46,7 @@ const CourseHero = ({ courseDetails }) => {
           <Image src={instrctorAvatar} alt={"instructor image"} />
         </div>
         <div>
-          <p className="font-medium">{courseDetails.createdBy.name}</p>
+          <p className="font-medium">{courseDetails?.createdBy?.name}</p>
         </div>
       </div>
     </div>
