@@ -1,8 +1,24 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { getAllCategories } from './CourseActions';
 
 const CourseTabs = () => {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await getAllCategories();
+      if (res.success) {
+        console.log(res.data);
+        setCategories(res.data.data);
+      } else {
+        console.log(res.error);
+      }
+    }
+    fetchCategories();
+  }, []);
+  console.log(categories);
   return (
     <ul className="flex mt-5 gap-4 flex-wrap text-sm font-medium text-center text-gray-500">
       <li className="me-2">
