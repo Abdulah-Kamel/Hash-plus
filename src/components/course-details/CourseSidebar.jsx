@@ -30,12 +30,12 @@ const CourseSidebar = ({ courseDetails }) => {
         <CardContent className="p-4 space-y-3">
             <div className="grid grid-cols-4 gap-3 items-center">
             {/* Add to Cart Button */}
-            <Button className="col-span-3 w-full bg-primary hover:bg-primary/90 text-white cursor-pointer py-3 text-lg font-medium rounded-lg">
+            <Button className="col-span-3 w-full bg-primary hover:bg-primary/90 text-white cursor-pointer py-5 text-lg font-medium rounded-lg">
                 أضف إلى السلة
             </Button>
             {/* Wishlist Button */}
             <div className="col-span-1 flex justify-center">
-                <Button variant="outline" className="w-full border border-primary cursor-pointer hover:bg-gray-50 rounded-lg">
+                <Button variant="outline" className="w-full border border-primary cursor-pointer hover:bg-gray-50 rounded-lg py-5">
                   <Heart className="text-primary w-6 h-6" />
                 </Button>
             </div>

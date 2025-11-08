@@ -1,10 +1,22 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import Rating from '@/components/shared/Rating';
-
+import { getAllCategories } from '@/components/courses/CourseActions';
 const FilterAccordion = ({ idPrefix = "" }) => {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await getAllCategories();
+      if (res.success) {
+        setCategories(res.data.data);
+      }
+    }
+    fetchCategories();
+  }, []);
+  console.log(categories);
   return (
     <Accordion
       type="multiple"
@@ -17,7 +29,7 @@ const FilterAccordion = ({ idPrefix = "" }) => {
         <AccordionContent className="flex flex-col gap-3 mt-1">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <Checkbox id={`all-cat${idPrefix}`} />
+              <Checkbox checked={true} id={`all-cat${idPrefix}`} />
               <Label htmlFor={`all-cat${idPrefix}`} className="text-sm font-light">الكل (123)</Label>
             </div>
             <div className="flex items-center gap-3">
@@ -42,33 +54,17 @@ const FilterAccordion = ({ idPrefix = "" }) => {
         <AccordionContent className="flex flex-col gap-3 mt-1">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <Checkbox id={`all-content${idPrefix}`} />
+              <Checkbox checked={true} id={`all-content${idPrefix}`} />
               <Label htmlFor={`all-content${idPrefix}`} className="text-sm font-light">الكل (123)</Label>
             </div>
-            <div className="flex items-center gap-3">
-              <Checkbox id={`programming${idPrefix}`} />
-              <Label htmlFor={`programming${idPrefix}`} className="text-sm font-light">برمجة التطبيقات (24)</Label>
-            </div>
-            <div className="flex items-center gap-3">
-              <Checkbox id={`web-programming${idPrefix}`} />
-              <Label htmlFor={`web-programming${idPrefix}`} className="text-sm font-light">برمجة المواقع (9)</Label>
-            </div>
-            <div className="flex items-center gap-3">
-              <Checkbox id={`ai-programming${idPrefix}`} />
-              <Label htmlFor={`ai-programming${idPrefix}`} className="text-sm font-light">برمجة الذكاء (123)</Label>
-            </div>
-            <div className="flex items-center gap-3">
-              <Checkbox id={`data-analysis${idPrefix}`} />
-              <Label htmlFor={`data-analysis${idPrefix}`} className="text-sm font-light">تحليل البيانات (9)</Label>
-            </div>
-            <div className="flex items-center gap-3">
-              <Checkbox id={`mobile-design${idPrefix}`} />
-              <Label htmlFor={`mobile-design${idPrefix}`} className="text-sm font-light">تصميم المواقع (17)</Label>
-            </div>
-            <div className="flex items-center gap-3">
-              <Checkbox id={`app-design${idPrefix}`} />
-              <Label htmlFor={`app-design${idPrefix}`} className="text-sm font-light">تصميم التطبيقات (24)</Label>
-            </div>
+           {
+            categories.map((category) => (
+              <div className="flex items-center gap-3" key={category.id}>
+                <Checkbox id={`${category.id}-content${idPrefix}`} />
+                <Label htmlFor={`${category.id}-content${idPrefix}`} className="text-sm font-light">{category.name}</Label>
+              </div>
+            ))
+           }
           </div>
         </AccordionContent>
       </AccordionItem>

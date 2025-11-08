@@ -11,8 +11,10 @@ import { getSingelCourses } from "./CourseDetailsActions";
 import { useParams } from "next/navigation";
 import CourseHeroSkeleton from "./CourseHeroSkeleton";
 import CourseContentSkeleton from "./CourseContentSkeleton";
+import { getAllCourses } from "../courses/CourseActions";
 const CourseDetails = () => {
   const { id } = useParams();
+  const {courses, setCourses} = useCoursesStore();
   const [courseDetails, setCourseDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -28,6 +30,21 @@ const CourseDetails = () => {
       }
     };
     fetchCourseDetails();
+    if (courses.length === 0) {
+      const fetchCourses = async () => {
+        setLoading(true);
+        const res = await getAllCourses();
+        if (res.success) {
+          console.log(res.data);
+          setCourses(res.data.data);
+          setLoading(false);
+        } else {
+          console.log(res.error);
+          setLoading(false);
+        }
+      };
+      fetchCourses();
+    }
   }, []);
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -40,7 +57,7 @@ const CourseDetails = () => {
         {loading ? (
           <CourseContentSkeleton />
         ) : (
-          <CourseContent courseDetails={courseDetails} />
+          <CourseContent courseDetails={courseDetails} courses={courses} />
         )}
       </div>
       <div className="lg:col-span-1 max-sm:order-1">

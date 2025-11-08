@@ -28,7 +28,9 @@ const CourseHero = ({ courseDetails }) => {
       <div className="flex flex-wrap items-center gap-6 text-sm border-b border-gray-50 pb-6">
         <div className="flex items-center gap-2">
           <div className="flex items-center">
-            <span className="text-blue-200 me-2">(625)</span>
+            <span className="text-blue-200 me-2">
+              ({courseDetails?.stats?.totalRatings})
+            </span>
 
             {[...Array(5)].map((_, i) => (
               <Star
@@ -37,7 +39,9 @@ const CourseHero = ({ courseDetails }) => {
               />
             ))}
           </div>
-          <span className="font-medium">{courseDetails?.stats?.totalRatings || 4.5}</span>
+          <span className="font-medium">
+            {courseDetails?.stats?.averageRating}
+          </span>
         </div>
       </div>
 

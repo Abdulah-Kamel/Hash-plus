@@ -29,7 +29,7 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select";
-const CourseContent = ({ courseDetails }) => {
+const CourseContent = ({ courseDetails, courses }) => {
   return (
     <div className="space-y-6">
       <Card className="px-6">
@@ -63,7 +63,7 @@ const CourseContent = ({ courseDetails }) => {
               <CardContent>
                 <Card className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 px-5 mt-3">
                   {courseDetails?.whatYouWillLearn?.map((item) => (
-                    <div className="flex justify-start items-center gap-2 text-muted-foreground">
+                    <div className="flex justify-start items-center gap-2 text-muted-foreground" key={item}>
                       <CircleCheckBig />
                       {item}
                     </div>
@@ -72,7 +72,9 @@ const CourseContent = ({ courseDetails }) => {
                 <div className="mt-6">
                   <h3 className="text-xl font-bold">محتوى الدوره</h3>
                   <p className="text-muted-foreground mt-3">
-                    {courseDetails?.totalModules} قسم . {courseDetails?.totalTests} اختبار . {courseDetails?.duration} ساعة
+                    {courseDetails?.totalModules} قسم .{" "}
+                    {courseDetails?.totalTests} اختبار .{" "}
+                    {courseDetails?.duration} ساعة
                   </p>
                   <Accordion
                     type="single"
@@ -83,166 +85,35 @@ const CourseContent = ({ courseDetails }) => {
                     <AccordionItem value="item-1">
                       <AccordionTrigger className="bg-gray-100 px-6 flex items-center first:rounded-b-none last:rounded-t-none hover:no-underline">
                         <div className="w-full flex items-center justify-between">
-                          <span>بداية الدورة</span>
-                          <span>6 محاضرة . 22 دقيقة</span>
+                          <span>{courseDetails?.title}</span>
+                          <span>
+                            {courseDetails?.totalModules} محاضرة .{" "}
+                            {courseDetails?.duration} ساعة
+                          </span>
                         </div>
                       </AccordionTrigger>
                       <AccordionContent className="flex flex-col gap-6 text-balance p-4">
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1">
-                            <Play className="text-white bg-secondary p-1 rounded-full w-8 h-8" />
-                            <span>محتوى تقنى متميز</span>
-                            <Link
-                              href={"/watch"}
-                              className="text-primary ms-3 hover:underline hover:text-primary/80"
-                            >
-                              مشاهدة
-                            </Link>
+                        {courseDetails?.modules?.map((module) => (
+                          <div className="flex justify-between items-center" key={module.id}>
+                            <div className="flex items-center gap-1">
+                              <Play className="text-white bg-secondary p-1 rounded-full w-8 h-8" />
+                              <span>{module.title}</span>
+                              {module.isFree && (
+                                <Link
+                                  href={`/course/${courseDetails?.id}/module/${module.videoUrl}`}
+                                  className="text-primary ms-3 hover:underline hover:text-primary/80"
+                                >
+                                  مشاهدة
+                                </Link>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className="text-muted-foreground">
+                                {module.duration} دقيقة
+                              </span>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-muted-foreground">2:35</span>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1">
-                            <LockKeyhole className="p-1 rounded-full w-8 h-8" />
-                            <span>محتوى تقنى متميز</span>
-                            <Link
-                              href={"/watch"}
-                              className="text-primary ms-3 hover:underline hover:text-primary/80"
-                            >
-                              مشاهدة
-                            </Link>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-muted-foreground">2:35</span>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1">
-                            <LockKeyhole className="p-1 rounded-full w-8 h-8" />
-                            <span>محتوى تقنى متميز</span>
-                            <Link
-                              href={"/watch"}
-                              className="text-primary ms-3 hover:underline hover:text-primary/80"
-                            >
-                              مشاهدة
-                            </Link>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-muted-foreground">2:35</span>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-2">
-                      <AccordionTrigger className="bg-gray-100 px-6 flex items-center first:rounded-b-none last:rounded-t-none hover:no-underline">
-                        <div className="w-full flex items-center justify-between">
-                          <span>بداية الدورة</span>
-                          <span>6 محاضرة . 22 دقيقة</span>
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="flex flex-col gap-6 text-balance p-4">
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1">
-                            <Play className="text-white bg-secondary p-1 rounded-full w-8 h-8" />
-                            <span>محتوى تقنى متميز</span>
-                            <Link
-                              href={"/watch"}
-                              className="text-primary ms-3 hover:underline hover:text-primary/80"
-                            >
-                              مشاهدة
-                            </Link>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-muted-foreground">2:35</span>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1">
-                            <LockKeyhole className="p-1 rounded-full w-8 h-8" />
-                            <span>محتوى تقنى متميز</span>
-                            <Link
-                              href={"/watch"}
-                              className="text-primary ms-3 hover:underline hover:text-primary/80"
-                            >
-                              مشاهدة
-                            </Link>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-muted-foreground">2:35</span>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1">
-                            <LockKeyhole className="p-1 rounded-full w-8 h-8" />
-                            <span>محتوى تقنى متميز</span>
-                            <Link
-                              href={"/watch"}
-                              className="text-primary ms-3 hover:underline hover:text-primary/80"
-                            >
-                              مشاهدة
-                            </Link>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-muted-foreground">2:35</span>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-3">
-                      <AccordionTrigger className="bg-gray-100 px-6 flex items-center first:rounded-b-none last:rounded-t-none hover:no-underline">
-                        <div className="w-full flex items-center justify-between">
-                          <span>بداية الدورة</span>
-                          <span>6 محاضرة . 22 دقيقة</span>
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="flex flex-col gap-6 text-balance p-4">
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1">
-                            <Play className="text-white bg-secondary p-1 rounded-full w-8 h-8" />
-                            <span>محتوى تقنى متميز</span>
-                            <Link
-                              href={"/watch"}
-                              className="text-primary ms-3 hover:underline hover:text-primary/80"
-                            >
-                              مشاهدة
-                            </Link>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-muted-foreground">2:35</span>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1">
-                            <LockKeyhole className="p-1 rounded-full w-8 h-8" />
-                            <span>محتوى تقنى متميز</span>
-                            <Link
-                              href={"/watch"}
-                              className="text-primary ms-3 hover:underline hover:text-primary/80"
-                            >
-                              مشاهدة
-                            </Link>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-muted-foreground">2:35</span>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1">
-                            <LockKeyhole className="p-1 rounded-full w-8 h-8" />
-                            <span>محتوى تقنى متميز</span>
-                            <Link
-                              href={"/watch"}
-                              className="text-primary ms-3 hover:underline hover:text-primary/80"
-                            >
-                              مشاهدة
-                            </Link>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-muted-foreground">2:35</span>
-                          </div>
-                        </div>
+                        ))}
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
@@ -250,18 +121,14 @@ const CourseContent = ({ courseDetails }) => {
                 <div className="mt-6 bg-gray-50 p-6 rounded-lg">
                   <h3 className="text-xl font-bold">متطلبات البدء فى الدورة</h3>
                   <ul className="list-disc list-inside mt-3 space-y-3">
-                    {
-                      courseDetails?.requirements?.map((item) => (
-                        <li className="text-muted-foreground">
-                          {item}
-                        </li>
-                      ))
-                    }
+                    {courseDetails?.requirements?.map((item) => (
+                      <li className="text-muted-foreground" key={item}>{item}</li>
+                    ))}
                   </ul>
                 </div>
                 <div className="rounded-lg mt-6 w-full flex flex-col gap-6">
                   <h3 className="text-xl font-bold">دورات لها علاقة</h3>
-                  {coursesData.slice(0, 3).map((course) => (
+                  {courses.slice(0, 3).map((course) => (
                     <HorizontalCourseCard
                       key={course.id}
                       course={course}
@@ -288,7 +155,7 @@ const CourseContent = ({ courseDetails }) => {
                   <div className="flex flex-col items-start">
                     <div>
                       <h3 className="text-lg font-semibold text-primary">
-                        ولاء القحطاني
+                        {courseDetails?.createdBy?.name}
                       </h3>
                       <p className="text-muted-foreground mt-1">مبرمجه</p>
                     </div>
