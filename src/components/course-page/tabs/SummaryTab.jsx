@@ -8,9 +8,9 @@ import {TabsContent} from "@/components/ui/tabs";
 const SummaryTab = ({ courseData }) => {
     return (
         <TabsContent value="summary">
-            <CourseDescription description={courseData.description} />
-            <CourseRequirements requirements={courseData.requirements} />
-            <CourseOutcomes outcomes={courseData.outcomes} />
+            <CourseDescription description={courseData?.description} />
+            <CourseRequirements requirements={courseData?.requirements} />
+            <CourseOutcomes outcomes={courseData?.whatYouWillLearn} />
             <CourseStats />
         </TabsContent>
     );

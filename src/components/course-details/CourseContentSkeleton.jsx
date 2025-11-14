@@ -7,7 +7,6 @@ const CourseContentSkeleton = () => {
     <div className="space-y-6">
       <Card className="px-6">
         <Tabs defaultValue="curriculum" className="w-full" dir="rtl">
-          {/* Tabs Header Skeleton */}
           <TabsList className="grid w-full grid-cols-3 mb-8">
             <TabsTrigger
               value="curriculum"
@@ -29,14 +28,12 @@ const CourseContentSkeleton = () => {
             </TabsTrigger>
           </TabsList>
 
-          {/* Curriculum Tab Skeleton */}
           <TabsContent value="curriculum" className="space-y-6">
             <Card className="border-none shadow-none">
               <CardHeader>
                 <div className="h-6 w-32 bg-gray-200 animate-pulse rounded"></div>
               </CardHeader>
               <CardContent>
-                {/* What You Will Learn Section */}
                 <Card className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 px-5 mt-3">
                   {[...Array(6)].map((_, i) => (
                     <div
@@ -49,22 +46,18 @@ const CourseContentSkeleton = () => {
                   ))}
                 </Card>
 
-                {/* Course Content Section */}
                 <div className="mt-6">
                   <div className="h-6 w-24 bg-gray-200 animate-pulse rounded"></div>
                   <div className="h-4 w-64 bg-gray-200 animate-pulse rounded mt-3"></div>
 
-                  {/* Accordion Skeleton */}
                   <div className="w-full mt-3 border-2 rounded-lg">
                     {[...Array(3)].map((_, i) => (
                       <div key={i} className="border-b last:border-b-0">
-                        {/* Accordion Header */}
                         <div className="bg-gray-100 px-6 py-4 flex items-center justify-between">
                           <div className="h-5 w-24 bg-gray-200 animate-pulse rounded"></div>
                           <div className="h-4 w-32 bg-gray-200 animate-pulse rounded"></div>
                         </div>
 
-                        {/* Accordion Content (only show for first item) */}
                         {i === 0 && (
                           <div className="flex flex-col gap-6 p-4">
                             {[...Array(3)].map((_, j) => (
@@ -87,7 +80,6 @@ const CourseContentSkeleton = () => {
                   </div>
                 </div>
 
-                {/* Requirements Section */}
                 <div className="mt-6 bg-gray-50 p-6 rounded-lg">
                   <div className="h-6 w-40 bg-gray-200 animate-pulse rounded"></div>
                   <div className="mt-3 space-y-3">
@@ -100,7 +92,6 @@ const CourseContentSkeleton = () => {
                   </div>
                 </div>
 
-                {/* Related Courses Section */}
                 <div className="rounded-lg mt-6 w-full flex flex-col gap-6">
                   <div className="h-6 w-28 bg-gray-200 animate-pulse rounded"></div>
                   {[...Array(3)].map((_, i) => (
@@ -118,7 +109,6 @@ const CourseContentSkeleton = () => {
                   ))}
                 </div>
 
-                {/* Show More Button */}
                 <div className="mt-6">
                   <div className="w-full h-12 bg-gray-200 animate-pulse rounded-full"></div>
                 </div>
@@ -126,13 +116,11 @@ const CourseContentSkeleton = () => {
             </Card>
           </TabsContent>
 
-          {/* Instructor Tab Skeleton */}
           <TabsContent value="instructor" className="space-y-6">
             <Card className="border-none shadow-none">
               <CardContent className="p-6">
                 <div className="flex items-center gap-6">
                   <div className="flex flex-col items-start w-full">
-                    {/* Instructor Header */}
                     <div className="flex items-center gap-4 w-full">
                       <div className="w-22 h-22 bg-gray-200 animate-pulse rounded-full"></div>
                       <div className="space-y-2">
@@ -141,7 +129,6 @@ const CourseContentSkeleton = () => {
                       </div>
                     </div>
 
-                    {/* Instructor Stats */}
                     <div className="mt-4 space-y-2">
                       {[...Array(4)].map((_, i) => (
                         <div key={i} className="flex items-center gap-2">
@@ -151,7 +138,6 @@ const CourseContentSkeleton = () => {
                       ))}
                     </div>
 
-                    {/* About Instructor */}
                     <div className="mt-6 w-full">
                       <div className="h-6 w-20 bg-gray-200 animate-pulse rounded"></div>
                       <div className="mt-3 space-y-2">
@@ -167,7 +153,6 @@ const CourseContentSkeleton = () => {
                       </div>
                     </div>
 
-                    {/* Related Courses */}
                     <div className="rounded-lg mt-6 w-full flex flex-col gap-6">
                       <div className="h-6 w-28 bg-gray-200 animate-pulse rounded"></div>
                       {[...Array(3)].map((_, i) => (
@@ -189,7 +174,6 @@ const CourseContentSkeleton = () => {
             </Card>
           </TabsContent>
 
-          {/* Reviews Tab Skeleton */}
           <TabsContent value="reviews" className="space-y-6">
             <Card className="border-none shadow-none">
               <CardHeader>

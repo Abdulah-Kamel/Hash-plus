@@ -20,7 +20,6 @@ export const handleForgetPassword = async (data) => {
         }
 
         const final = await res.json();
-        console.log(final);
         const cookie = await cookies();
         cookie.set("user-email", data.email, {
             httpOnly: true,
@@ -29,7 +28,6 @@ export const handleForgetPassword = async (data) => {
         // Return a success object
         return {success: true, data: final};
     } catch (err) {
-        console.log(err);
         // Return a generic error object
         return {success: false, error: "An unexpected error occurred."};
     }

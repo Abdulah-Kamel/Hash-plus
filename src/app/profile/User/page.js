@@ -73,7 +73,6 @@ const UserProfile = () => {
 
   async function onSubmit(data) {
     setLoading(true);
-    console.log("Form data:", data);
     setLoading(false);
   }
 

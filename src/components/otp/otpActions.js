@@ -17,9 +17,6 @@ export const handleEmailConfirm = async (data) => {
       );
 
       const final = await res.json();
-      console.log("API Response:", final);
-      console.log("HTTP Status:", res.status);
-      console.log("res.ok:", res.ok);
 
       // Check the actual response content, not just HTTP status
       if (final.status === "success") {
@@ -33,7 +30,6 @@ export const handleEmailConfirm = async (data) => {
         };
       }
     } catch (err) {
-      console.log(err);
       // Return a generic error object
       return { success: false, error: "An unexpected error occurred." };
     }

@@ -47,7 +47,6 @@ const ReviewsTab = () => {
                     </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    {/* Review Item */}
                     <div className="p-4 bg-gray-50 rounded-lg">
                         <div className="flex justify-between items-center">
                             <div className="flex items-center gap-4">
@@ -77,7 +76,6 @@ const ReviewsTab = () => {
                             <ThumbsDown />
                         </div>
                     </div>
-                    {/* Review Item */}
                     <div className="p-4 bg-gray-50 rounded-lg">
                         <div className="flex justify-between items-center">
                             <div className="flex items-center gap-4">
@@ -102,7 +100,6 @@ const ReviewsTab = () => {
                             <span role={"button"} className="border-none text-secondary ms-2 cursor-pointer">عرض المزيد .</span>
                         </p>
                     </div>
-                    {/* Review Item */}
                     <div className="p-4 bg-gray-50 rounded-lg">
                         <div className="flex justify-between items-center">
                             <div className="flex items-center gap-4">

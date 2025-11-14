@@ -20,7 +20,6 @@ const CommunityTab = () => {
                    </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    {/* Community Post 1 */}
                     <div className="p-4 bg-gray-50 rounded-lg">
                       <div>
                           <div className="flex items-start justify-between">
@@ -73,7 +72,6 @@ const CommunityTab = () => {
                                   تعليق
                               </button>
                           </div>
-                            {/* Comment Input for this post */}
                             <div className="mt-4 flex items-center gap-3">
                                 <Avatar className="w-8 h-8">
                                     <AvatarFallback className="text-xs bg-gray-200">أ</AvatarFallback>
@@ -86,7 +84,6 @@ const CommunityTab = () => {
 
 
                     </div>
-                    {/* Community Post 1 */}
                     <div className="p-4 bg-gray-50 rounded-lg">
                       <div className="border-b border-gray200 pb-6">
                           <div className="flex items-start justify-between">

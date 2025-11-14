@@ -41,7 +41,6 @@ const ResetPasswordPage = ({role}) => {
     }, [form.reset]);
 
     async function onSubmit(data) {
-        console.log(data)
         setLoading(true)
         const result = await handleResetPassword(data);
         if (result.success) {

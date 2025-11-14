@@ -14,7 +14,6 @@ const HorizontalCourseCard = ({ course }) => {
     return (
       <Card className="w-full rounded-2xl p-0">
         <div className="flex flex-col xl:flex-row gap-4 p-4">
-          {/* Course Image */}
           <Link href={`/course/${course?.id}`} className="block flex-shrink-0">
             <Image
               className="w-full xl:w-64 h-full object-cover rounded-lg"
@@ -25,12 +24,9 @@ const HorizontalCourseCard = ({ course }) => {
             />
           </Link>
 
-          {/* Course Content - arranged horizontally */}
           <div className="flex flex-col xl:flex-row flex-grow justify-between items-center gap-6">
-            {/* Left Section - Course Info */}
             <div className="flex-grow w-full space-y-3">
               <div className="flex max-xl:flex-col gap-3 items-center justify-between">
-                {/* tags section */}
                 <div className="flex items-center gap-2">
                   {course?.tags?.map((tag) => (
                     <Badge
@@ -42,7 +38,6 @@ const HorizontalCourseCard = ({ course }) => {
                     </Badge>
                   ))}
                 </div>
-                {/* Rating Section */}
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground text-sm">
                     ({course?.stats?.totalRatings})
@@ -56,10 +51,8 @@ const HorizontalCourseCard = ({ course }) => {
                 </div>
               </div>
 
-              {/* Title */}
               <h3 className="text-xl font-medium">{course?.title}</h3>
 
-              {/* Instructor */}
               <div className="flex items-center gap-2">
                 <Link href={`/teacher/${course?.createdBy?.id}`}>
                   <Image
@@ -72,7 +65,6 @@ const HorizontalCourseCard = ({ course }) => {
                 </Link>
                 <p className="text-base font-light">{course?.createdBy?.name}</p>
               </div>
-              {/* Course Info */}
               <div className="flex items-center gap-4 xl:gap-50 border-b mx-2 xl:mx-5 pb-4 mt-3 text-base xl:text-lg">
                 <div className="text-muted-foreground flex items-center gap-2">
                   <Clock className="w-6 h-6" />
@@ -83,7 +75,6 @@ const HorizontalCourseCard = ({ course }) => {
                   <p>{course?.totalModules} درس</p>
                 </div>
               </div>
-              {/* Price and CTA */}
               <div className="flex items-center justify-between w-full">
                 <div className="text-2xl font-medium text-gray-900 flex gap-1 items-center">
                   <span>{course?.price}</span>

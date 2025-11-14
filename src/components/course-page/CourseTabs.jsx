@@ -20,9 +20,7 @@ const CourseTabs = ({ courseData }) => {
                 ))}
             </TabsList>
             <SummaryTab courseData={courseData} />
-            {/* Instructor Tab */}
             <InstructorTab />
-            {/* Reviews Tab */}
             <ReviewsTab />
             <AttachmentsTab/>
             <CommunityTab/>

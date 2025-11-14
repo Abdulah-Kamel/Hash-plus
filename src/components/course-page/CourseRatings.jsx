@@ -33,14 +33,12 @@ const CourseRatings = () => {
     return (
         <div className="py-6 px-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                {/* Ratings Breakdown */}
                 <div className="md:col-span-2 space-y-3">
                     {ratingsData.map((rating) => (
                         <RatingBar key={rating.stars} stars={rating.stars} percentage={rating.percentage} />
                     ))}
 
                 </div>
-                {/* Overall Rating */}
                 <div className="md:col-span-1 flex flex-col items-center justify-center text-center">
                     <h2 className="text-5xl text-gray-800">4.5</h2>
                     <div className="flex items-center my-2">

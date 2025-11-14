@@ -92,13 +92,10 @@ export default function RichTextEditor() {
     const handleAddLink = () => {
         if (linkUrl) {
             if (linkText && !editor.state.selection.empty) {
-                // Replace selected text with link
                 editor.chain().focus().setLink({ href: linkUrl }).run()
             } else if (linkText) {
-                // Insert new text with link
                 editor.chain().focus().insertContent(`<a href="${linkUrl}">${linkText}</a>`).run()
             } else {
-                // Just add link to selected text or insert URL as text
                 editor.chain().focus().setLink({ href: linkUrl }).run()
             }
         }
@@ -117,9 +114,7 @@ export default function RichTextEditor() {
 
     return (
         <div className="border rounded-lg overflow-hidden bg-white">
-            {/* Toolbar */}
             <div className="flex items-center justify-end gap-1 p-3 bg-gray-50 border-b flex-wrap">
-                {/* Text Formatting */}
                 <div className="flex items-center gap-1">
                     <Button
                         variant="ghost"
@@ -155,7 +150,6 @@ export default function RichTextEditor() {
                     </Button>
                 </div>
 
-                {/* Alignment */}
                 <div className="flex items-center gap-1">
                     <Button
                         variant="ghost"
@@ -187,7 +181,6 @@ export default function RichTextEditor() {
                     </Button>
                 </div>
 
-                {/* Colors */}
                 <div className="relative">
                     <input
                         type="color"

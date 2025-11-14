@@ -12,7 +12,7 @@ const AssignmentPage = () => {
         <>
             <NavBar />
             <CourseHeader/>
-            <Container className="max-w-5xl">
+            <Container className="max-w-5xl py-4">
                 {
                     isFinal ?
                         <FinalAssignment/>

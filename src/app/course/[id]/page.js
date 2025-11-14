@@ -2,11 +2,6 @@ import React from "react";
 import { NavBar } from "@/components/navbar";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
-import {
-  CourseHero,
-  CourseSidebar,
-  CourseContent,
-} from "@/components/course-details";
 import CourseDetails from "@/components/course-details/CourseDetails";
 
 export const metadata = {

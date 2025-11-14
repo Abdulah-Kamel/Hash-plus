@@ -5,7 +5,6 @@ export const handleResetPassword = async (data) => {
     try {
         const cookie = await cookies();
         const userEmail = cookie.get("user-email").value
-        console.log({email: userEmail, ...data})
         const res = await fetch(`${process.env.baseApi}/api/v1/users/reset-password`, {
             method: "POST",
             body: JSON.stringify({email: userEmail, ...data}),
@@ -22,11 +21,9 @@ export const handleResetPassword = async (data) => {
         }
 
         const final = await res.json();
-        console.log(final);
         // Return a success object
         return {success: true, data: final};
     } catch (err) {
-        console.log(err);
         // Return a generic error object
         return {success: false, error: "An unexpected error occurred."};
     }

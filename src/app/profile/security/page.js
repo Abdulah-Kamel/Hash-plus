@@ -75,7 +75,6 @@ const SecurityPage = () => {
 
   const onEmailSubmit = async (data) => {
     setLoading(true);
-    console.log("Email data:", data);
 
     setUserData((prev) => ({ ...prev, email: data.email }));
     setEmailDialogOpen(false);
@@ -84,7 +83,6 @@ const SecurityPage = () => {
 
   const onPhoneSubmit = async (data) => {
     setLoading(true);
-    console.log("Phone data:", data);
 
     setUserData((prev) => ({ ...prev, phone: data.phone }));
     setPhoneDialogOpen(false);
@@ -93,7 +91,6 @@ const SecurityPage = () => {
 
   const onPasswordSubmit = async (data) => {
     setLoading(true);
-    console.log("Password data:", data);
 
     passwordForm.reset();
     setLoading(false);

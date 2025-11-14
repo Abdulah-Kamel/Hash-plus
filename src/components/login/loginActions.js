@@ -19,7 +19,6 @@ export const handleLogin = async (data) => {
         }
 
         const final = await res.json();
-        console.log(final);
         const cookie = await cookies();
         cookie.set("user-token", final.token, {
             httpOnly: true,
@@ -32,7 +31,6 @@ export const handleLogin = async (data) => {
         // Return a success object
         return {success: true, data: final};
     } catch (err) {
-        console.log(err);
         // Return a generic error object
         return {success: false, error: "An unexpected error occurred."};
     }

@@ -36,7 +36,6 @@ const NotificationsPage = () => {
 
   const onNotificationsSubmit = async (data) => {
     setLoading(true);
-    console.log("Notifications data:", data);
     setLoading(false);
   };
 

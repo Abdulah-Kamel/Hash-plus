@@ -25,7 +25,6 @@ const PrivacyPage = () => {
 
   const onPrivacySubmit = async (data) => {
     setLoading(true);
-    console.log("Privacy data:", data);
     setLoading(false);
   };
 
