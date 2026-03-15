@@ -6,11 +6,8 @@ import LibraryContent from "@/components/library/LibraryContent";
 const LibraryPage = () => {
     return (
       <div>
-        <NavBar />
-
         <div className="bg-white min-h-screen">
           <LibraryHeader />
-
           <div className="px-4 lg:px-8 py-6">
             <div className="max-w-7xl mx-auto">
               <div className="">
@@ -21,8 +18,6 @@ const LibraryPage = () => {
             </div>
           </div>
         </div>
-
-        <Footer />
       </div>
     );
 }

@@ -38,11 +38,9 @@ export const metadata = {
 export default function RegisterPage() {
     return (
         <>
-            <NavBar/>
             <Container className="my-6 flex justify-center items-center py-12">
              <RegisterCard/>
             </Container>
-            <Footer/>
         </>
     )
 }

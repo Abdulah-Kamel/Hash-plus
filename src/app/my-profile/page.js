@@ -9,7 +9,6 @@ import CiriftcatesCard from "@/components/my-profile/ProfileCards/CiriftcatesCar
 const MyProfile = () => {
   return (
     <>
-      <NavBar />
       <Container>
         <section className="py-12 space-y-4">
           <MyProfileHeader />
@@ -18,7 +17,6 @@ const MyProfile = () => {
           <CiriftcatesCard />
         </section>
       </Container>
-      <Footer />
     </>
   );
 };

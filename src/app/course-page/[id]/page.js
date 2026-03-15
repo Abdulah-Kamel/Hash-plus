@@ -29,8 +29,6 @@ const CoursePage = () => {
   }, []);
     return (
       <div>
-        <NavBar />
-
         <div className="bg-white min-h-screen">
           <div className="px-4 lg:px-8 py-4">
             {
@@ -65,8 +63,6 @@ const CoursePage = () => {
             </div>
           </div>
         </div>
-
-        <Footer />
       </div>
     );
 }

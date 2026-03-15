@@ -6,6 +6,7 @@ import Container from "@/components/container";
 import {Mail} from "lucide-react";
 import OtpUserEmail from "@/components/otp/otpUserEmail";
 import OtpCounter from "@/components/otp/otpCounter";
+import { cookies } from "next/headers";
 
 export const metadata = {
     title: "تأكيد الحساب - رمز التحقق",
@@ -37,31 +38,35 @@ export const metadata = {
     },
 };
 
-export default function OtpPage() {
-    return (
-        <>
-            <NavBar/>
-            <Container className="my-6 flex justify-center items-center py-12">
-                <Card className="w-full max-w-[700px] border border-gray-100 shadow-lg px-3 py-5 sm:p-10 rounded-md">
-                    <CardHeader>
-                        <CardTitle className="text-2xl font-bold">ارسلنا اليك رمز التحقق</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div>
-                            <Mail className="text-secondary w-14 sm:w-25 h-14 sm:h-25 mx-auto mb-4"/>
-                            <div className="text-center my-5 text-base font-light">
-                                <p className="text-[#4B5675]">أدخل رمز التحقق المرسل عبر الايميل</p>
-                                <OtpUserEmail/>
-                            </div>
-                        </div>
-                        <OtpForm/>
-                    </CardContent>
-                    <CardFooter className="flex-col gap-4">
-                        <OtpCounter/>
-                    </CardFooter>
-                </Card>
-            </Container>
-            <Footer/>
-        </>
-    )
+export default async function OtpPage() {
+  const cookie = await cookies();
+  const user = cookie.get("user")?.value || "test@gmail.com";
+  return (
+    <>
+      <Container className="my-6 flex justify-center items-center py-12">
+        <Card className="w-full max-w-[700px] border border-gray-100 shadow-lg px-3 py-5 sm:p-10 rounded-md">
+          <CardHeader>
+            <CardTitle className="text-lg text-center font-bold">
+              ارسلنا اليك رمز التحقق
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div>
+              <Mail className="text-secondary w-14 sm:w-25 h-14 sm:h-25 mx-auto mb-4" />
+              <div className="text-center my-5 text-base font-light">
+                <p className="text-[#4B5675]">
+                  أدخل رمز التحقق المرسل عبر الايميل
+                </p>
+                <OtpUserEmail userEmail={user}/>
+              </div>
+            </div>
+            <OtpForm />
+          </CardContent>
+          <CardFooter className="flex-col gap-4">
+            <OtpCounter userEmail={user} />
+          </CardFooter>
+        </Card>
+      </Container>
+    </>
+  );
 }

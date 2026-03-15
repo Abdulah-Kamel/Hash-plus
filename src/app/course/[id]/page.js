@@ -35,11 +35,9 @@ export const metadata = {
 const CoursePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavBar />
       <Container className="py-12">
         <CourseDetails />
       </Container>
-      <Footer />
     </div>
   );
 };

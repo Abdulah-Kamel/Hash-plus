@@ -66,7 +66,6 @@ const ShopPage = () => {
 
   return (
     <section className="min-h-screen bg-primary">
-      <NavBar />
       <ShopHero />
       <div className="bg-white">
         <Container className="py-8">
@@ -88,7 +87,6 @@ const ShopPage = () => {
           <CustomPagination />
         </Container>
       </div>
-      <Footer />
     </section>
   );
 };

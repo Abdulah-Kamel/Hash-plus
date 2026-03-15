@@ -9,7 +9,6 @@ import OrderSummary from "@/components/cart/OrderSummary";
 const CartPage = () => {
   return (
     <>
-      <NavBar />
       <Container className="py-4">
         <div>
           <h1 className="text-3xl">سلة الشراء</h1>
@@ -26,7 +25,6 @@ const CartPage = () => {
           </div>
         </div>
       </Container>
-      <Footer />
     </>
   );
 };

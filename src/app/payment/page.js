@@ -21,7 +21,6 @@ const PaymentPage = () => {
 
     return (
         <>
-            <NavBar />
             <Container className="py-4">
                 <div>
                     <h1 className="text-3xl">الدفع</h1>
@@ -298,7 +297,6 @@ const PaymentPage = () => {
                     </div>
                 </div>
             </Container>
-            <Footer />
         </>
     );
 };

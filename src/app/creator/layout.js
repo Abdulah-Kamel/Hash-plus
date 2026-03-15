@@ -1,8 +1,25 @@
 "use client";
-import Container from "@/components/container";
-import Footer from "@/components/footer";
-import { NavBar } from "@/components/navbar";
+
+import { CreatorSidebar } from "@/components/creator/CreatorSidebar";
+import CreatorTopBar from "@/components/creator/CreatorTopBar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function CreatorLayout({ children }) {
-  return <>{children}</>;
+  return (
+    <SidebarProvider
+      style={{
+        "--sidebar-width": "100px",
+        "--sidebar-width-mobile": "100px",
+      }}
+    >
+      <div className="flex w-full">
+        <CreatorSidebar />
+        <div className="flex-1 p-2 mt-6">
+          <div className="border border-gray-300 min-h-screen rounded-lg p-4 space-y-4">
+            {children}
+          </div>
+        </div>
+      </div>
+    </SidebarProvider>
+  );
 }

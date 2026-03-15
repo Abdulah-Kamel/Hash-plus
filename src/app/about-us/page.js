@@ -12,7 +12,6 @@ import Cta from "@/components/cta";
 const AboutUsPage = () => {
   return (
     <>
-      <NavBar />
       <HeroLanding />
       <AboutSection />
       <VisionMission />
@@ -20,7 +19,6 @@ const AboutUsPage = () => {
       <ContactSection />
       <OnlineCourses />
       <Cta />
-      <Footer />
     </>
   );
 };

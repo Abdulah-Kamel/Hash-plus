@@ -71,8 +71,6 @@ const TeacherPage = () => {
 
     return (
       <div className="min-h-screen bg-gray-50">
-        <NavBar />
-
         <section className="">
           <div className="w-full h-23 bg-primary"></div>
           <Container>
@@ -186,7 +184,6 @@ const TeacherPage = () => {
             </div>
           </Container>
         </section>
-        <Footer />
       </div>
     );
 };

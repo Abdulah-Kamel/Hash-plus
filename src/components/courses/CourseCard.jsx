@@ -58,7 +58,7 @@ const CourseCard = ({ course }) => {
               height={40}
             />
           </Link>
-          <p className="text-lg font-light">{course.createdBy.name}</p>
+          {/* <p className="text-lg font-light">{course.createdBy.name}</p> */}
         </div>
       </CardHeader>
       <CardContent className="border-b mx-2 py-4 text-lg">

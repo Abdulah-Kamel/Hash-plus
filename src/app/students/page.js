@@ -17,7 +17,6 @@ import StudentsCard from "@/components/students/StudentsCard";
 const StudentsPage = () => {
   return (
     <>
-      <NavBar />
       <StudentsHeader />
       <Container>
         <div className="w-full">
@@ -64,7 +63,6 @@ const StudentsPage = () => {
         </div>
         <CustomPagination />
       </Container>
-      <Footer />
     </>
   );
 };

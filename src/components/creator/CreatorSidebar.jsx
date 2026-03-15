@@ -152,7 +152,7 @@ export function CreatorSidebar({ ...props }) {
       variant="inset"
       {...props}
       dir="rtl"
-      className="[--sidebar:theme(colors.gray.100)] [--sidebar-border:theme(colors.gray.200)]"
+      className="[--sidebar:theme(colors.gray.100)] [--sidebar-border:theme(colors.gray.200)] fixed top-0 left-0"
     >
       <SidebarHeader>
         <SidebarMenu>

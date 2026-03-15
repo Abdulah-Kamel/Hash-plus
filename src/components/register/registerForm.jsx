@@ -27,18 +27,18 @@ const RegisterForm = ({ role }) => {
       .object({
         name: z.string().min(3, "الاسم يجب أن يكون 3 أحرف على الأقل").max(255),
         email: z.email("البريد الإلكتروني غير صحيح"),
-        phone: z
-          .string("رقم الهاتف مطلوب")
-          .min(1, "رقم الهاتف مطلوب")
-          .refine((val) => isValidPhoneNumber(val), "رقم الهاتف غير صحيح"),
         password: z
-          .string()
-          .min(8, "كلمة السر يجب أن تكون 8 أحرف على الأقل")
-          .max(255)
-          .regex(
+        .string()
+        .min(8, "كلمة السر يجب أن تكون 8 أحرف على الأقل")
+        .max(255)
+        .regex(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
             "كلمة السر يجب أن تحتوي على حرف كبير، حرف صغير، رقم ورمز خاص"
-          ),
+        ),
+        // phone: z
+        //   .string("رقم الهاتف مطلوب")---------
+        //   .min(1, "رقم الهاتف مطلوب")
+        //   .refine((val) => isValidPhoneNumber(val), "رقم الهاتف غير صحيح"),
     //     confirmPassword: z.string(),
     //     terms: z
     //       .boolean()
@@ -56,8 +56,8 @@ const RegisterForm = ({ role }) => {
             role: role,
             name: '',
             email: '',
-            phone: '',
             password: '',
+            // phone: '',
             // confirmPassword: '',
             // terms: false,
         },
@@ -68,8 +68,8 @@ const RegisterForm = ({ role }) => {
             role: role,
             name: '',
             email: '',
-            phone: '',
             password: '',
+            // phone: '',
             // confirmPassword: '',
             // terms: false,
         });
@@ -103,7 +103,7 @@ const RegisterForm = ({ role }) => {
             <div className="flex flex-col gap-6">
                 <FormField control={control} name="name" label="الاسم" placeholder="الاسم" autoComplete="name" />
                 <FormField control={control} name="email" label="البريد الإلكتروني" placeholder="البريد الإلكتروني" type="email" autoComplete="email" />
-                <PhoneField control={control} name="phone" label="رقم الهاتف" placeholder="رقم الهاتف" PhoneInput={PhoneInput} getCountryCallingCode={getCountryCallingCode} value={value} setValue={setValue}/>
+                {/* <PhoneField control={control} name="phone" label="رقم الهاتف" placeholder="رقم الهاتف" PhoneInput={PhoneInput} getCountryCallingCode={getCountryCallingCode} value={value} setValue={setValue}/> */}
                 <PasswordField control={control} name="password" label="كلمة السر" placeholder="ادخل كلمة السر" autoComplete="new-password" />
                 {/* <PasswordField control={control} name="confirmPassword" label="اعد كتابة كلمة السر" placeholder="اعد كتابة كلمة السر" autoComplete="new-password" />
 

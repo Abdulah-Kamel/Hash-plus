@@ -10,7 +10,6 @@ const AssignmentPage = () => {
     const isFinal = false;
     return (
         <>
-            <NavBar />
             <CourseHeader/>
             <Container className="max-w-5xl py-4">
                 {
@@ -20,7 +19,6 @@ const AssignmentPage = () => {
                         <Assignment/>
                 }
             </Container>
-            <Footer/>
         </>
     );
 };

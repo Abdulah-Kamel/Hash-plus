@@ -1,10 +1,8 @@
 import { cookies } from 'next/headers'
 
-const OtpUserEmail = async () => {
-    const cookie = await cookies();
-    const user = JSON.parse(cookie.get("user").value)
+const OtpUserEmail = async ({userEmail}) => {
     return (
-        <p className="mt-2">{user.email}</p>
+        <p className="mt-2">{userEmail}</p>
     );
 };
 

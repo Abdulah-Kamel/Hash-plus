@@ -41,7 +41,6 @@ export const metadata = {
 export default function Home() {
   return (
      <>
-         <NavBar/>
          <Hero/>
          <LogoCarousel />
          <Features />
@@ -52,7 +51,6 @@ export default function Home() {
          <Faq />
          <OnlineCourses />
          <Cta />
-         <Footer />
      </>
       );
 }

@@ -17,7 +17,6 @@ import TechnicianCard from "@/components/technician/TechnicianCard";
 const TechnicianPage = () => {
   return (
     <>
-      <NavBar />
       <TechnicianHeader />
       <Container>
         <div className="w-full">
@@ -62,7 +61,6 @@ const TechnicianPage = () => {
         </div>
         <CustomPagination />
       </Container>
-      <Footer />
     </>
   );
 };

@@ -10,14 +10,12 @@ import React from "react";
 const BlogPage = () => {
   return (
     <>
-      <NavBar />
       <BlogHero />
       <Container className="py-12">
         <BlogHeader />
         <BlogGrid/>
         <CustomPagination/>
       </Container>
-      <Footer />
     </>
   );
 };

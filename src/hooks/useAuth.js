@@ -8,7 +8,9 @@ export function useAuth() {
 
   useEffect(() => {
     async function fetchUser() {
-      const res = await fetch("/api/auth/me", { credentials: "include" });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/me`, {
+        credentials: "include",
+      });
       if (res.ok) {
         const data = await res.json();
         setUser(data.user);

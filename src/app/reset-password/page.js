@@ -65,7 +65,6 @@ const ResetPasswordPage = ({role}) => {
 
     return (
         <>
-            <NavBar/>
             <Container className="my-6 flex justify-center items-center  py-12">
                 <Card className="w-full max-w-[700px] border border-gray-100 shadow-lg px-3 py-5 sm:p-10 rounded-md">
                     <h1 className="mb-3 font-bold sm:text-xl">إعادة تعيين كلمة السر</h1>
@@ -126,7 +125,6 @@ const ResetPasswordPage = ({role}) => {
                     </CardContent>
                 </Card>
             </Container>
-            <Footer/>
         </>
     );
 };

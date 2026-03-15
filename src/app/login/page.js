@@ -57,11 +57,9 @@ import LoginCard from "@/components/login/loginCard";
 export default function loginPage() {
     return (
         <>
-            <NavBar/>
             <Container className="my-6 flex justify-center items-center  py-12">
                 <LoginCard/>
             </Container>
-            <Footer/>
         </>
             )
 }
