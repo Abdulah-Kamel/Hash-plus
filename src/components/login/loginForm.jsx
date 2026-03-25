@@ -53,6 +53,7 @@ const LoginForm = ({role}) => {
     async function onSubmit(data) {
         setLoading(true)
         const result = await handleLogin(data);
+        console.log("result", result);
         if (result.success) {
             setLoading(false)
             toast.success("تم تسجيل الدخول بنجاح", {

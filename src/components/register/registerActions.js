@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 export const handleRegister = async (data) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/signup`,
+        `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/auth/signup`,
         {
           method: "POST",
           body: JSON.stringify(data),
@@ -17,16 +17,22 @@ export const handleRegister = async (data) => {
       if (!res.ok) {
         const error = await res.json();
         // Return an error object
-        return { success: false, error: error.error };
+        console.log("error", error);
+        return { success: false, error: error };
       }
 
       const final = await res.json();
+      console.log("final", final);
       const cookie = await cookies();
       cookie.set("user-token", final.token, {
         httpOnly: true,
         sameSite: "strict",
       });
-      cookie.set("user", JSON.stringify(final.data.user), {
+      cookie.set("user", JSON.stringify(final.data), {
+        httpOnly: true,
+        sameSite: "strict",
+      });
+      cookie.set("refresh-token", final.refreshToken, {
         httpOnly: true,
         sameSite: "strict",
       });
@@ -34,6 +40,6 @@ export const handleRegister = async (data) => {
       return { success: true, data: final };
     } catch (err) {
       // Return a generic error object
-      return { success: false, error: "An unexpected error occurred." };
+      return { success: false, error: "An unexpected error occurred. " + err };
     }
 }

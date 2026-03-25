@@ -79,6 +79,7 @@ const RegisterForm = ({ role }) => {
     async function onSubmit(data) {
         setLoading(true)
         const result = await handleRegister(data);
+        console.log("result", result);
         if (result.success) {
             setLoading(false)
             toast.success("تم إنشاء حساب بنجاح", {
@@ -89,11 +90,11 @@ const RegisterForm = ({ role }) => {
             router.push("/otp");
         } else {
             setLoading(false)
-            toast.error(result.error, {
+            toast.error(result?.error?.status, {
                 position: "top-right",
                 duration:3000,
                 classNames:"toast-error text-black mt-14",
-                description: <p className="font-light text-black">{result.error}</p>,
+                description: <p className="font-light text-black">{result?.error?.message}</p>,
             });
         }
     }

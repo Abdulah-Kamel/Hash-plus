@@ -40,7 +40,8 @@ export const metadata = {
 
 export default async function OtpPage() {
   const cookie = await cookies();
-  const user = cookie.get("user")?.value || "test@gmail.com";
+  const user = JSON.parse(cookie.get("user")?.value || "{}");
+  console.log("user", user);
   return (
     <>
       <Container className="my-6 flex justify-center items-center py-12">
@@ -57,13 +58,13 @@ export default async function OtpPage() {
                 <p className="text-[#4B5675]">
                   أدخل رمز التحقق المرسل عبر الايميل
                 </p>
-                <OtpUserEmail userEmail={user}/>
+                <OtpUserEmail userEmail={user.email}/>
               </div>
             </div>
             <OtpForm />
           </CardContent>
           <CardFooter className="flex-col gap-4">
-            <OtpCounter userEmail={user} />
+            <OtpCounter userEmail={user.email} />
           </CardFooter>
         </Card>
       </Container>

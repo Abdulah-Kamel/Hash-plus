@@ -14,14 +14,15 @@ export const handleLogin = async (data) => {
             },
           },
         );
-
+        
         if (!res.ok) {
-            const error = await res.json();
-            // Return an error object
-            return {success: false, error: error.error};
+          const error = await res.json();
+          // Return an error object
+          return { success: false, error: error.error };
         }
 
         const final = await res.json();
+        console.log("final", final);
         const cookie = await cookies();
         cookie.set("user-token", final.token, {
             httpOnly: true,
@@ -31,6 +32,10 @@ export const handleLogin = async (data) => {
             httpOnly: true,
             sameSite: "strict"
         })
+        cookie.set("refresh-token", final.refreshToken, {
+          httpOnly: true,
+          sameSite: "strict",
+        });
         // Return a success object
         return {success: true, data: final};
     } catch (err) {
