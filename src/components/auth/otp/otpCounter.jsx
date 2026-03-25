@@ -1,8 +1,8 @@
-"use client"
-import React, {useEffect, useState} from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
-import { handleRequestOtp } from "./otpActions";
+import { Button } from "@/components/ui/button";
+import { handleRequestOtp } from "@/components/auth/otp/otpActions";
 
 const OtpCounter = ({ userEmail }) => {
   const [counter, setCounter] = useState(37);

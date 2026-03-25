@@ -1,41 +1,42 @@
 import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card"
-import OtpForm from "@/components/otp/otpForm";
+import OtpForm from "@/components/auth/otp/otpForm";
 import {NavBar} from "@/components/navbar";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
 import {Mail} from "lucide-react";
-import OtpUserEmail from "@/components/otp/otpUserEmail";
-import OtpCounter from "@/components/otp/otpCounter";
+import OtpUserEmail from "@/components/auth/otp/otpUserEmail";
+import OtpCounter from "@/components/auth/otp/otpCounter";
 import { cookies } from "next/headers";
 
 export const metadata = {
-    title: "تأكيد الحساب - رمز التحقق",
-    description: "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني لتأكيد حسابك وإكمال عملية التسجيل في Hash Plus.",
-    keywords: [
-        "تأكيد الحساب",
-        "رمز التحقق",
-        "OTP",
-        "تفعيل الحساب",
-        "تأكيد البريد الإلكتروني",
-        "رمز الأمان"
+  title: "تأكيد الحساب - رمز التحقق",
+  description:
+    "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني لتأكيد حسابك وإكمال عملية التسجيل في Hash Plus.",
+  keywords: [
+    "تأكيد الحساب",
+    "رمز التحقق",
+    "OTP",
+    "تفعيل الحساب",
+    "تأكيد البريد الإلكتروني",
+    "رمز الأمان",
+  ],
+  openGraph: {
+    title: "Hash Plus - تأكيد الحساب",
+    description: "أدخل رمز التحقق لتأكيد حسابك وإكمال التسجيل",
+    url: "https://hashplus.comauth/otp",
+    images: [
+      {
+        url: "/og-otp.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Hash Plus - تأكيد الحساب",
+      },
     ],
-    openGraph: {
-        title: "Hash Plus - تأكيد الحساب",
-        description: "أدخل رمز التحقق لتأكيد حسابك وإكمال التسجيل",
-        url: "https://hashplus.com/otp",
-        images: [
-            {
-                url: "/og-otp.jpg",
-                width: 1200,
-                height: 630,
-                alt: "Hash Plus - تأكيد الحساب",
-            },
-        ],
-    },
-    robots: {
-        index: false,
-        follow: false,
-    },
+  },
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function OtpPage() {

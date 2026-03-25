@@ -2,7 +2,7 @@ import {NavBar} from "@/components/navbar";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
 
-import RegisterCard from "@/components/register/registerCard";
+import RegisterCard from "@/components/auth/register/registerCard";
 
 
 export const metadata = {

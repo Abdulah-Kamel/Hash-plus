@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import LoginForm from "@/components/login/loginForm";
+import LoginForm from "@/components/auth/login/loginForm";
 import {NavBar} from "@/components/navbar";
 import Footer from "@/components/footer";
 
@@ -53,7 +53,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import googleIcon from "@/assets/google-icon.svg";
-import LoginCard from "@/components/login/loginCard";
+import LoginCard from "@/components/auth/login/loginCard";
 export default function loginPage() {
     return (
         <>
