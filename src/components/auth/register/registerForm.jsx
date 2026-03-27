@@ -89,7 +89,7 @@ const RegisterForm = ({ role }) => {
         duration: 3000,
         classNames: "toast-success text-black mt-14",
       });
-      router.push("auth/otp");
+      router.push("/auth/otp");
     } else {
       setLoading(false);
       toast.error(result?.error?.status, {
