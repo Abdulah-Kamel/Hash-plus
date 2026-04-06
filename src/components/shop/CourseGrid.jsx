@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { CourseCard } from "@/components/courses";
 import { useCoursesStore } from "@/store/useCoursesStore";
-import { getAllCourses } from "../courses/CourseActions";
+import { getAllContents } from "@/actions/contentActions";
 import CourseCardSkeleton from "../courses/CourseCardSkeleton";
 const CourseGrid = () => {
   const { courses, setCourses,setLoading,loading } = useCoursesStore();
   useEffect(() => {
     const fetchCourses = async () => {
       setLoading(true);
-      const res = await getAllCourses();
+      const res = await getAllContents();
       if (res.success) {
         console.log(res.data);
         setCourses(res.data.data);
@@ -27,7 +27,7 @@ const CourseGrid = () => {
           <CourseCardSkeleton />
         ) : (
           courses.map((course) => (
-            <CourseCard course={course} key={course.id} />
+            <CourseCard course={course} key={course._id} />
           ))
         )}
       </div>

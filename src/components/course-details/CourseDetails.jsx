@@ -7,11 +7,11 @@ import {
 } from "@/components/course-details";
 import { useCoursesStore } from "@/store/useCoursesStore";
 import { useEffect } from "react";
-import { getSingelCourses } from "./CourseDetailsActions";
+import { getSingleContent } from "./CourseDetailsActions";
 import { useParams } from "next/navigation";
 import CourseHeroSkeleton from "./CourseHeroSkeleton";
 import CourseContentSkeleton from "./CourseContentSkeleton";
-import { getAllCourses } from "../courses/CourseActions";
+import { getAllContents } from "@/actions/contentActions";
 const CourseDetails = () => {
   const { id } = useParams();
   const {courses, setCourses} = useCoursesStore();
@@ -19,7 +19,7 @@ const CourseDetails = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchCourseDetails = async () => {
-      const res = await getSingelCourses(id);
+      const res = await getSingleContent(id);
       if (res.success) {
         setCourseDetails(res.data.data);
         console.log(res.data.data);
@@ -33,7 +33,7 @@ const CourseDetails = () => {
     if (courses.length === 0) {
       const fetchCourses = async () => {
         setLoading(true);
-        const res = await getAllCourses();
+        const res = await getAllContents();
         if (res.success) {
           console.log(res.data);
           setCourses(res.data.data);

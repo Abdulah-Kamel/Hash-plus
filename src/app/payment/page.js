@@ -1,9 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import {NavBar} from "@/components/navbar";
 import Container from "@/components/container";
-import OrderSummary from "@/components/cart/OrderSummary";
-import Footer from "@/components/footer";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
@@ -14,8 +11,9 @@ import visaLogo from "@/assets/visa.svg";
 import mastercardLogo from "@/assets/mastercard.svg";
 import tabby from "@/assets/tabby.svg";
 import mada from "@/assets/mada.svg";
-import { cn } from '@/lib/utils';
-// import {Separator} from "@/components/ui/separator";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
 const PaymentPage = () => {
     const [selectedMethod, setSelectedMethod] = useState(null);
 
@@ -293,7 +291,27 @@ const PaymentPage = () => {
                         </Accordion>
                     </div>
                     <div className="col-span-1">
-                        <OrderSummary/>
+                        <Card className="bg-gray-100 rounded-xl px-4">
+                            <CardHeader className="border-b border-gray-300">
+                                <h2 className="text-2xl">ملخص الاشتراك</h2>
+                            </CardHeader>
+                            <CardContent className="px-4">
+                                <div>
+                                    <div className="mt-6">
+                                        <Button className="w-full bg-primary text-white py-6 cursor-pointer hover:bg-primary/90 rounded-full gap-1 text-lg">
+                                            تأكيد الاشتراك
+                                        </Button>
+                                    </div>
+                                    <div className="mt-6">
+                                        <h4>تفعيل الكوبون</h4>
+                                        <div className="flex items-center gap-2">
+                                            <Input type={"text"} className="mt-2 bg-white py-6 rounded-full" placeholder="اكتب الكوبون"/>
+                                            <Button className="bg-primary text-white py-6 cursor-pointer hover:bg-primary/90 rounded-full">تفعيل</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             </Container>

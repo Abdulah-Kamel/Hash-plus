@@ -1,64 +1,14 @@
 'use client';
 import React, { useState } from 'react';
 import Container from '@/components/container';
-import { NavBar } from "@/components/navbar";
-import Footer from "@/components/footer";
-import courseImage from "@/assets/course1.png";
 import {
   ShopHero,
   ShopHeader,
   DesktopSidebar,
   MobileSidebar,
   CourseGrid,
-  ShopPagination
 } from '@/components/shop';
 import CustomPagination from "@/components/shared/CustomPagination";
-
-// Mock data for courses
-const coursesData = [
-  {
-    id: 1,
-    title: 'مذكرات Javascript',
-    instructor: 'ولاء القحطانى',
-    rating: 4.5,
-    reviews: 1024,
-    price: 50,
-    originalPrice: 80,
-    image: courseImage,
-    badge: 'الأكثر مبيعا',
-    badgeColor: 'bg-green-500',
-    duration:40,
-    lessons:40
-  },
-  {
-    id: 2,
-    title: 'مذكرات Javascript',
-    instructor: 'ولاء القحطانى',
-    rating: 4.5,
-    reviews: 1024,
-    price: 50,
-    originalPrice: 80,
-    image: courseImage,
-    badge: 'الأكثر تقييما',
-    badgeColor: 'bg-blue-500',
-    duration:40,
-    lessons:40
-  },
-  {
-    id: 3,
-    title: 'مذكرات Javascript',
-    instructor: 'ولاء القحطانى',
-    rating: 4.5,
-    reviews: 1024,
-    price: 50,
-    originalPrice: 80,
-    image: courseImage,
-    badge: 'الأكثر تقييما',
-    badgeColor: 'bg-purple-500',
-    duration:40,
-    lessons:40
-  }
-];
 
 const ShopPage = () => {
   const [selectedSort, setSelectedSort] = useState('الأحدث');
@@ -82,7 +32,7 @@ const ShopPage = () => {
               setSidebarOpen={setSidebarOpen}
             />
 
-            <CourseGrid courses={coursesData} />
+            <CourseGrid />
           </div>
           <CustomPagination />
         </Container>

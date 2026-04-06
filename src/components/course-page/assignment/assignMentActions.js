@@ -2,13 +2,13 @@
 export async function getAssignment(id){
     try {
         const res = await fetch(
-            `${process.env.baseApi}/api/v1/tests/${id}`,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
+          `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/tests/${id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
         );
 
         

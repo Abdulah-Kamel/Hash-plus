@@ -62,7 +62,7 @@ const CourseContent = ({ courseDetails, courses }) => {
               </CardHeader>
               <CardContent>
                 <Card className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 px-5 mt-3">
-                  {courseDetails?.whatYouWillLearn?.map((item) => (
+                  {courseDetails?.learningOutcomes?.map((item) => (
                     <div className="flex justify-start items-center gap-2 text-muted-foreground" key={item}>
                       <CircleCheckBig />
                       {item}
@@ -72,9 +72,8 @@ const CourseContent = ({ courseDetails, courses }) => {
                 <div className="mt-6">
                   <h3 className="text-xl font-bold">محتوى الدوره</h3>
                   <p className="text-muted-foreground mt-3">
-                    {courseDetails?.totalModules} قسم .{" "}
-                    {courseDetails?.totalTests} اختبار .{" "}
-                    {courseDetails?.duration} ساعة
+                    {courseDetails?.metadata?.modulesCount} قسم .{" "}
+                    {courseDetails?.metadata?.duration} ساعة
                   </p>
                   <Accordion
                     type="single"
@@ -87,20 +86,20 @@ const CourseContent = ({ courseDetails, courses }) => {
                         <div className="w-full flex items-center justify-between">
                           <span>{courseDetails?.title}</span>
                           <span>
-                            {courseDetails?.totalModules} محاضرة .{" "}
-                            {courseDetails?.duration} ساعة
+                            {courseDetails?.metadata?.modulesCount} محاضرة .{" "}
+                            {courseDetails?.metadata?.duration} ساعة
                           </span>
                         </div>
                       </AccordionTrigger>
                       <AccordionContent className="flex flex-col gap-6 text-balance p-4">
                         {courseDetails?.modules?.map((module) => (
-                          <div className="flex justify-between items-center" key={module.id}>
+                          <div className="flex justify-between items-center" key={module._id || module.title}>
                             <div className="flex items-center gap-1">
                               <Play className="text-white bg-secondary p-1 rounded-full w-8 h-8" />
                               <span>{module.title}</span>
                               {module.isFree && (
                                 <Link
-                                  href={`/course/${courseDetails?.id}/module/${module.videoUrl}`}
+                                  href={`/course/${courseDetails?._id}/module/${module.videoUrl}`}
                                   className="text-primary ms-3 hover:underline hover:text-primary/80"
                                 >
                                   مشاهدة
@@ -121,16 +120,16 @@ const CourseContent = ({ courseDetails, courses }) => {
                 <div className="mt-6 bg-gray-50 p-6 rounded-lg">
                   <h3 className="text-xl font-bold">متطلبات البدء فى الدورة</h3>
                   <ul className="list-disc list-inside mt-3 space-y-3">
-                    {courseDetails?.requirements?.map((item) => (
+                    {courseDetails?.prerequisites?.map((item) => (
                       <li className="text-muted-foreground" key={item}>{item}</li>
                     ))}
                   </ul>
                 </div>
                 <div className="rounded-lg mt-6 w-full flex flex-col gap-6">
                   <h3 className="text-xl font-bold">دورات لها علاقة</h3>
-                  {courses.slice(0, 3).map((course) => (
+                  {courses?.slice(0, 3).map((course) => (
                     <HorizontalCourseCard
-                      key={course.id}
+                      key={course._id}
                       course={course}
                       isHorizontal={true}
                     />
@@ -155,7 +154,7 @@ const CourseContent = ({ courseDetails, courses }) => {
                   <div className="flex flex-col items-start">
                     <div>
                       <h3 className="text-lg font-semibold text-primary">
-                        {courseDetails?.createdBy?.name}
+                        {courseDetails?.instructor}
                       </h3>
                       <p className="text-muted-foreground mt-1">مبرمجه</p>
                     </div>

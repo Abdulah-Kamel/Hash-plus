@@ -6,7 +6,9 @@ import Image from 'next/image';
 import codeIcon from "@/assets/code-circle.svg"
 import instrctorAvatar from "@/assets/courseProfile.png"
 const CourseHero = ({ courseDetails }) => {
-  console.log(courseDetails);
+  const ratingsCount = courseDetails?.metadata?.ratingsCount ?? 0;
+  const avgRatings = courseDetails?.metadata?.avgRatings ?? 0;
+
   return (
     <div className="space-y-6 lg:col-span-2 col-span-1 bg-primary px-8 py-5 rounded-lg text-white shadow-lg backdrop-blur-md">
       <div className="space-y-3">
@@ -29,18 +31,18 @@ const CourseHero = ({ courseDetails }) => {
         <div className="flex items-center gap-2">
           <div className="flex items-center">
             <span className="text-blue-200 me-2">
-              ({courseDetails?.stats?.totalRatings})
+              ({ratingsCount})
             </span>
 
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                className={`w-4 h-4 ${i < Math.round(avgRatings) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`}
               />
             ))}
           </div>
           <span className="font-medium">
-            {courseDetails?.stats?.averageRating}
+            {avgRatings.toFixed(1)}
           </span>
         </div>
       </div>
@@ -50,7 +52,7 @@ const CourseHero = ({ courseDetails }) => {
           <Image src={instrctorAvatar} alt={"instructor image"} />
         </div>
         <div>
-          <p className="font-medium">{courseDetails?.createdBy?.name}</p>
+          <p className="font-medium">{courseDetails?.instructor}</p>
         </div>
       </div>
     </div>

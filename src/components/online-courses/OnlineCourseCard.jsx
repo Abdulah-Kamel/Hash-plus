@@ -58,7 +58,7 @@ const OnlineCourseCard = ({ course }) => {
             <span>{course.price}</span>
            <SaudiRiyal className="w-5 h-5"/>
           </div>
-            <Button variant="outline" className="px-5 md:px-10 py-6 rounded-full cursor-pointer">اضف الى السلة</Button>
+            <Button variant="outline" className="px-5 md:px-10 py-6 rounded-full cursor-pointer">اشترك الآن</Button>
         </div>
       </CardFooter>
     </Card>

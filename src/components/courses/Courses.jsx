@@ -6,14 +6,14 @@ import CourseTabs from "./CourseTabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCoursesStore } from "@/store/useCoursesStore";
 import { useEffect } from "react";
-import { getAllCourses } from "./CourseActions";
+import { getAllContents } from "@/actions/contentActions";
 import CourseCardSkeleton from "./CourseCardSkeleton";
 const Courses = () => {
   const { courses, setCourses,setLoading,loading } = useCoursesStore();
   useEffect(() => {
     const fetchCourses = async () => {
       setLoading(true);
-      const res = await getAllCourses();
+      const res = await getAllContents();
       if (res.success) {
         console.log(res.data);
         setCourses(res.data.data);
@@ -37,7 +37,7 @@ const Courses = () => {
               <CourseCardSkeleton />
             ) : (
               courses.map((course) => (
-              <CourseCard key={course.id} course={course} />
+              <CourseCard key={course._id} course={course} />
             ))
             )}
           </div>

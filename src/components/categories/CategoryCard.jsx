@@ -18,7 +18,7 @@ const CategoryCard = ({ category }) => {
       </CardHeader>
       <CardFooter className="flex justify-between items-center">
         <Button asChild variant="ghost" size="icon" className="rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors">
-          <Link href={`/courses?category=${category.title}`}>
+          <Link href={`/shop?content=${category.id}`}>
             <ChevronLeft className="w-5 h-5" />
           </Link>
         </Button>

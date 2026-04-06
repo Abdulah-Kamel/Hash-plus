@@ -9,27 +9,35 @@ import {
 } from 'lucide-react';
 import Image from "next/image";
 import courseImage from "@/assets/course1.png"
+
+const languageLabels = {
+  ar: "اللغة العربية",
+  en: "اللغة الإنجليزية",
+};
+
 const CourseSidebar = ({ courseDetails }) => {
+  const price = courseDetails?.price?.amount ?? 0;
+  const duration = courseDetails?.metadata?.duration ?? 0;
+  const materialsCount = courseDetails?.materials?.length ?? 0;
+  const language = languageLabels[courseDetails?.language] || courseDetails?.language;
+  const thumbnail = courseDetails?.thumbnail;
+
   return (
     <div className="space-y-6">
       <Card className="border-2 border-gray-100 shadow-md">
           <CardHeader>
-              <Image src={courseImage} alt="course image" className="w-full"/>
+              <Image src={thumbnail || courseImage} alt="course image" className="w-full" width={400} height={200} />
               <div className="flex items-center justify-center gap-4 mt-3">
                   <span className="text-3xl flex items-center gap-1">
-                      {courseDetails?.price}
+                      {price}
                       <SaudiRiyal width={36} height={36} />
-                  </span>
-                  <span className="text-2xl text-muted-foreground flex items-center gap-1">
-                      {courseDetails?.price}
-                      <SaudiRiyal width={28} height={28} />
                   </span>
               </div>
           </CardHeader>
         <CardContent className="p-4 space-y-3">
             <div className="grid grid-cols-4 gap-3 items-center">
             <Button className="col-span-3 w-full bg-primary hover:bg-primary/90 text-white cursor-pointer py-5 text-lg font-medium rounded-lg">
-                أضف إلى السلة
+                اشترك الآن
             </Button>
             <div className="col-span-1 flex justify-center">
                 <Button variant="outline" className="w-full border border-primary cursor-pointer hover:bg-gray-50 rounded-lg py-5">
@@ -39,7 +47,7 @@ const CourseSidebar = ({ courseDetails }) => {
             </div>
 
             <Button variant="outline" className="w-full border border-primary text-primary hover:text-primary cursor-pointer  py-5 text-lg font-medium rounded-lg">
-                اشتري الآن
+                ابدأ التعلم
             </Button>
 
             <div className="mt-4">
@@ -47,15 +55,15 @@ const CourseSidebar = ({ courseDetails }) => {
                 <ul className="space-y-4 mt-3">
                     <li className="flex items-center gap-2 text-muted-foreground">
                         <FileDown />
-                        <span>40 ملف للتحميل</span>
+                        <span>{materialsCount} ملف للتحميل</span>
                     </li>
                     <li className="flex items-center gap-2 text-muted-foreground">
                         <SquarePlay />
-                        <span>40 ساعة من الفيديوهات</span>
+                        <span>{duration} ساعة من الفيديوهات</span>
                     </li>
                     <li className="flex items-center gap-2 text-muted-foreground">
                         <Globe />
-                        <span>اللغة العربية</span>
+                        <span>{language}</span>
                     </li>
                     <li className="flex items-center gap-2 text-muted-foreground">
                         <Infinity />
