@@ -1,9 +1,19 @@
+"use client";
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 import FilterAccordion from './FilterAccordion';
+import { useShopFilterStore } from '@/store/useShopFilterStore';
 
 const MobileSidebar = ({ sidebarOpen, setSidebarOpen }) => {
+  const { clearFilters, applyFilters } = useShopFilterStore();
+
+  const handleClear = () => {
+    clearFilters();
+    applyFilters();
+    setSidebarOpen(false);
+  };
+
   if (!sidebarOpen) return null;
 
   return (
@@ -38,7 +48,7 @@ const MobileSidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <Button
                 variant="outline"
                 className="w-full"
-                onClick={() => setSidebarOpen(false)}
+                onClick={handleClear}
               >
                 حذف التصفية
               </Button>

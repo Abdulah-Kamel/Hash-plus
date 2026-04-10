@@ -11,7 +11,6 @@ import {
 import CustomPagination from "@/components/shared/CustomPagination";
 
 const ShopPage = () => {
-  const [selectedSort, setSelectedSort] = useState('الأحدث');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -20,8 +19,6 @@ const ShopPage = () => {
       <div className="bg-white">
         <Container className="py-8">
           <ShopHeader
-            selectedSort={selectedSort}
-            setSelectedSort={setSelectedSort}
             setSidebarOpen={setSidebarOpen}
           />
           <div className="flex flex-col xl:flex-row gap-8">

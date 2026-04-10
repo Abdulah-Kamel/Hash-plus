@@ -92,27 +92,57 @@ const CourseContent = ({ courseDetails, courses }) => {
                         </div>
                       </AccordionTrigger>
                       <AccordionContent className="flex flex-col gap-6 text-balance p-4">
-                        {courseDetails?.modules?.map((module) => (
-                          <div className="flex justify-between items-center" key={module._id || module.title}>
-                            <div className="flex items-center gap-1">
-                              <Play className="text-white bg-secondary p-1 rounded-full w-8 h-8" />
-                              <span>{module.title}</span>
-                              {module.isFree && (
-                                <Link
-                                  href={`/course/${courseDetails?._id}/module/${module.videoUrl}`}
-                                  className="text-primary ms-3 hover:underline hover:text-primary/80"
-                                >
-                                  مشاهدة
-                                </Link>
-                              )}
+                        {courseDetails?.modules?.map((module) => {
+                          const isBootcamp = courseDetails?.contentType === "bootcamp";
+                          // Determine icon based on module type
+                          const ModuleIcon = isBootcamp
+                            ? (module.liveSession?.url ? Play : Play)
+                            : (module.moduleType === "quiz" ? LockKeyhole
+                              : module.moduleType === "task" ? BookHeart
+                              : Play);
+                          // Determine duration display
+                          const durationDisplay = isBootcamp
+                            ? (module.timeStart && module.timeEnd
+                              ? `${module.timeStart} - ${module.timeEnd}`
+                              : module.video?.duration ? `${module.video.duration} دقيقة` : "")
+                            : (module.videoData?.duration
+                              ? `${Math.floor(module.videoData.duration / 60)} دقيقة`
+                              : module.quizData?.length ? `${module.quizData.length} سؤال` : "");
+
+                          return (
+                            <div className="flex justify-between items-center" key={module._id || module.title}>
+                              <div className="flex items-center gap-1">
+                                <ModuleIcon className="text-white bg-secondary p-1 rounded-full w-8 h-8" />
+                                <span>{module.title}</span>
+                                {module.isFree && (
+                                  <Link
+                                    href={`/course-page/${courseDetails?._id}`}
+                                    className="text-primary ms-3 hover:underline hover:text-primary/80"
+                                  >
+                                    مشاهدة
+                                  </Link>
+                                )}
+                                {isBootcamp && module.liveSession?.url && (
+                                  <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full ms-2">
+                                    بث مباشر
+                                  </span>
+                                )}
+                                {isBootcamp && module.projects?.length > 0 && (
+                                  <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full ms-2">
+                                    {module.projects.length} مشروع
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-1">
+                                {durationDisplay && (
+                                  <span className="text-muted-foreground">
+                                    {durationDisplay}
+                                  </span>
+                                )}
+                              </div>
                             </div>
-                            <div className="flex items-center gap-1">
-                              <span className="text-muted-foreground">
-                                {module.duration} دقيقة
-                              </span>
-                            </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>

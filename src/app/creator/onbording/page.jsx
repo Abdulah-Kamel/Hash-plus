@@ -2,17 +2,32 @@
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { Form } from "@/components/ui/form";
 import { z } from "zod";
-const page = () => {
+import { useRouter } from "next/navigation";
+import { createContent } from "@/actions/contentActions";
+import StepContentType from "@/components/creator/onbording/StepContentType";
+import StepEstimateTime from "@/components/creator/onbording/StepEstimateTime";
+import StepContentName from "@/components/creator/onbording/StepContentName";
+import StepContentCategory from "@/components/creator/onbording/StepContentCategory";
+import StepsHeader from "@/components/creator/steps/StepsHeader";
+
+const formSchema = z.object({
+  contentType: z.enum(["course", "bootcamp"], {
+    required_error: "يرجى اختيار نوع المحتوى",
+  }),
+  estimateTime: z.string().min(1, "يرجى اختيار الوقت المتاح"),
+  contentName: z.string().min(3, "يجب أن يكون الاسم 3 أحرف على الأقل"),
+  contentCategory: z.string().min(1, "يرجى اختيار التصنيف"),
+});
+
+const Page = () => {
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const totalSteps = 4;
-  const formSchema = z.object({
-    contentType: z.enum(["course", "bootcamp"]), // Step 1
-    estimateTime: z.string().min(1), // Step 2
-    contentName: z.string().min(3), // Step 3
-    contentCategory: z.string().min(3), // Step 4
-  });
+  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -22,63 +37,129 @@ const page = () => {
       contentCategory: "",
     },
   });
-  const nextStep = async () => {
-    const fields =
-      step === 1
-        ? ["contentType"]
-        : step === 2
-          ? ["estimateTime"]
-          : step === 3
-            ? ["contentName"]
-            : ["contentCategory"];
 
-    // const isValid = await form.trigger(fields);
-    const isValid = true;
+  const stepFields = {
+    1: ["contentType"],
+    2: ["estimateTime"],
+    3: ["contentName"],
+    4: ["contentCategory"],
+  };
+
+  const nextStep = async () => {
+    const fields = stepFields[step];
+    const isValid = await form.trigger(fields);
     if (isValid) setStep((s) => Math.min(s + 1, totalSteps));
   };
+
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
 
-  const onSubmit = (data, e) => {
-    e.preventDefault();
-    console.log("Final Submission:", data);
-    // Call your API here
-  };
-  return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-sm border">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {/* Step Rendering */}
-          {/* {step === 1 && <StepOne form={form} />}
-          {step === 2 && <StepTwo form={form} />}
-          {step === 3 && <StepThree form={form} />} */}
-          {step === 1 && <h1>step 1</h1>}
-          {step === 2 && <h1>step 2</h1>}
-          {step === 3 && <h1>step 3</h1>}
-          {step === 4 && <h1>step 4</h1>}
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    try {
+      // Build the content payload matching the API schema
+      const payload = {
+        contentType: data.contentType,
+        title: data.contentName,
+        category: data.contentCategory,
+        description: "",
+        learningOutcomes: [],
+        prerequisites: [],
+        level: "beginner",
+        language: "ar",
+        materials: [],
+        price: {
+          amount: 0,
+          currency: "SAR",
+        },
+      };
 
-          {/* Navigation Controls */}
-          <div className="flex justify-between pt-4 border-t">
+      // Add bootcamp-specific fields
+      if (data.contentType === "bootcamp") {
+        payload.startDate = new Date().toISOString().split("T")[0];
+        payload.endDate = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split("T")[0];
+        payload.totalProjects = 0;
+      }
+
+    
+      const res = await createContent(payload);
+
+      if (res.success) {
+        const contentId = res.data?.data?._id;
+        if (contentId) {
+          router.push(`/creator/content/${contentId}`);
+        } else {
+          router.push("/creator/home");
+        }
+      } else {
+        console.error("Failed to create content:", res.error);
+      }
+    } catch (err) {
+      console.error("Error submitting content:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Reuse the existing StepsHeader component */}
+      <StepsHeader currentStep={step} totalSteps={totalSteps} />
+
+      {/* Main Content */}
+      <main className="flex-1 flex items-start justify-center pt-16 px-6">
+        <div className="w-full max-w-2xl">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {/* Step Content */}
+              <div className="min-h-[400px] flex flex-col justify-start">
+                {step === 1 && <StepContentType form={form} />}
+                {step === 2 && <StepEstimateTime form={form} />}
+                {step === 3 && <StepContentName form={form} />}
+                {step === 4 && <StepContentCategory form={form} />}
+              </div>
+            </form>
+          </Form>
+        </div>
+      </main>
+
+      {/* Bottom Navigation */}
+      <footer className="px-6 py-4 border-t border-gray-100">
+        <div className="max-w-2xl mx-auto flex justify-between items-center">
+          {step < totalSteps ? (
             <Button
               type="button"
-              variant="ghost"
-              onClick={prevStep}
-              disabled={step === 1}
+              onClick={nextStep}
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full text-sm font-medium cursor-pointer"
             >
-              Back
+              التالي
             </Button>
+          ) : (
+            <Button
+              type="button"
+              onClick={form.handleSubmit(onSubmit)}
+              disabled={isSubmitting}
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full text-sm font-medium cursor-pointer"
+            >
+              {isSubmitting ? "جاري الإنشاء..." : "ابدأ الان"}
+            </Button>
+          )}
 
-            {step < totalSteps ? (
-              <Button type="button" onClick={nextStep}>
-                Next
-              </Button>
-            ) : (
-              <Button type="submit">Generate Content</Button>
-            )}
-          </div>
-        </form>
-      </Form>
+          {step > 1 && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={prevStep}
+              className="border-gray-300 text-gray-600 px-8 py-3 rounded-full text-sm font-medium hover:bg-gray-50 cursor-pointer"
+            >
+              العودة
+            </Button>
+          )}
+        </div>
+      </footer>
     </div>
   );
 };
 
-export default page;
+export default Page;

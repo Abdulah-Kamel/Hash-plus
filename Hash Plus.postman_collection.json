@@ -1,0 +1,1944 @@
+{
+	"info": {
+		"_postman_id": "758e4861-76eb-496b-8c9a-bdec8226152c",
+		"name": "Hash Plus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26691060"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.json().token)\r",
+									"{\r",
+									"    pm.environment.set(\"JWT\", pm.response.json().token);\r",
+									"\r",
+									"}\r",
+									"\r",
+									"if(pm.response.json().refreshToken)\r",
+									"{\r",
+									"    pm.environment.set(\"REFRESH\", pm.response.json().refreshToken);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"barakamohamed946\",\r\n    \"email\": \"barakamohamed946@gmail.com\",\r\n    \"password\": \"barakamohamed946@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/auth/signup",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup"
+							]
+						},
+						"description": "Registers a new user on the **Hash Plus** platform.\n\nThis endpoint collects essential user details such as name, phone, email, and password, then creates a new account.\n\nUpon successful signup, the API returns a confirmation message and a JWT token, which the client can use for authentication in subsequent requests.\n\nStartFragment\n\n### **Request Body**\n\nSend a JSON object containing the following fields:\n\n| Field | Type | Required | Description |\n| --- | --- | --- | --- |\n| `name` | `string` | ✅ | The user's full name |\n| `phone` | `string` | ✅ | The user's phone number |\n| `email` | `string` | ✅ | A valid email address |\n| `password` | `string` | ✅ | Password (must meet minimum security rules) |\n\n### **Response**\n\n**✅ Success (201 Created)**\n\n```\n{\n  \"status\": \"success\",\n  \"message\": \"User registered successfully\",\n  \"data\": {\n    \"user\": {\n      \"_id\": \"6701234f2b1a8b21e9f3faaa\",\n      \"name\": \"baraka\",\n      \"email\": \"mhmdahmdbusiness@gmail.com\",\n      \"phone\": \"01096339822\"\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n  }\n}\n\n ```\n\n**❌ Error Responses**\n\n| Status Code | Description | Example |\n| --- | --- | --- |\n| `400` | Invalid input or missing field | `{ \"status\": \"error\", \"message\": \"Email is required\" }` |\n| `409` | Email already exists | `{ \"status\": \"error\", \"message\": \"User already exists\" }` |\n| `500` | Server error | `{ \"status\": \"error\", \"message\": \"Something went wrong\" }` |\n\n---\n\n### **Notes**\n\n- Passwords are securely hashed before being stored.\n    \n- A valid email is required — duplicate emails are not allowed.\n    \n- The returned JWT token must be stored securely (e.g., in `Authorization` header)."
+					},
+					"response": []
+				},
+				{
+					"name": "Log In",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.json().token)\r",
+									"{\r",
+									"    pm.environment.set(\"JWT\", pm.response.json().token);\r",
+									"\r",
+									"}\r",
+									"\r",
+									"if(pm.response.json().refreshToken)\r",
+									"{\r",
+									"    pm.environment.set(\"REFRESH\", pm.response.json().refreshToken);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"barakamohamed946@gmail.com\",\r\n    \"password\": \"barakamohamed946@\"\r\n}\r\n// {\r\n//     \"email\": \"mhmdahmdbusiness@gmail.com\",\r\n//     \"password\": \"mhmdahmdbusines@\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/auth/login",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						},
+						"description": "StartFragment\n\nAuthenticates an existing **Hash Plus** user using their registered email and password.  \n  \nUpon successful login, the API issues a **JWT access token** that grants the user access to protected routes like profile management, folders, and AI features.\n\nIf credentials are invalid, an appropriate error message is returned.\n\n---\n\n### **Request Body**\n\nSend a JSON object containing the user's credentials:\n\n| Field | Type | Required | Description |\n| --- | --- | --- | --- |\n| `email` | `string` | ✅ | The registered email address |\n| `password` | `string` | ✅ | The user’s password |\n\n### **Response**\n\n**✅ Success (200 OK)**  \n  \nReturns user info and a JWT token to authenticate further API requests.\n\n```\n{\n  \"status\": \"success\",\n  \"message\": \"Logged in successfully\",\n  \"data\": {\n    \"user\": {\n      \"_id\": \"6701234f2b1a8b21e9f3faaa\",\n      \"name\": \"Mohamed Baraka\",\n      \"email\": \"barakamohamed946@gmail.com\",\n      \"phone\": \"01096339820\",\n      \"isActive\": true\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n  }\n}\n\n ```\n\n---\n\n**❌ Error Responses**\n\n| Status Code | Description | Example |\n| --- | --- | --- |\n| `400` | Missing required fields | `{ \"status\": \"error\", \"message\": \"Email and password are required\" }` |\n| `401` | Invalid credentials | `{ \"status\": \"error\", \"message\": \"Invalid email or password\" }` |\n| `403` | User deactivated or not verified | `{ \"status\": \"error\", \"message\": \"Account is inactive\" }` |\n| `500` | Internal server error | `{ \"status\": \"error\", \"message\": \"Something went wrong\" }` |\n\n---\n\n### **Notes**\n\n- A valid **JWT** is returned upon successful login.\n    \n- Authorization: Bearer\n    \n- Tokens may have an expiry time; use `/auth/refresh-token` to obtain a new one.\n    \n- If login fails multiple times, temporary rate limiting may apply."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"otp\": \"697442\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/auth/verify-otp",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"verify-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mhmdahmdbusiness@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/request-otp",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"request-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Google Auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.json().token)\r",
+									"{\r",
+									"    pm.environment.set(\"JWT\", pm.response.json().token);\r",
+									"\r",
+									"}\r",
+									"\r",
+									"if(pm.response.json().refreshToken)\r",
+									"{\r",
+									"    pm.environment.set(\"REFRESH\", pm.response.json().refreshToken);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQ1NDNlMjFhMDI3M2VmYzY2YTQ3NTAwMDI0NDFjYjIxNTFjYjIzNWYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzMzc2MjA1NzY5NTItdWJqNGIwY2JodDRiNDc3NW9jaHV0MG45amZnMW44NmYuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIzMzc2MjA1NzY5NTItdWJqNGIwY2JodDRiNDc3NW9jaHV0MG45amZnMW44NmYuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDI3OTExMTkxOTI1MjA0OTgxNzkiLCJlbWFpbCI6ImFiZHVsbGFoa2FtZWw3NTBAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTc2NTQ0OTEwMywibmFtZSI6IkFiZHVsbGFoIEthbWVsIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0tlSHg0c0pKdHR3VVFndjJiQUxzSVJoc1VZZ2k1QXllcXM1RUhYcUNEUERZQW1DRDd5PXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkFiZHVsbGFoIiwiZmFtaWx5X25hbWUiOiJLYW1lbCIsImlhdCI6MTc2NTQ0OTQwMywiZXhwIjoxNzY1NDUzMDAzLCJqdGkiOiIwMDUyMWQ4NGNjNjhmZDhjZmRjYjI3MTY4NzlmNTZhYTAwNmUxZDYxIn0.NRQZOXHu9VTrSG5lDpbQoCyK5i-vdzV2TwTo6wXoE0IyID44bBNJ3htJb3wP5ky5QuLtF_RpVaj0WmIcte34NYQtw4vjnMRh-f0OhJla8ZhFxr7kZ2YKm6w5nFe5w043ycWh3Af8IseWbJMLRoRBzvSr2URPcbArOu0ms0-nSuFdAKRUpTc4nd1j1AyPO2f21UQT_FS14dcavUSLCnV-Iodgk5lVpdE_Qb2D6cz0c8ckQAgFFZOcXFH1SIW_tssK6UBOOFwLx4KVhT_yrtPi3_Y5l4sqk_SkMXKmlsvxmXDW_dCmPVbM-QkACB2TEvqE4MvGygPGmp3Rpq159IT61Q\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/google",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"google"
+							]
+						},
+						"description": "StartFragment\n\nAuthenticates an existing **Hash Plus** user using their registered email and password.  \n  \nUpon successful login, the API issues a **JWT access token** that grants the user access to protected routes like profile management, folders, and AI features.\n\nIf credentials are invalid, an appropriate error message is returned.\n\n---\n\n### **Request Body**\n\nSend a JSON object containing the user's credentials:\n\n| Field | Type | Required | Description |\n| --- | --- | --- | --- |\n| `email` | `string` | ✅ | The registered email address |\n| `password` | `string` | ✅ | The user’s password |\n\n### **Response**\n\n**✅ Success (200 OK)**  \n  \nReturns user info and a JWT token to authenticate further API requests.\n\n```\n{\n  \"status\": \"success\",\n  \"message\": \"Logged in successfully\",\n  \"data\": {\n    \"user\": {\n      \"_id\": \"6701234f2b1a8b21e9f3faaa\",\n      \"name\": \"Mohamed Baraka\",\n      \"email\": \"barakamohamed946@gmail.com\",\n      \"phone\": \"01096339820\",\n      \"isActive\": true\n    },\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n  }\n}\n\n ```\n\n---\n\n**❌ Error Responses**\n\n| Status Code | Description | Example |\n| --- | --- | --- |\n| `400` | Missing required fields | `{ \"status\": \"error\", \"message\": \"Email and password are required\" }` |\n| `401` | Invalid credentials | `{ \"status\": \"error\", \"message\": \"Invalid email or password\" }` |\n| `403` | User deactivated or not verified | `{ \"status\": \"error\", \"message\": \"Account is inactive\" }` |\n| `500` | Internal server error | `{ \"status\": \"error\", \"message\": \"Something went wrong\" }` |\n\n---\n\n### **Notes**\n\n- A valid **JWT** is returned upon successful login.\n    \n- Authorization: Bearer\n    \n- Tokens may have an expiry time; use `/auth/refresh-token` to obtain a new one.\n    \n- If login fails multiple times, temporary rate limiting may apply."
+					},
+					"response": []
+				},
+				{
+					"name": "Log Out",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/auth/logout",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logs out the currently authenticated user by invalidating their **JWT access token** (or clearing the authentication cookie, depending on implementation).  \n  \nThis ensures that the token can no longer be used to access protected resources like user profiles or folders.\n\nThe client should delete or remove the stored token after a successful logout.\n\n---\n\n### **Request Headers**\n\n| Header | Value | Required | Description |\n| --- | --- | --- | --- |\n| `Authorization` | `Bearer` | ✅ | The JWT token obtained from login |\n\n---\n\n### **Response**\n\n**✅ Success (200 OK)**\n\n```\n{\n  \"status\": \"success\",\n  \"message\": \"Logged out successfully\"\n}\n\n ```\n\n---\n\n**❌ Error Responses**\n\n| Status Code | Description | Example |\n| --- | --- | --- |\n| `401` | Missing or invalid token | `{ \"status\": \"error\", \"message\": \"Unauthorized - Invalid or expired token\" }` |\n| `500` | Internal server error | `{ \"status\": \"error\", \"message\": \"Something went wrong\" }` |\n\n---\n\n### **Notes**\n\n- Logging out does **not** delete the user’s account.\n    \n- The token must be included in the **Authorization** header to identify which user is logging out.\n    \n- After logout, users must log in again to get a new token.\n    \n- If you’re using **HTTP-only cookies** for tokens, the server will automatically clear them on logout."
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-refresh-token",
+								"value": "{{REFRESH}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/refresh-token",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh-token"
+							]
+						},
+						"description": "Generates a new **JWT access token** using a valid **refresh token**.\n\nThis allows users to maintain an active session without having to log in again when the access token expires.\n\nThe refresh token is typically sent in the **request body** or as an **HTTP-only cookie** depending on your implementation.\n\n---\n\n### **Request Headers**\n\n```\nAuthorization: Bearer <refresh_token>\n\n ```\n\n### **Response**\n\n**✅ Success (200 OK)**\n\n```\n{\n  \"status\": \"success\",\n  \"message\": \"Access token refreshed successfully\",\n  \"data\": {\n    \"token\": \"new_jwt_access_token_here\"\n  }\n}\n\n ```\n\n---\n\n**❌ Error Responses**\n\n| Status Code | Description | Example |\n| --- | --- | --- |\n| `401` | Missing, invalid, or expired refresh token | `{ \"status\": \"error\", \"message\": \"Unauthorized - Invalid or expired refresh token\" }` |\n| `403` | Refresh token has been revoked | `{ \"status\": \"error\", \"message\": \"Forbidden - Refresh token revoked\" }` |\n| `500` | Internal server error | `{ \"status\": \"error\", \"message\": \"Something went wrong\" }` |\n\n---\n\n### **Notes**\n\n- Refresh tokens are **long-lived** compared to access tokens.\n    \n- Always store refresh tokens securely (e.g., HTTP-only cookies or secure storage).\n    \n- Using a refresh token automatically invalidates the previous access token if your backend implements token rotation.\n    \n- If the refresh token is invalid or expired, the user must log in again."
+					},
+					"response": []
+				},
+				{
+					"name": "forgot password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"barakamohamed946@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/forgot-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"forgot-password"
+							]
+						},
+						"description": "**Description:**\n\nSends a password reset code to the user’s registered email.\n\nUse this endpoint when a user forgets their password. The reset code will be required to verify the user before resetting the password.\n\n---\n\n### **Response**\n\n**✅ Success (200 OK)**\n\n```\n{\n  \"status\": \"success\",\n  \"message\": \"Reset code sent to your email\"\n}\n\n ```\n\n**❌ Error Responses**\n\n| Status Code | Description | Example |\n| --- | --- | --- |\n| 404 | Email not registered | `{ \"status\": \"error\", \"message\": \"User with this email does not exist\" }` |\n| 500 | Server error | `{ \"status\": \"error\", \"message\": \"Something went wrong\" }` |"
+					},
+					"response": []
+				},
+				{
+					"name": "verify reset code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"resetCode\":\"470043\"\r\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/verify-reset-code",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"verify-reset-code"
+							]
+						},
+						"description": "**Description:**  \n  \nVerifies the reset code sent to the user’s email.  \n  \nThis ensures that the user requesting the password reset owns the email account.\n\n---\n\n### **Request Body**\n\n```\n{\n  \"resetCode\": \"310639\"\n}\n\n ```\n\n---\n\n### **Response**\n\n**✅ Success (200 OK)**\n\n```\n{\n  \"status\": \"success\",\n  \"message\": \"Reset code verified successfully\"\n}\n\n ```\n\n**❌ Error Responses**\n\n| Status Code | Description | Example |\n| --- | --- | --- |\n| 400 | Invalid or expired code | `{ \"status\": \"error\", \"message\": \"Reset code is invalid or expired\" }` |\n| 404 | User not found | `{ \"status\": \"error\", \"message\": \"User not found\" }` |\n| 500 | Server error | `{ \"status\": \"error\", \"message\": \"Something went wrong\" }` |"
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.json().token)\r",
+									"{\r",
+									"    pm.environment.set(\"JWT\", pm.response.json().token);\r",
+									"\r",
+									"}\r",
+									"\r",
+									"if(pm.response.json().refreshToken)\r",
+									"{\r",
+									"    pm.environment.set(\"REFRESH\", pm.response.json().refreshToken);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"barakamohamed946@gmail.com\",\r\n    \"newPassword\": \"barakamohamed946#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/reset-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"reset-password"
+							]
+						},
+						"description": "**Description:**  \n  \nAllows the user to set a new password after verifying the reset code.  \n  \nOnce the password is reset, the user can log in with the new password.\n\n---\n\n### **Request Body**\n\n```\n{\n  \"newPassword\": \"MohamedBaraka0#\"\n}\n\n ```\n\n---\n\n### **Response**\n\n**✅ Success (200 OK)**\n\n```\n{\n  \"status\": \"success\",\n  \"message\": \"Password reset successfully\"\n}\n\n ```\n\n**❌ Error Responses**\n\n| Status Code | Description | Example |\n| --- | --- | --- |\n| 400 | Missing or weak password | `{ \"status\": \"error\", \"message\": \"New password does not meet security requirements\" }` |\n| 401 | Unauthorized (if reset code not verified) | `{ \"status\": \"error\", \"message\": \"Reset code not verified\" }` |\n| 500 | Server error | `{ \"status\": \"error\", \"message\": \"Something went wrong\" }` |\n\n---\n\n### **Notes**\n\n- The **reset code** is valid for a limited time (e.g., 10–15 minutes).\n    \n- Passwords are securely hashed before being stored.\n    \n- Users must **verify the reset code** before calling `/reset-password`.\n    \n- Encourage users to choose a strong password with uppercase, lowercase, numbers, and symbols."
+					},
+					"response": []
+				}
+			],
+			"description": "The **Hash Plus API** uses **JWT (JSON Web Tokens)** for authentication and authorization."
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Get My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/profiles",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles"
+							]
+						},
+						"description": "Summary\nRetrieve the authenticated user's profile.\n\nMethod and URL\nGET {{URL}}/api/v1/profiles\n\nAuthentication\n- Requires Bearer JWT in the Authorization header.\n- Variable {{JWT}} should contain a valid token. Example header: Authorization: Bearer {{JWT}}.\n\nPath and Query Parameters\n- None. This endpoint returns the profile for the calling user based on the token.\n\nHeaders\n- Authorization: Bearer {{JWT}}\n- Accept: application/json (recommended)\n\nRequest Body\n- None.\n\nResponses\n- 200 OK: Returns the current user's profile object.\n  Example shape (may vary):\n  {\n    \"id\": \"string\",\n    \"email\": \"user@example.com\",\n    \"name\": \"string\",\n    \"roles\": [\"user\"],\n    \"createdAt\": \"2024-01-01T00:00:00.000Z\"\n  }\n- 401 Unauthorized: Missing or invalid token. Ensure {{JWT}} is set and not expired.\n- 403 Forbidden: Token valid but lacks permission to access the profile.\n- 5xx Server Error: Unexpected error on the server.\n\nNotes\n- This request uses environment variables {{URL}} and {{JWT}} from 'Dev Environment'.\n- To test different users, switch the {{JWT}} value in the active environment.\n- If the API supports pagination or expansion, add query parameters as needed.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Profiles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/profiles/all",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"all"
+							]
+						},
+						"description": "Endpoint: GET {{URL}}/api/v1/profiles/all\n\nPurpose\n- Retrieve a paginated list of all user profiles.\n\nAuthentication\n- Type: Bearer token\n- Source: {{JWT}} (from active environment)\n- How to set: In the Dev Environment, set JWT to a valid access token. The request should use Authorization: Bearer {{JWT}} (inherit from folder/collection if configured).\n\nPath & Query Parameters\n- Path: /api/v1/profiles/all\n- Query params (optional):\n  - page: number (default 1) – page index to retrieve\n  - limit: number (default 20) – number of items per page\n  - search: string – free-text search across profile fields\n  - sortBy: string – field to sort by (e.g., createdAt, name)\n  - order: string – asc | desc (default desc)\n\nHeaders\n- Authorization: Bearer {{JWT}}\n- Accept: application/json\n\nSample Responses\n- 200 OK\n{\n  \"success\": true,\n  \"data\": [\n    { \"id\": \"p_123\", \"name\": \"Jane Doe\", \"email\": \"jane@example.com\" }\n  ],\n  \"page\": 1,\n  \"limit\": 20,\n  \"total\": 125\n}\n\n- 401 Unauthorized\n{\n  \"success\": false,\n  \"message\": \"Invalid or missing token\"\n}\n\n- 403 Forbidden\n{\n  \"success\": false,\n  \"message\": \"Insufficient permissions\"\n}\n\n- 500 Internal Server Error\n{\n  \"success\": false,\n  \"message\": \"Something went wrong\"\n}\n\nTest Ideas (Postman Tests)\n- Auth: Assert status 401 when JWT is empty/invalid; 200 when valid.\n- Schema: Validate data items contain id, name, email.\n- Pagination: When page=2&limit=5, assert length(data) <= 5 and page == 2.\n- Sorting: With sortBy=name&order=asc, assert data is sorted ascending by name.\n- Performance: Assert response time < 1000 ms.\n- Security: Ensure sensitive fields (e.g., password, tokens) are not present.\n\nNotes\n- This request uses variables from the Dev Environment: {{URL}} and {{JWT}}. Ensure that environment is selected before sending."
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Profile Image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/profiles/profileImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"profileImage"
+							]
+						},
+						"description": "Retrieves the authenticated user's profile image.\n\nMethod: GET\nURL: {{URL}}/api/v1/profiles/profileImage\n\nAuthentication:\n- Requires a valid JWT. Ensure the {{JWT}} variable in the active environment contains a bearer token.\n- Send the header: Authorization: Bearer {{JWT}}\n\nHeaders:\n- Authorization: Bearer {{JWT}} (required)\n- Accept: image/* (optional, defaults to server's image content type)\n\nQuery Parameters:\n- None.\n\nRequest Body:\n- None.\n\nResponses:\n- 200 OK: Returns the user's profile image as a binary image stream. The Content-Type will reflect the stored image format (e.g., image/png, image/jpeg).\n- 401 Unauthorized: Missing or invalid token.\n- 404 Not Found: No profile image associated with the user.\n- 5xx: Server error.\n\nUsage Notes:\n- Use the Send and Download option in Postman to save the image locally.\n- To preview inline in Postman, check the Visualize or Image viewer when available based on the response content type.\n\nExample cURL:\n```\ncurl -X GET \"{{URL}}/api/v1/profiles/profileImage\" \\\n  -H \"Authorization: Bearer {{JWT}}\" \\\n  -H \"Accept: image/*\"\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Profile isActive",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/profiles/isActive/69a0997d1256ef0a25940a96",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"isActive",
+								"69a0997d1256ef0a25940a96"
+							]
+						},
+						"description": "Overview\nToggle the 'isActive' state of a user profile.\n\nMethod and URL\nPATCH {{URL}}/api/v1/profiles/isActive/:profileId\n\nPath Parameters\n- profileId (string) — Unique identifier of the profile to toggle. Example: 69074f97652cd69d9083dc2b\n\nHeaders\n- Authorization: Bearer {{JWT}} (required)\n- Content-Type: application/json (no body is required)\n\nRequest Body\nThis endpoint does not require a request body.\n\nBehavior\n- Toggles the profile's isActive flag from true to false or false to true.\n- Returns the updated profile metadata.\n\nSuccess Response (200)\nExample\n{\n  \"success\": true,\n  \"message\": \"Profile activation status updated\",\n  \"data\": {\n    \"id\": \"69074f97652cd69d9083dc2b\",\n    \"isActive\": true,\n    \"updatedAt\": \"2025-01-01T12:00:00.000Z\"\n  }\n}\n\nPossible Errors\n- 400 Bad Request — Invalid profileId format.\n- 401 Unauthorized — Missing or invalid JWT token.\n- 403 Forbidden — Authenticated user not permitted to toggle this profile.\n- 404 Not Found — Profile not found.\n- 409 Conflict — Toggle not permitted due to current state or constraints.\n- 500 Internal Server Error — Unexpected error on server.\n\nNotes\n- Ensure {{URL}} and {{JWT}} are set in the active environment (Dev Environment).\n- If your API uses role-based access control, only privileged roles may perform this action.\n- Audit trails, if enabled, should record the previous and new values of isActive."
+					},
+					"response": []
+				},
+				{
+					"name": "Update My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mohamed Baraka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/profiles",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles"
+							]
+						},
+						"description": "Overview\nUpdate the authenticated user profile.\n\nMethod & URL\nPATCH {{URL}}/api/v1/profiles\n\nAuthentication\nBearer JWT is required. Set the Authorization header to `Bearer {{JWT}}`.\n\nHeaders\n- Content-Type: application/json\n- Authorization: Bearer {{JWT}}\n\nRequest Body (JSON)\nSend only the fields you wish to update.\n\nSchema:\n{\n  \"name\": string,               // optional\n  \"country\": string             // optional\n}\n\nExample:\n{\n  \"name\": \"Baraka Updated bbb\"\n  // \"country\": \"Egypt\"\n}\n\nBehavior\n- Partial update: unspecified fields remain unchanged.\n- Server validates allowed fields; unknown fields are ignored or rejected based on server rules.\n\nResponses\n- 200 OK: Profile updated successfully. Returns the updated profile resource.\n- 400 Bad Request: Invalid payload (e.g., wrong types or disallowed fields).\n- 401 Unauthorized: Missing or invalid JWT.\n- 403 Forbidden: Authenticated but not permitted to update this profile.\n- 404 Not Found: Profile not found for the authenticated user.\n- 422 Unprocessable Entity: Validation failed (e.g., name length).\n- 500 Internal Server Error: Unexpected server error.\n\nSuccess Response Example (200):\n{\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"Baraka Updated bbb\",\n    \"country\": \"Egypt\",\n    \"updatedAt\": \"2025-01-15T10:20:30.000Z\"\n  }\n}\n\nError Response Example (401):\n{\n  \"status\": \"fail\",\n  \"message\": \"Unauthorized\"\n}\n\nNotes\n- Ensure {{URL}} and {{JWT}} are set in the active environment (Dev Environment).\n- Use this request as part of an authenticated user flow.\n- If you need deterministic tests, save an example after a successful run to use with mock servers."
+					},
+					"response": []
+				},
+				{
+					"name": "Update My Profile Image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profileImage",
+									"type": "file",
+									"src": "postman-cloud:///1eed2a33-2555-4760-83f1-ca5b2b1a8140"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/profiles/profileImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"profileImage"
+							]
+						},
+						"description": "Purpose\nUpload or replace the currently authenticated user’s profile image.\n\nMethod and URL\nPATCH {{URL}}/api/v1/profiles/profileImage\n\nAuthentication\n- Type: Bearer Token (JWT)\n- Source: {{JWT}} (from active environment)\n\nRequired Headers\n- Authorization: Bearer {{JWT}}\n- Content-Type: multipart/form-data (automatically set by Postman when using form-data body)\n\nBody (form-data)\n- image (file, required): The image file to upload as the profile picture. Supported types typically include JPG, PNG, or WEBP. Recommended max size per your server limits.\n\nNotes\n- This request must use body type: form-data.\n- Ensure the Authorization header is enabled and the JWT in the active environment is valid and unexpired.\n- Server may perform validation (file size, mime type). On failure, a 4xx response is returned with error details.\n\nSample Responses\n- 200 OK\n{\n  \"success\": true,\n  \"message\": \"Profile image updated successfully\",\n  \"data\": {\n    \"profileImageUrl\": \"https://cdn.example.com/users/123/profile.jpg\"\n  }\n}\n\n- 400 Bad Request (example)\n{\n  \"success\": false,\n  \"message\": \"Invalid file type. Allowed: jpg, png, webp\"\n}\n\n- 401 Unauthorized (example)\n{\n  \"success\": false,\n  \"message\": \"Invalid or expired token\"\n}\n\n- 413 Payload Too Large (example)\n{\n  \"success\": false,\n  \"message\": \"File size exceeds limit\"\n}\n\nTroubleshooting\n- If you see 401, refresh {{JWT}} in the environment.\n- If Content-Type is not multipart/form-data, switch body type to form-data and add the image file field.\n- Verify {{URL}} points to the correct environment (e.g., dev/staging/prod)."
+					},
+					"response": []
+				},
+				{
+					"name": "Change My Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.json().token){pm.environment.set(\"JWT\", pm.response.json().token);}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\":\"mhmdahmdbusines@\",\r\n    \"newPassword\":\"mhmdahmdbusines\",\r\n    \"confirmNewPassword\":\"mhmdahmdbusines\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/profiles/change-password",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"change-password"
+							]
+						},
+						"description": "Summary\nChange the authenticated user's password.\n\nPurpose\nAllows a logged-in user to update their account password by providing the current password and setting a new one.\n\nMethod and URL\nPATCH {{URL}}/api/v1/profiles/change-password\n\nAuthentication\nType: Bearer Token\nHeader: Authorization: Bearer {{JWT}}\nNotes: Ensure the Dev Environment has JWT set from a successful login or a previous response.\n\nRequest Body\nContent-Type: application/json\nSchema:\n- currentPassword: string - Required. The user's existing password.\n- newPassword: string - Required. The new password that meets your server's password policy (e.g., min length, complexity).\n- confirmNewPassword: string - Required. Must exactly match newPassword.\nValidation notes:\n- newPassword and confirmNewPassword must match.\n- Server may enforce minimum length and complexity requirements.\n- Current password must be correct.\nExample:\n{\n  \"currentPassword\": \"exampleCurrent#123\",\n  \"newPassword\": \"NewStronger#456\",\n  \"confirmNewPassword\": \"NewStronger#456\"\n}\n\nResponses\n200 OK\nDescription: Password changed successfully. Some implementations may return a refreshed JWT.\nExample:\n{\n  \"message\": \"Password updated\",\n  \"token\": \"<optional-new-jwt>\"\n}\n\n400 Bad Request\nDescription: Validation error (e.g., passwords don't match or do not meet policy).\nExample:\n{\n  \"error\": \"ValidationError\",\n  \"details\": [\n    \"confirmNewPassword must match newPassword\"\n  ]\n}\n\n401 Unauthorized\nDescription: Missing or invalid JWT.\nExample:\n{\n  \"error\": \"Unauthorized\"\n}\n\n403 Forbidden\nDescription: Current password incorrect or user not allowed to perform this action.\nExample:\n{\n  \"error\": \"Forbidden\",\n  \"message\": \"Current password is incorrect\"\n}\n\nPost-response behavior\nIf the response JSON contains token, the environment variable JWT is automatically updated via the existing test script.\n\nNotes\n- Use environment variable {{URL}} to target the desired server.\n- Keep your passwords secure; do not commit real credentials to version control.\n- Consider logging out other sessions after password change if supported by the backend."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove My Profile Image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/profiles/profileImage",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles",
+								"profileImage"
+							]
+						},
+						"description": "Purpose\n- Permanently removes the authenticated user's profile image from their account.\n\nEndpoint\n- Method: DELETE\n- URL: `{{URL}}/api/v1/profiles/profileImage`\n\nAuthentication\n- Requires a valid JSON Web Token (JWT).\n- Include the token in the Authorization header as: `Authorization: Bearer {{JWT}}`.\n\nPath & Query Parameters\n- None.\n\nRequest Body\n- None.\n\nHeaders\n- Authorization: Bearer {{JWT}}\n- Content-Type is not required as there is no body.\n\nEnvironment Variables\n- `{{URL}}` should point to your API base URL in the active environment (e.g., Dev Environment).\n- `{{JWT}}` should contain a valid access token for the signed-in user.\n\nResponses\n- 200 OK: Profile image removed successfully. The response may include a message or the updated profile resource.\n- 204 No Content: Profile image removed successfully with no response body.\n- 401 Unauthorized: Missing/invalid token. Ensure `{{JWT}}` is set and not expired.\n- 403 Forbidden: Authenticated but not allowed to modify this profile image.\n- 404 Not Found: No profile image exists to remove.\n- 429 Too Many Requests: Rate limit exceeded. Retry after the indicated time.\n- 5xx Server Error: Unexpected server error.\n\nNotes\n- This action is irreversible; you will need to upload a new image to restore one.\n- Ensure the active environment (e.g., Dev Environment) defines `URL` and `JWT` variables.\n- Typical workflow: upload image -> verify -> delete (this request).\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove My Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/profiles",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"profiles"
+							]
+						},
+						"description": "Endpoint: DELETE {{URL}}/api/v1/profiles\n\nSummary\n- Permanently removes the authenticated user's profile. This action is irreversible.\n\nAuthorization\n- Requires a valid JWT access token.\n- Send the token in the Authorization header as: Bearer {{JWT}}.\n\nRequest\n- Method: DELETE\n- URL: {{URL}}/api/v1/profiles\n- Body: None\n\nExpected Responses\n- 200 OK: Profile successfully removed. Response may include a confirmation message or the deleted resource metadata.\n- 204 No Content: Profile removed, no response body.\n- 401 Unauthorized: Missing or invalid token.\n- 403 Forbidden: Token valid but not permitted to delete this profile.\n- 404 Not Found: Profile does not exist.\n\nHeaders\n- Authorization: Bearer {{JWT}}\n- Content-Type: application/json (optional; no body is required).\n\nNotes\n- This operation typically soft-deletes or hard-deletes based on server implementation. Confirm retention policies before using in production.\n- This request has no pre-request or test scripts currently.\n\nUsage\n1) Ensure the 'Dev Environment' is active and variables URL and JWT are set.\n2) Click Send. Verify the status code and server message.\n\nSafety\n- Use with caution in non-production environments first. Consider backing up user data if applicable."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "create category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"برمجة\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/categories",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get categories",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/categories",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get category by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/categories/69cd4b18864399f4dd71956c",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"69cd4b18864399f4dd71956c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"برمجة\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/categories/69cd4b18864399f4dd71956c",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"69cd4b18864399f4dd71956c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete category by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Development\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/categories/69a73517a43b42513e42e572",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								"69a73517a43b42513e42e572"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contents",
+			"item": [
+				{
+					"name": "create content",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"contentType\": \"course\", // [\"course\",\"bootcamp\"]\r\n//     \"title\": \"كورس برمجة 1\",\r\n//     \"category\": \"69cd4b18864399f4dd71956c\",\r\n//     \"instructor\": \"69cd4a00864399f4dd71955a\",\r\n//     \"description\": \"description\",\r\n//     \"learningOutcomes\": [\r\n//         \"learningOutcomes, learningOutcomes\"\r\n//     ],\r\n//     \"prerequisites\": [\r\n//         \"prerequisites, prerequisites\"\r\n//     ],\r\n//     \"welcomeMessage\": \"welcomeMessage\",\r\n//     \"congratulationsMessage\": \"congratulationsMessage\",\r\n//     \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n//     \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n//     \"materials\": [\r\n//         \"materials\",\r\n//         \"materials\",\r\n//         \"materials\"\r\n//     ],\r\n//     \"price\": {\r\n//         \"amount\": 299.99,\r\n//         \"currency\": \"SAR\"\r\n//     },\r\n//     \"thumbnail\": \"thumbnail\",\r\n//     \"welcomeVideo\": \"welcomeVideo\"\r\n// }\r\n\r\n{\r\n    \"contentType\": \"bootcamp\", // [\"course\",\"bootcamp\"]\r\n    \"title\": \"معسكر تصميم 1\",\r\n    \"category\": \"69a734afa43b42513e42e558\",\r\n    \"instructor\": \"69b9cd36eac491d75031c962\",\r\n    \"description\": \"description\",\r\n    \"learningOutcomes\": [\r\n        \"learningOutcomes, learningOutcomes\"\r\n    ],\r\n    \"prerequisites\": [\r\n        \"prerequisites, prerequisites\"\r\n    ],\r\n    \"welcomeMessage\": \"welcomeMessage\",\r\n    \"congratulationsMessage\": \"congratulationsMessage\",\r\n    \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n    \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n    \"materials\": [\r\n        \"materials\",\r\n        \"materials\",\r\n        \"materials\"\r\n    ],\r\n    \"price\": {\r\n        \"amount\": 299.99,\r\n        \"currency\": \"SAR\"\r\n    },\r\n    \"thumbnail\": \"thumbnail\",\r\n    \"welcomeVideo\": \"welcomeVideo\",\r\n    \"startDate\": \"2026-04-01\",\r\n    \"endDate\": \"2026-08-01\",\r\n    \"totalProjects\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/contents",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get contents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/contents",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get content by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/contents/69cd4c9d5169d542ebfbf5fb",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								"69cd4c9d5169d542ebfbf5fb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update content by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"معسكر برمجة 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/contents/69cd4c9d5169d542ebfbf5fb",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								"69cd4c9d5169d542ebfbf5fb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete content by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Development\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/contents/69cd4c745169d542ebfbf5ed",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								"69cd4c745169d542ebfbf5ed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Modules",
+			"item": [
+				{
+					"name": "get course module by id (for develpoment only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"modules",
+								":moduleId"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": "69cd4b8b864399f4dd71957c"
+								},
+								{
+									"key": "moduleId",
+									"value": "69cd60d7c85448e00472a419"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get course module by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/course",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"modules",
+								":moduleId",
+								"course"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": ""
+								},
+								{
+									"key": "moduleId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get bootcamp module by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/bootcamp",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"modules",
+								":moduleId",
+								"bootcamp"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": ""
+								},
+								{
+									"key": "moduleId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create course module",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"moduleType\": \"link\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"module (link)\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"url\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"url\",\r\n        \"imageUrl\": \"imageUrl\",\r\n        \"description\": \"description\"\r\n    },\r\n    \"linkData\": {\r\n        \"url\": \"url\",\r\n        \"description\": \"description\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/modules/course",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"modules",
+								"course"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update course module by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"moduleType\": \"link\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"module (link) updated\",\r\n    \"description\": \"description updated\",\r\n    \"videoData\": {\r\n        \"url\": \"url updated\",\r\n        \"key\": \"key updated\",\r\n        \"uploadId\": \"123\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a updated\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a updated\"\r\n        }\r\n    ],\r\n    \"taskData\": {\r\n        \"url\": \"url updated\",\r\n        \"imageUrl\": \"imageUrl updated\",\r\n        \"description\": \"description updated\"\r\n    },\r\n    \"linkData\": {\r\n        \"url\": \"url updated\",\r\n        \"description\": \"description updated\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/course",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"modules",
+								":moduleId",
+								"course"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": ""
+								},
+								{
+									"key": "moduleId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete course module by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Development\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/course",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"modules",
+								":moduleId",
+								"course"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": ""
+								},
+								{
+									"key": "moduleId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create bootcamp module",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": {\r\n        \"url\": \"url\"\r\n    },\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/modules/bootcamp",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"modules",
+								"bootcamp"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update bootcamp module by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"module a updated\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": {\r\n        \"url\": \"url\"\r\n    },\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/bootcamp",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"modules",
+								":moduleId",
+								"bootcamp"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": ""
+								},
+								{
+									"key": "moduleId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete bootcamp module by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Development\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/bootcamp",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"modules",
+								":moduleId",
+								"bootcamp"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": ""
+								},
+								{
+									"key": "moduleId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "create review",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"review\": \"review b\",\r\n    \"rating\": 2,\r\n    \"user\": \"69cd4a00864399f4dd71955a\",\r\n    \"content\": \"69cd4c9d5169d542ebfbf5fb\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/reviews",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get reviews",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/reviews",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-rating",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get review by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Development\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/reviews/69cd4d6a3e79d92cd595f04c",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"69cd4d6a3e79d92cd595f04c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update review by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"rating\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/reviews/69cd4d8a3e79d92cd595f057",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"69cd4d8a3e79d92cd595f057"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete review by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/reviews/69cd4d8a3e79d92cd595f057",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"reviews",
+								"69cd4d8a3e79d92cd595f057"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "Start Upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fileName\": \"fileName\",\r\n    \"fileType\": \"fileType\",\r\n    \"userId\": \"userId\",\r\n    \"partsCount\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/uploads/multipart/start",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"uploads",
+								"multipart",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"key\": \"key\",\r\n    \"uploadId\": \"uploadId\",\r\n    \"parts\": [\r\n        {\r\n            \"PartNumber\": 1,\r\n            \"ETag\": \"ETag1\"\r\n        },\r\n        {\r\n            \"PartNumber\": 2,\r\n            \"ETag\": \"ETag2\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/uploads/multipart/complete",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"uploads",
+								"multipart",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Abort Upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"key\": \"key\",\r\n    \"uploadId\": \"uploadId\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/uploads/multipart/abort",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"uploads",
+								"multipart",
+								"abort"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"key\": \"key\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/v1/uploads/multipart/delete",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"uploads",
+								"multipart",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nested Routes",
+			"item": [
+				{
+					"name": "Get All Reviews For One Content",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/contents/:contentId/reviews",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"contents",
+								":contentId",
+								"reviews"
+							],
+							"variable": [
+								{
+									"key": "contentId",
+									"value": "69cd4b8b864399f4dd71957c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Contents For One Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/v1/categories/:categoryId/contents",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"categories",
+								":categoryId",
+								"contents"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "69cd4b18864399f4dd71956c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

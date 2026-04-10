@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,8 +10,15 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { Filter } from 'lucide-react';
+import { useShopFilterStore } from '@/store/useShopFilterStore';
 
-const ShopHeader = ({ selectedSort, setSelectedSort, setSidebarOpen }) => {
+const ShopHeader = ({ setSidebarOpen }) => {
+  const { filteredCourses, selectedSort, setSelectedSort, applyFilters } = useShopFilterStore();
+
+  useEffect(() => {
+    applyFilters();
+  }, [selectedSort]);
+
   return (
     <div className="w-full">
       <Card className="flex sm:flex-row justify-between w-full border-none shadow-none">
@@ -30,7 +37,7 @@ const ShopHeader = ({ selectedSort, setSelectedSort, setSidebarOpen }) => {
             تصفية
           </Button>
             <div className="flex items-center gap-1">
-                <Select dir={"rtl"} onValueChange={setSelectedSort}>
+                <Select dir={"rtl"} value={selectedSort || undefined} onValueChange={setSelectedSort}>
                     <SelectTrigger className="py-2 px-8 border-gray-800 rounded-full">
                         <SelectValue placeholder="ترتيب حسب" />
                     </SelectTrigger>
@@ -43,7 +50,7 @@ const ShopHeader = ({ selectedSort, setSelectedSort, setSidebarOpen }) => {
                         </SelectGroup>
                     </SelectContent>
                 </Select>
-                <p className="text-base text-muted-foreground">النتايج: 1720</p>
+                <p className="text-base text-muted-foreground whitespace-nowrap">النتائج: {filteredCourses.length}</p>
             </div>
         </div>
       </Card>
