@@ -60,7 +60,7 @@ const LoginForm = ({ role }) => {
         duration: 3000,
         classNames: "toast-success text-black mt-14",
       });
-      router.push("/");
+      router.push(role === "teacher" ? "/creator/home" : "/");
     } else {
       setLoading(false);
       toast.error(result.error, {

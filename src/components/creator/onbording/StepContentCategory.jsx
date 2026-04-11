@@ -15,29 +15,28 @@ import {
 } from "@/components/ui/select";
 import { getAllCategories } from "@/components/courses/CourseActions";
 
-const fallbackCategories = [
-  { _id: "design", name: "تصميم" },
-  { _id: "programming", name: "برمجة" },
-  { _id: "marketing", name: "تسويق" },
-  { _id: "business", name: "إدارة أعمال" },
-  { _id: "data", name: "علم البيانات" },
-  { _id: "ai", name: "ذكاء اصطناعي" },
-];
-
 export default function StepContentCategory({ form }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
+  const fetchCategories = async () => {
+    setLoading(true);
+    setError(false);
+    try {
       const res = await getAllCategories();
       if (res.success && res.data.data?.length > 0) {
         setCategories(res.data.data);
       } else {
-        setCategories(fallbackCategories);
+        setError(true);
       }
-      setLoading(false);
-    };
+    } catch {
+      setError(true);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
     fetchCategories();
   }, []);
 
@@ -62,30 +61,33 @@ export default function StepContentCategory({ form }) {
                 onValueChange={field.onChange}
                 value={field.value}
                 dir="rtl"
+                disabled={loading || error}
               >
                 <SelectTrigger className="max-w-xl mx-auto text-right py-6 px-5 text-base border-gray-200 rounded-xl">
-                  <SelectValue placeholder="اختر التصنيف" />
+                  <SelectValue placeholder={loading ? "جاري التحميل..." : "اختر التصنيف"} />
                 </SelectTrigger>
                 <SelectContent>
-                  {loading ? (
-                    <SelectItem value="loading" disabled>
-                      جاري التحميل...
+                  {categories.map((category) => (
+                    <SelectItem key={category._id} value={category._id}>
+                      {category.name}
                     </SelectItem>
-                  ) : categories.length > 0 ? (
-                    categories.map((category) => (
-                      <SelectItem key={category._id} value={category._id}>
-                        {category.name}
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <SelectItem value="empty" disabled>
-                      لا توجد تصنيفات
-                    </SelectItem>
-                  )}
+                  ))}
                 </SelectContent>
               </Select>
             </FormControl>
             <FormMessage />
+            {error && (
+              <p className="text-sm text-red-500 mt-2">
+                تعذر تحميل التصنيفات.{" "}
+                <button
+                  type="button"
+                  onClick={fetchCategories}
+                  className="text-primary hover:underline font-medium cursor-pointer"
+                >
+                  إعادة المحاولة
+                </button>
+              </p>
+            )}
           </FormItem>
         )}
       />

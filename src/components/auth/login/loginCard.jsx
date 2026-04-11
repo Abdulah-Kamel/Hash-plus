@@ -4,6 +4,7 @@ import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import RegisterForm from "@/components/auth/register/registerForm";
 import LoginForm from "@/components/auth/login/loginForm";
+import Link from "next/link";
 
 const LoginCard = () => {
     const [role, setRole] = React.useState("technician");

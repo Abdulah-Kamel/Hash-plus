@@ -163,6 +163,12 @@ const ContentBuilderPage = () => {
 
       {/* Body */}
       <div className="flex flex-1">
+        {/* Right Sidebar */}
+        <ContentBuilderSidebar
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+        />
+
         {/* Main Content */}
         <main className="flex-1 p-8">
           <div className="max-w-3xl mx-auto bg-white rounded-xl border border-gray-200 p-8">
@@ -181,12 +187,6 @@ const ContentBuilderPage = () => {
             )}
           </div>
         </main>
-
-        {/* Right Sidebar */}
-        <ContentBuilderSidebar
-          activeSection={activeSection}
-          onSectionChange={setActiveSection}
-        />
       </div>
     </div>
   );

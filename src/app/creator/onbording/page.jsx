@@ -19,6 +19,7 @@ const formSchema = z.object({
   }),
   estimateTime: z.string().min(1, "يرجى اختيار الوقت المتاح"),
   contentName: z.string().min(3, "يجب أن يكون الاسم 3 أحرف على الأقل"),
+  contentDescription: z.string().min(10, "يجب أن يكون الوصف 10 أحرف على الأقل"),
   contentCategory: z.string().min(1, "يرجى اختيار التصنيف"),
 });
 
@@ -34,6 +35,7 @@ const Page = () => {
       contentType: "",
       estimateTime: "",
       contentName: "",
+      contentDescription: "",
       contentCategory: "",
     },
   });
@@ -41,7 +43,7 @@ const Page = () => {
   const stepFields = {
     1: ["contentType"],
     2: ["estimateTime"],
-    3: ["contentName"],
+    3: ["contentName", "contentDescription"],
     4: ["contentCategory"],
   };
 
@@ -61,7 +63,7 @@ const Page = () => {
         contentType: data.contentType,
         title: data.contentName,
         category: data.contentCategory,
-        description: "",
+        description: data.contentDescription,
         learningOutcomes: [],
         prerequisites: [],
         level: "beginner",

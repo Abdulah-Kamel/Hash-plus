@@ -52,7 +52,7 @@ export async function getContentById(id) {
 }
 
 export async function createContent(data) {
-  const token = await cookies().get("token")?.value;
+  const token = await cookies().get("user-token")?.value;
   console.log(token);
   try {
     const res = await fetch(
@@ -81,4 +81,4 @@ export async function createContent(data) {
     return { success: false, error: "An unexpected error occurred." };
   }
 }
-// انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة اخرى
+//انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة اخرى
