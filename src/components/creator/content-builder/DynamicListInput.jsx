@@ -49,7 +49,7 @@ const DynamicListInput = ({
       <button
         type="button"
         onClick={onAdd}
-        className="flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium justify-end w-full pt-2 cursor-pointer"
+        className="flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium justify-end ms-auto pt-2 cursor-pointer"
       >
         <PlusCircle className="w-4 h-4" />
         <span>{addLabel}</span>

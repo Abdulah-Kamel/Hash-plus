@@ -47,7 +47,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export default function RichTextEditor() {
+export default function RichTextEditor({ value, onChange, placeholder = "اكتب المطلوب هنا" }) {
     const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false)
     const [linkUrl, setLinkUrl] = useState("")
     const [linkText, setLinkText] = useState("")
@@ -66,7 +66,12 @@ export default function RichTextEditor() {
                 openOnClick: false,
             }),
         ],
-        content: "<p>اكتب المطلوب هنا</p>",
+        content: value || `<p>${placeholder}</p>`,
+        onUpdate: ({ editor }) => {
+            if (onChange) {
+                onChange(editor.getHTML());
+            }
+        },
         editorProps: {
             attributes: {
                 class:

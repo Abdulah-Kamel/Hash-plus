@@ -10,7 +10,7 @@ export const handleLogin = async (data) => {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json; charset=utf-8",
             },
           },
         );
@@ -28,7 +28,7 @@ export const handleLogin = async (data) => {
             httpOnly: true,
             sameSite: "strict"
         })
-        cookie.set("user", JSON.stringify(final.data.user), {
+        cookie.set("user", JSON.stringify(final.data), {
             httpOnly: true,
             sameSite: "strict"
         })

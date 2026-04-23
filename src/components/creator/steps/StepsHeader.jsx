@@ -1,10 +1,13 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import logo from "@/assets/logo.svg";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useRouter } from "next/navigation";
 
 const StepsHeader = ({ currentStep, totalSteps }) => {
+  const router = useRouter();
   return (
     <>
       {/* Header */}
@@ -26,6 +29,9 @@ const StepsHeader = ({ currentStep, totalSteps }) => {
           </div>
           <Button
             variant="outline"
+            onClick={() => {
+              router.push("/creator/home");
+            }}
             className="px-12 py-5 rounded-full text-primary hover:text-primary cursor-pointer"
           >
             الخروج

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import DynamicListInput from "./DynamicListInput";
+import DynamicListInput from "./DynamicListInput";``
 
 const TargetLearnersSection = ({
   learningOutcomes = [],
@@ -53,7 +53,6 @@ const TargetLearnersSection = ({
           onAdd={addOutcome}
           onRemove={removeOutcome}
           onChange={changeOutcome}
-          placeholder="احتراف التصميم"
           addLabel="أضف آخر"
           minItems={1}
         />
@@ -80,7 +79,6 @@ const TargetLearnersSection = ({
           onAdd={addPrerequisite}
           onRemove={removePrerequisite}
           onChange={changePrerequisite}
-          placeholder="معرفة قواعد تجربة المستخدم"
           addLabel="أضف آخر"
           minItems={1}
         />

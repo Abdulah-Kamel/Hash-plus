@@ -8,21 +8,24 @@ export function useAuth() {
 
   useEffect(() => {
     async function fetchUser() {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API}/api/auth/me`,
-        {
-          credentials: "include",
-        },
-      );
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data.user);
-        setToken(data.token);
-      } else {
+      try {
+        const { getSession } = await import("@/actions/authActions");
+        const session = await getSession();
+        if (session.success && session.user) {
+          setUser(session.user);
+          setToken(session.token);
+          console.log(session.user);
+        } else {
+          setUser(null);
+          setToken(null);
+        }
+      } catch (err) {
+        console.error("Failed to fetch session:", err);
         setUser(null);
         setToken(null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     fetchUser();
   }, []);

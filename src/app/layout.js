@@ -99,6 +99,10 @@ export default function RootLayout({ children }) {
   }, [path, isCreator]);
   return (
     <html lang="ar" dir="rtl" className={alexandria.variable}>
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body className="antialiased">
         <Toaster />
         {!isCreator ? (

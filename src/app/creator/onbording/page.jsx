@@ -64,11 +64,8 @@ const Page = () => {
         title: data.contentName,
         category: data.contentCategory,
         description: data.contentDescription,
-        learningOutcomes: [],
-        prerequisites: [],
         level: "beginner",
         language: "ar",
-        materials: [],
         price: {
           amount: 0,
           currency: "SAR",

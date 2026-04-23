@@ -25,12 +25,6 @@ const ContentBuilderTopBar = ({ title = "", onSave, isSaving = false }) => {
       {/* Left side - action buttons */}
       <div className="flex items-center gap-3">
         <Button
-          variant="outline"
-          className="px-6 rounded-full text-primary border-primary hover:bg-primary/5 cursor-pointer"
-        >
-          عرض المحتوى
-        </Button>
-        <Button
           onClick={onSave}
           disabled={isSaving}
           className="px-6 rounded-full bg-primary hover:bg-primary/90 text-white cursor-pointer"

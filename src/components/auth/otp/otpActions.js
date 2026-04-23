@@ -11,7 +11,7 @@ export const handleEmailConfirm = async (data) => {
         method: "POST",
         body: JSON.stringify({ email: user.email, ...data }),
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json; charset=utf-8",
         },
       },
     );
@@ -55,7 +55,7 @@ export const handleRequestOtp = async (email) => {
         method: "POST",
         body: JSON.stringify({ email: email }),
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json; charset=utf-8",
         },
       },
     );

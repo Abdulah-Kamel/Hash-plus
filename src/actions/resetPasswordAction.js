@@ -12,7 +12,7 @@ export const handleResetPassword = async (data) => {
             method: "POST",
             body: JSON.stringify({ email: userEmail, ...data }),
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/json; charset=utf-8",
             },
           },
         );

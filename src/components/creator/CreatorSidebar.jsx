@@ -79,71 +79,71 @@ const data = [
       },
     ],
   },
-  {
-    title: "الطلاب",
-    url: "/creator/students",
-    icon: GraduationCapIcon,
-    items: [
-      {
-        title: "جميع الطلاب",
-        url: "/creator/students",
-      },
-      {
-        title: "التقييمات",
-        url: "/creator/students/reviews",
-      },
-      {
-        title: "الرسائل",
-        url: "/creator/students/messages",
-      },
-    ],
-  },
-  {
-    title: "المراجعات",
-    url: "/creator/analytics",
-    icon: StarIcon,
-    items: [
-      {
-        title: "نظرة عامة",
-        url: "/creator/analytics",
-      },
-      {
-        title: "المبيعات",
-        url: "/creator/analytics/sales",
-      },
-      {
-        title: "الأداء",
-        url: "/creator/analytics/performance",
-      },
-      {
-        title: "التقارير",
-        url: "/creator/analytics/reports",
-      },
-    ],
-  },
-  {
-    title: "الارباح",
-    url: "/creator/analytics",
-    icon: ChartColumnBig,
-    items: [
-      {
-        title: "نظرة عامة",
-        url: "/creator/analytics",
-      },
-      {
-        title: "المبيعات",
-        url: "/creator/analytics/sales",
-      },
-      {
-        title: "الأداء",
-        url: "/creator/analytics/performance",
-      },
-      {
-        title: "التقارير",
-        url: "/creator/analytics/reports",
-      },
-    ],
-  },
+  // {
+  //   title: "الطلاب",
+  //   url: "/creator/students",
+  //   icon: GraduationCapIcon,
+  //   items: [
+  //     {
+  //       title: "جميع الطلاب",
+  //       url: "/creator/students",
+  //     },
+  //     {
+  //       title: "التقييمات",
+  //       url: "/creator/students/reviews",
+  //     },
+  //     {
+  //       title: "الرسائل",
+  //       url: "/creator/students/messages",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "المراجعات",
+  //   url: "/creator/analytics",
+  //   icon: StarIcon,
+  //   items: [
+  //     {
+  //       title: "نظرة عامة",
+  //       url: "/creator/analytics",
+  //     },
+  //     {
+  //       title: "المبيعات",
+  //       url: "/creator/analytics/sales",
+  //     },
+  //     {
+  //       title: "الأداء",
+  //       url: "/creator/analytics/performance",
+  //     },
+  //     {
+  //       title: "التقارير",
+  //       url: "/creator/analytics/reports",
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "الارباح",
+  //   url: "/creator/analytics",
+  //   icon: ChartColumnBig,
+  //   items: [
+  //     {
+  //       title: "نظرة عامة",
+  //       url: "/creator/analytics",
+  //     },
+  //     {
+  //       title: "المبيعات",
+  //       url: "/creator/analytics/sales",
+  //     },
+  //     {
+  //       title: "الأداء",
+  //       url: "/creator/analytics/performance",
+  //     },
+  //     {
+  //       title: "التقارير",
+  //       url: "/creator/analytics/reports",
+  //     },
+  //   ],
+  // },
 ];
 
 export function CreatorSidebar({ ...props }) {

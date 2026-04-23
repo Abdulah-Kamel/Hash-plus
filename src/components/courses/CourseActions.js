@@ -6,7 +6,7 @@ export async function getAllCourses() {
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json; charset=utf-8",
         },
       },
     );
@@ -33,7 +33,7 @@ export async function getAllCategories() {
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json; charset=utf-8",
         },
       },
     );

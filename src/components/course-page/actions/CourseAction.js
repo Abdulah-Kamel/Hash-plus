@@ -6,7 +6,7 @@ export async function getCourse(id) {
       {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json; charset=utf-8",
         },
       },
     );

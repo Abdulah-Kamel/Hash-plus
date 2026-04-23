@@ -9,7 +9,7 @@ export const handleRegister = async (data) => {
           method: "POST",
           body: JSON.stringify(data),
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
           },
         },
       );
@@ -28,7 +28,7 @@ export const handleRegister = async (data) => {
         httpOnly: true,
         sameSite: "strict",
       });
-      cookie.set("user", JSON.stringify(final.data), {
+      cookie.set("user", JSON.stringify(final.data.data), {
         httpOnly: true,
         sameSite: "strict",
       });
