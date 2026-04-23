@@ -52,7 +52,7 @@ import Link from "next/link";
 const data = [
   {
     title: "الرئيسية",
-    url: "/creator",
+    url: "/creator/home",
     icon: Home,
     isActive: true,
   },
