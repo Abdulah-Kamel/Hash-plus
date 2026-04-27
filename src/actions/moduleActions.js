@@ -1,6 +1,7 @@
 "use server";
+import { handleActionError } from "@/lib/handleActionError";
 
-import { cookies } from "next/headers";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 /**
  * Get a single module by ID (course type)
@@ -8,13 +9,10 @@ import { cookies } from "next/headers";
  */
 export async function getCourseModule(contentId, moduleId) {
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${contentId}/modules/${moduleId}/course`,
       {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
       },
     );
 
@@ -25,9 +23,7 @@ export async function getCourseModule(contentId, moduleId) {
 
     const final = await res.json();
     return { success: true, data: final };
-  } catch (err) {
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 
 /**
@@ -36,13 +32,10 @@ export async function getCourseModule(contentId, moduleId) {
  */
 export async function getBootcampModule(contentId, moduleId) {
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${contentId}/modules/${moduleId}/bootcamp`,
       {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
       },
     );
 
@@ -53,9 +46,7 @@ export async function getBootcampModule(contentId, moduleId) {
 
     const final = await res.json();
     return { success: true, data: final };
-  } catch (err) {
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 
 /**
@@ -73,16 +64,11 @@ export async function getModule(contentId, moduleId, contentType) {
  * POST /api/v1/contents/:contentId/modules/course
  */
 export async function createCourseModule(contentId, data) {
-  const token = (await cookies()).get("user-token")?.value;
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${contentId}/modules/course`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(data),
       },
     );
@@ -94,9 +80,7 @@ export async function createCourseModule(contentId, data) {
 
     const final = await res.json();
     return { success: true, data: final };
-  } catch (err) {
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 
 /**
@@ -104,16 +88,11 @@ export async function createCourseModule(contentId, data) {
  * PATCH /api/v1/contents/:contentId/modules/:moduleId/course
  */
 export async function updateCourseModule(contentId, moduleId, data) {
-  const token = (await cookies()).get("user-token")?.value;
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${contentId}/modules/${moduleId}/course`,
       {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(data),
       },
     );
@@ -125,9 +104,7 @@ export async function updateCourseModule(contentId, moduleId, data) {
 
     const final = await res.json();
     return { success: true, data: final };
-  } catch (err) {
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 
 /**
@@ -135,16 +112,11 @@ export async function updateCourseModule(contentId, moduleId, data) {
  * DELETE /api/v1/contents/:contentId/modules/:moduleId/course
  */
 export async function deleteCourseModule(contentId, moduleId) {
-  const token = (await cookies()).get("user-token")?.value;
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${contentId}/modules/${moduleId}/course`,
       {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${token}`,
-        },
       },
     );
 
@@ -155,9 +127,7 @@ export async function deleteCourseModule(contentId, moduleId) {
 
     const final = await res.json();
     return { success: true, data: final };
-  } catch (err) {
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 
 /**
@@ -165,16 +135,11 @@ export async function deleteCourseModule(contentId, moduleId) {
  * POST /api/v1/contents/:contentId/modules/bootcamp
  */
 export async function createBootcampModule(contentId, data) {
-  const token = (await cookies()).get("user-token")?.value;
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${contentId}/modules/bootcamp`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(data),
       },
     );
@@ -186,9 +151,7 @@ export async function createBootcampModule(contentId, data) {
 
     const final = await res.json();
     return { success: true, data: final };
-  } catch (err) {
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 
 /**
@@ -196,16 +159,11 @@ export async function createBootcampModule(contentId, data) {
  * PATCH /api/v1/contents/:contentId/modules/:moduleId/bootcamp
  */
 export async function updateBootcampModule(contentId, moduleId, data) {
-  const token = (await cookies()).get("user-token")?.value;
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${contentId}/modules/${moduleId}/bootcamp`,
       {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(data),
       },
     );
@@ -217,9 +175,7 @@ export async function updateBootcampModule(contentId, moduleId, data) {
 
     const final = await res.json();
     return { success: true, data: final };
-  } catch (err) {
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 
 /**
@@ -227,16 +183,11 @@ export async function updateBootcampModule(contentId, moduleId, data) {
  * DELETE /api/v1/contents/:contentId/modules/:moduleId/bootcamp
  */
 export async function deleteBootcampModule(contentId, moduleId) {
-  const token = (await cookies()).get("user-token")?.value;
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${contentId}/modules/${moduleId}/bootcamp`,
       {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${token}`,
-        },
       },
     );
 
@@ -247,7 +198,5 @@ export async function deleteBootcampModule(contentId, moduleId) {
 
     const final = await res.json();
     return { success: true, data: final };
-  } catch (err) {
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }

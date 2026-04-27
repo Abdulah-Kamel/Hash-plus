@@ -20,7 +20,7 @@ export function NavBar() {
 
           {/* Mobile: drawer trigger */}
           <button
-            className="lg:hidden inline-flex items-center justify-center p-2 w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            className="xl:hidden inline-flex items-center justify-center p-2 w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
             type="button"
             onClick={() => setMobileMenuOpen(true)}
             aria-controls="mobile-nav"

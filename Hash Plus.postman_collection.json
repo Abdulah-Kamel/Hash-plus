@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "34c52147-ac58-48fc-a9cc-46ca75e60698",
+    "_postman_id": "f5c4c4aa-9dc2-47f4-8460-4fa126f268d0",
     "name": "Hash Plus",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "44127010"
@@ -39,7 +39,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"barakamohamed946\",\r\n    \"email\": \"barakamohamed946@gmail.com\",\r\n    \"password\": \"barakamohamed946@\",\r\n    \"role\": \"student\" // enum([\"student\", \"instructor\"])\r\n}",
+              "raw": "{\r\n    \"name\": \"بركة الأدمن\",\r\n    \"email\": \"mob6640@gmail.com\",\r\n    \"password\": \"mob6640@\",\r\n    \"role\": \"student\" // enum([\"student\", \"instructor\"])\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -92,7 +92,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "// {\r\n//     \"email\": \"barakamohamed946@gmail.com\",\r\n//     \"password\": \"barakamohamed946@\"\r\n// }\r\n{\r\n    \"email\": \"mob6640@gmail.com\",\r\n    \"password\": \"mhmdahmdbusiness@\"\r\n}\r\n// {\r\n//     \"email\": \"mhmdahmdbusiness@gmail.com\",\r\n//     \"password\": \"mhmdahmdbusiness@\"\r\n// }",
+              "raw": "// instructor\r\n// {\r\n//     \"email\": \"barakamohamed946@gmail.com\",\r\n//     \"password\": \"barakamohamed946@\"\r\n// }\r\n\r\n// admin\r\n{\r\n    \"email\": \"mob6640@gmail.com\",\r\n    \"password\": \"mob6640@\"\r\n}\r\n\r\n// student\r\n// {\r\n//     \"email\": \"mhmdahmdbusiness@gmail.com\",\r\n//     \"password\": \"mhmdahmdbusiness@\"\r\n// }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -100,9 +100,9 @@
               }
             },
             "url": {
-              "raw": "{{URL}}/api/v1/auth/login",
+              "raw": "{{local}}/api/v1/auth/login",
               "host": [
-                "{{URL}}"
+                "{{local}}"
               ],
               "path": [
                 "api",
@@ -118,11 +118,21 @@
         {
           "name": "Verify OTP",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"otp\": \"454511\"\r\n}",
+              "raw": "{\r\n    \"email\": \"\",\r\n    \"otp\": \"509065\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -147,11 +157,21 @@
         {
           "name": "Request OTP",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"mhmdahmdbusiness@gmail.com\"\r\n}",
+              "raw": "{\r\n    \"email\": \"mob6640@gmail.com\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -353,7 +373,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"resetCode\":\"470043\"\r\n}   ",
+              "raw": "{\r\n    \"email\": \"\",\r\n    \"resetCode\": \"470043\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -454,9 +474,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{local}}/api/v1/profiles",
+              "raw": "{{URL}}/api/v1/profiles",
               "host": [
-                "{{local}}"
+                "{{URL}}"
               ],
               "path": [
                 "api",
@@ -516,7 +536,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"Mohamed Baraka\"\r\n}",
+              "raw": "{\r\n    \"name\": \"String\",\r\n    \"bio\": \"String\",\r\n    \"languages\": [\r\n        {\r\n            \"language\": \"String\",\r\n            \"proficiency\": \"String\"\r\n        }\r\n    ],\r\n    \"skills\": [\r\n        \"String\"\r\n    ],\r\n    \"links\": [\r\n        {\r\n            \"name\": \"String\",\r\n            \"url\": \"String\"\r\n        }\r\n    ],\r\n    \"experience\": [\r\n        {\r\n            \"company\": \"String\",\r\n            \"country\": \"String\",\r\n            \"city\": \"String\",\r\n            \"jobTitle\": \"String\",\r\n            \"jobType\": \"String\",\r\n            \"jobStyle\": \"String\",\r\n            \"startDate\": \"Date\",\r\n            \"endDate\": \"Date\",\r\n            \"skills\": [\r\n                \"String\"\r\n            ],\r\n            \"description\": \"String\",\r\n            \"isCurrent\": true\r\n        }\r\n    ],\r\n    \"education\": [\r\n        {\r\n            \"institution\": \"String\",\r\n            \"degree\": \"String\",\r\n            \"major\": \"String\",\r\n            \"startDate\": \"Date\",\r\n            \"endDate\": \"Date\",\r\n            \"description\": \"String\",\r\n            \"isCurrent\": true\r\n        }\r\n    ],\r\n    \"instructorDetails\": {\r\n        \"teachingStyle\": \"String\",\r\n        \"videoProfessionality\": \"String\",\r\n        \"targetAudience\": \"String\"\r\n    },\r\n    \"studentDetails\": {\r\n        \"projects\": [\r\n            {\r\n                \"title\": \"String\",\r\n                \"description\": \"String\",\r\n                \"roleInProject\": \"String\",\r\n                \"skillsUsed\": [\r\n                    \"String\"\r\n                ],\r\n                \"startDate\": \"Date\",\r\n                \"endDate\": \"Date\",\r\n                \"projectImageUrls\": [\r\n                    \"String\"\r\n                ]\r\n            }\r\n        ],\r\n        \"certificates\": [\r\n            {\r\n                \"name\": \"String\",\r\n                \"description\": \"String\",\r\n                \"contentId\": \"mongoose.Schema.Types.ObjectId\",\r\n                \"certificateUrl\": \"String\",\r\n                \"issuedAt\": \"Date\"\r\n            }\r\n        ]\r\n    }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -689,9 +709,9 @@
               "formdata": []
             },
             "url": {
-              "raw": "{{local}}/api/v1/profiles",
+              "raw": "{{URL}}/api/v1/profiles",
               "host": [
-                "{{local}}"
+                "{{URL}}"
               ],
               "path": [
                 "api",
@@ -774,7 +794,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{local}}/api/v1/categories/69cd4b18864399f4dd71956c",
+              "raw": "{{local}}/api/v1/categories/69daacd528001b96a9ceba93",
               "host": [
                 "{{local}}"
               ],
@@ -782,7 +802,7 @@
                 "api",
                 "v1",
                 "categories",
-                "69cd4b18864399f4dd71956c"
+                "69daacd528001b96a9ceba93"
               ]
             }
           },
@@ -801,11 +821,11 @@
                 }
               ]
             },
-            "method": "PUT",
+            "method": "PATCH",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"برمجة\"\r\n}",
+              "raw": "{\r\n    \"name\": \"updated!\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -813,7 +833,7 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/categories/69cd4b18864399f4dd71956c",
+              "raw": "{{local}}/api/v1/categories/69daacd528001b96a9ceba93",
               "host": [
                 "{{local}}"
               ],
@@ -821,7 +841,7 @@
                 "api",
                 "v1",
                 "categories",
-                "69cd4b18864399f4dd71956c"
+                "69daacd528001b96a9ceba93"
               ]
             }
           },
@@ -852,7 +872,7 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/categories/69a73517a43b42513e42e572",
+              "raw": "{{local}}/api/v1/categories/69daacd528001b96a9ceba93",
               "host": [
                 "{{local}}"
               ],
@@ -860,7 +880,7 @@
                 "api",
                 "v1",
                 "categories",
-                "69a73517a43b42513e42e572"
+                "69daacd528001b96a9ceba93"
               ]
             }
           },
@@ -888,7 +908,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"contentType\": \"course\", // [\"course\",\"bootcamp\"]\r\n    \"title\": \"كورس برمجة 1\",\r\n    \"category\": \"69cd4b18864399f4dd71956c\",\r\n    \"instructor\": \"69cd4a00864399f4dd71955a\",\r\n    \"description\": \"description\",\r\n    \"learningOutcomes\": [\r\n        \"learningOutcomes, learningOutcomes\"\r\n    ],\r\n    \"prerequisites\": [\r\n        \"prerequisites, prerequisites\"\r\n    ],\r\n    \"welcomeMessage\": \"welcomeMessage\",\r\n    \"congratulationsMessage\": \"congratulationsMessage\",\r\n    \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n    \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n    \"materials\": [\r\n        \"materials\",\r\n        \"materials\",\r\n        \"materials\"\r\n    ],\r\n    \"price\": {\r\n        \"amount\": 299.99,\r\n        \"currency\": \"SAR\"\r\n    },\r\n    \"thumbnail\": {\r\n        \"url\": \"\",\r\n        \"key\": \"\"\r\n    },\r\n    \"welcomeVideo\": {\r\n        \"url\": \"\",\r\n        \"key\": \"\",\r\n        \"size\": 300,\r\n        \"duration\": 30\r\n    },\r\n    \"finalProject\": {\r\n        \"title\": \"Final Project\",\r\n        \"description\": \"\",\r\n        \"tasks\": [\r\n            \"task a\",\r\n            \"task b\"\r\n        ],\r\n        \"materials\": [\r\n            \"a\",\r\n            \"b\"\r\n        ]\r\n    }\r\n}\r\n// {\r\n//     \"contentType\": \"bootcamp\", // [\"course\",\"bootcamp\"]\r\n//     \"title\": \"معسكر تصميم 1\",\r\n//     \"category\": \"69a734afa43b42513e42e558\",\r\n//     \"instructor\": \"69b9cd36eac491d75031c962\",\r\n//     \"description\": \"description\",\r\n//     \"learningOutcomes\": [\r\n//         \"learningOutcomes, learningOutcomes\"\r\n//     ],\r\n//     \"prerequisites\": [\r\n//         \"prerequisites, prerequisites\"\r\n//     ],\r\n//     \"welcomeMessage\": \"welcomeMessage\",\r\n//     \"congratulationsMessage\": \"congratulationsMessage\",\r\n//     \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n//     \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n//     \"materials\": [\r\n//         \"materials\",\r\n//         \"materials\",\r\n//         \"materials\"\r\n//     ],\r\n//     \"price\": {\r\n//         \"amount\": 299.99,\r\n//         \"currency\": \"SAR\"\r\n//     },\r\n//     \"thumbnail\": {\r\n//         \"url\": \"\",\r\n//         \"key\": \"\"\r\n//     },\r\n//     \"welcomeVideo\": {\r\n//         \"url\": \"\",\r\n//         \"key\": \"\",\r\n//         \"size\": 300,\r\n//         \"duration\": 30\r\n//     },\r\n//     \"finalProject\": {\r\n//         \"title\": \"Final Project\",\r\n//         \"description\": \"\",\r\n//         \"tasks\": [\r\n//             \"task a\",\r\n//             \"task b\"\r\n//         ],\r\n//         \"materials\": [\r\n//             \"a\",\r\n//             \"b\"\r\n//         ]\r\n//     },\r\n//     \"startDate\": \"2026-04-01\",\r\n//     \"endDate\": \"2026-08-01\",\r\n//     \"totalProjects\": 10\r\n// }",
+              "raw": "{\r\n    \"contentType\": \"course\", // [\"course\",\"bootcamp\"]\r\n    \"title\": \"كورس برمجة 4\",\r\n    \"category\": \"69cd4b18864399f4dd71956c\",\r\n    \"description\": \"description\",\r\n    \"instructor\": \"69cd4a00864399f4dd71955a\",\r\n    \"learningOutcomes\": [\r\n        \"learningOutcomes, learningOutcomes\"\r\n    ],\r\n    \"prerequisites\": [\r\n        \"prerequisites, prerequisites\"\r\n    ],\r\n    \"welcomeMessage\": \"welcomeMessage\",\r\n    \"congratulationsMessage\": \"congratulationsMessage\",\r\n    \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n    \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n    \"materials\": [\r\n        \"materials\",\r\n        \"materials\",\r\n        \"materials\"\r\n    ],\r\n    \"price\": {\r\n        \"amount\": 299.99,\r\n        \"currency\": \"SAR\"\r\n    },\r\n    \"thumbnail\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\"\r\n    },\r\n    \"welcomeVideo\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"size\": 300,\r\n        \"duration\": 30\r\n    },\r\n    \"finalProject\": {\r\n        \"title\": \"Final Project\",\r\n        \"description\": \"description\",\r\n        \"tasks\": [\r\n            \"task a\",\r\n            \"task b\"\r\n        ],\r\n        \"materials\": [\r\n            \"a\",\r\n            \"b\"\r\n        ]\r\n    }\r\n}\r\n// {\r\n//     \"contentType\": \"bootcamp\", // [\"course\",\"bootcamp\"]\r\n//     \"title\": \"معسكر تصميم 1\",\r\n//     \"category\": \"69a734afa43b42513e42e558\",\r\n//     \"instructor\": \"69b9cd36eac491d75031c962\",\r\n//     \"description\": \"description\",\r\n//     \"learningOutcomes\": [\r\n//         \"learningOutcomes, learningOutcomes\"\r\n//     ],\r\n//     \"prerequisites\": [\r\n//         \"prerequisites, prerequisites\"\r\n//     ],\r\n//     \"welcomeMessage\": \"welcomeMessage\",\r\n//     \"congratulationsMessage\": \"congratulationsMessage\",\r\n//     \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n//     \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n//     \"materials\": [\r\n//         \"materials\",\r\n//         \"materials\",\r\n//         \"materials\"\r\n//     ],\r\n//     \"price\": {\r\n//         \"amount\": 299.99,\r\n//         \"currency\": \"SAR\"\r\n//     },\r\n//     \"thumbnail\": {\r\n//         \"url\": \"\",\r\n//         \"key\": \"\"\r\n//     },\r\n//     \"welcomeVideo\": {\r\n//         \"url\": \"\",\r\n//         \"key\": \"\",\r\n//         \"size\": 300,\r\n//         \"duration\": 30\r\n//     },\r\n//     \"finalProject\": {\r\n//         \"title\": \"Final Project\",\r\n//         \"description\": \"\",\r\n//         \"tasks\": [\r\n//             \"task a\",\r\n//             \"task b\"\r\n//         ],\r\n//         \"materials\": [\r\n//             \"a\",\r\n//             \"b\"\r\n//         ]\r\n//     },\r\n//     \"startDate\": \"2026-04-01\",\r\n//     \"endDate\": \"2026-08-01\",\r\n//     \"totalProjects\": 10\r\n// }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1446,6 +1466,58 @@
           "response": []
         },
         {
+          "name": "answer course module",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"answers\": [\r\n        {\r\n            \"_id\": \"\",\r\n            \"question\": \"question a\",\r\n            \"answer\": \"answer a\"\r\n        },\r\n        {\r\n            \"_id\": \"\",\r\n            \"question\": \"question a\",\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/contents/:contentId/modules/:moduleId/course-answer",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contents",
+                ":contentId",
+                "modules",
+                ":moduleId",
+                "course-answer"
+              ],
+              "variable": [
+                {
+                  "key": "contentId",
+                  "value": ""
+                },
+                {
+                  "key": "moduleId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "delete course module by id",
           "request": {
             "auth": {
@@ -1514,7 +1586,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": {\r\n        \"url\": \"url\"\r\n    },\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"uploadId\": \"123\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"moduleType\": \"video\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"url\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"url\",\r\n        \"imageUrl\": \"imageUrl\",\r\n        \"description\": \"description\"\r\n    },\r\n    \"liveSessionData\": {\r\n        \"startTime\": \"09:00\",\r\n        \"endTime\": \"17:00\",\r\n        \"timezone\": \"Asia/Riyadh\",\r\n        \"date\": \"2029-04-06\",\r\n        \"meetLink\": \"\",\r\n        \"liveStreamUrl\": \"\"\r\n    }\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1522,7 +1594,7 @@
               }
             },
             "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/modules/bootcamp",
+              "raw": "{{URL}}/api/v1/contents/:contentId/sections/:sectionId/modules/bootcamp",
               "host": [
                 "{{URL}}"
               ],
@@ -1531,7 +1603,60 @@
                 "v1",
                 "contents",
                 ":contentId",
+                "sections",
+                ":sectionId",
                 "modules",
+                "bootcamp"
+              ],
+              "variable": [
+                {
+                  "key": "contentId",
+                  "value": "69d3a46f6393e0185a1c35f3"
+                },
+                {
+                  "key": "sectionId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create bootcamp section",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"project a\",\r\n            \"description\": \"description\",\r\n            \"githubUrl\": \"githubUrl\",\r\n            \"liveDemoUrl\": \"liveDemoUrl\"\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/contents/:contentId/sections/bootcamp",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contents",
+                ":contentId",
+                "sections",
                 "bootcamp"
               ],
               "variable": [
@@ -1561,7 +1686,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"title\": \"module a updated\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": {\r\n        \"url\": \"url\"\r\n    },\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"title\": \"module a updated\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": \"url\",\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1670,7 +1795,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"review\": \"review new\",\r\n    \"rating\": 2,\r\n    \"content\": \"69d39d39676d83dd5ee9c558\"\r\n}",
+              "raw": "{\r\n    \"review\": \"review new\",\r\n    \"rating\": 4,\r\n    \"content\": \"69d39d39676d83dd5ee9c558\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1709,9 +1834,9 @@
               }
             },
             "url": {
-              "raw": "{{URL}}/api/v1/reviews",
+              "raw": "{{local}}/api/v1/reviews",
               "host": [
-                "{{URL}}"
+                "{{local}}"
               ],
               "path": [
                 "api",
@@ -1747,7 +1872,7 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/reviews/69cd4d6a3e79d92cd595f04c",
+              "raw": "{{local}}/api/v1/reviews/69e8cf3fc3e40a2cc2b6a7ce",
               "host": [
                 "{{local}}"
               ],
@@ -1755,7 +1880,7 @@
                 "api",
                 "v1",
                 "reviews",
-                "69cd4d6a3e79d92cd595f04c"
+                "69e8cf3fc3e40a2cc2b6a7ce"
               ]
             }
           },
@@ -1774,11 +1899,11 @@
                 }
               ]
             },
-            "method": "PUT",
+            "method": "PATCH",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n     \"rating\": 3\r\n}",
+              "raw": "{\r\n    \"rating\": 1\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1786,7 +1911,7 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/reviews/69cd4d8a3e79d92cd595f057",
+              "raw": "{{local}}/api/v1/reviews/69e8cff0c3e40a2cc2b6a7f9",
               "host": [
                 "{{local}}"
               ],
@@ -1794,7 +1919,7 @@
                 "api",
                 "v1",
                 "reviews",
-                "69cd4d8a3e79d92cd595f057"
+                "69e8cff0c3e40a2cc2b6a7f9"
               ]
             }
           },
@@ -1825,7 +1950,7 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/reviews/69cd4d8a3e79d92cd595f057",
+              "raw": "{{local}}/api/v1/reviews/69e8cf3fc3e40a2cc2b6a7ce",
               "host": [
                 "{{local}}"
               ],
@@ -1833,7 +1958,7 @@
                 "api",
                 "v1",
                 "reviews",
-                "69cd4d8a3e79d92cd595f057"
+                "69e8cf3fc3e40a2cc2b6a7ce"
               ]
             }
           },
@@ -2151,7 +2276,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"key\": \"key\"\r\n}",
+              "raw": "{\r\n    \"key\": \"key\",\r\n    \"uploadId\": \"uploadId\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2524,9 +2649,9 @@
                   "raw": ""
                 },
                 "url": {
-                  "raw": "{{URL}}/api/v1/dashboard/content/:contentId",
+                  "raw": "{{local}}/api/v1/dashboard/content/:contentId",
                   "host": [
-                    "{{URL}}"
+                    "{{local}}"
                   ],
                   "path": [
                     "api",
@@ -2674,46 +2799,6 @@
           "response": []
         }
       ]
-    }
-  ],
-  "auth": {
-    "type": "bearer",
-    "bearer": [
-      {
-        "key": "token",
-        "value": "{{JWT}}",
-        "type": "string"
-      }
-    ]
-  },
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "URL",
-      "value": ""
     }
   ]
 }

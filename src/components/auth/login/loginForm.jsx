@@ -26,8 +26,8 @@ const LoginForm = ({ role }) => {
   const formSchema = z.object({
     email: z.email("البريد الإلكتروني غير صحيح"),
     password: z.string().min(1, "كلمة السر مطلوبة"),
-    rememberMe: z.boolean().optional(),
-    role: z.string(),
+    // rememberMe: z.boolean().optional(),
+    // role: z.string(),
   });
 
   const { handleSubmit, control, reset } = useForm({

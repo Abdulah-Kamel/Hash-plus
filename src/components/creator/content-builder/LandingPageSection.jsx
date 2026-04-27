@@ -39,15 +39,15 @@ export default function LandingPageSection({ form, setForm }) {
 
   return (
     <div className="space-y-6" dir="rtl">
-      <h2 className="text-xl font-bold text-gray-900 text-right">صفحة هبوط الدورة التدريبية</h2>
+      <h2 className="text-xl font-bold text-gray-900 text-right">صفحة هبوط المعسكر</h2>
       <p className="text-[15px] font-medium text-gray-400 leading-8 text-right max-w-4xl">
-        صفحة هبوط دورتك التدريبية أساسية لنجاحك على هاش بلس. إذا تم تصميمها بشكل صحيح، فستساعدك أيضًا على الظهور في محركات البحث مثل جوجل. عند إكمال هذا القسم، فكّر في إنشاء صفحة هبوط جذّابة لدورتك التدريبية، توضح سبب رغبة أي شخص في التسجيل في دورتك.
+        صفحة هبوط معسكرك أساسية لنجاحك على هاش بلس. إذا تم تصميمها بشكل صحيح، فستساعدك أيضًا على الظهور في محركات البحث مثل جوجل. عند إكمال هذا القسم، فكّر في إنشاء صفحة هبوط جذّابة لمعسكرك، توضح سبب رغبة أي شخص في التسجيل في معسكرك.
       </p>
 
       <div className="space-y-5 pt-4">
         {/* Title */}
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-800 text-right">عنوان الدورة</label>
+          <label className="block text-sm font-semibold text-gray-800 text-right">عنوان المعسكر</label>
           <Input 
              value={form.title || ""} 
              onChange={(e) => handleUpdate("title", e.target.value)} 
@@ -57,7 +57,7 @@ export default function LandingPageSection({ form, setForm }) {
 
         {/* Description */}
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-800 text-right">وصف الدورة</label>
+          <label className="block text-sm font-semibold text-gray-800 text-right">وصف المعسكر</label>
           <textarea
             value={form.description || ""}
             onChange={(e) => handleUpdate("description", e.target.value)}
@@ -68,7 +68,7 @@ export default function LandingPageSection({ form, setForm }) {
         {/* Welcome Message */}
         <div className="space-y-2">
           <label className="block text-sm font-semibold text-gray-800 text-right">رسالة الترحيب</label>
-          <p className="text-[13px] text-gray-500 text-right">رسالة تظهر للطلاب عند اشتراكهم في الدورة.</p>
+          <p className="text-[13px] text-gray-500 text-right">رسالة تظهر للطلاب عند اشتراكهم في المعسكر.</p>
           <textarea
             value={form.welcomeMessage || ""}
             onChange={(e) => handleUpdate("welcomeMessage", e.target.value)}
@@ -126,14 +126,14 @@ export default function LandingPageSection({ form, setForm }) {
 
         {/* Image Upload */}
         <div className="space-y-2 pt-2">
-          <label className="block text-sm font-semibold text-gray-800 text-right">صورة الدورة</label>
+          <label className="block text-sm font-semibold text-gray-800 text-right">صورة المعسكر</label>
           <div 
             onClick={() => fileInputRef.current?.click()}
             className="border border-dashed border-[#5b73e8]/50 rounded-xl p-8 flex flex-col items-center justify-center gap-3 cursor-pointer hover:bg-[#5b73e8]/5 transition-colors"
           >
             <Upload className="w-6 h-6 text-[#5b73e8]" />
             <span className="text-[#5b73e8] font-medium text-sm">
-              {form.thumbnail ? (form.thumbnail.name || "صورة مرفقة") : "أرفق صورة الدورة هنا"}
+              {form.thumbnail ? (form.thumbnail.name || "صورة مرفقة") : "أرفق صورة المعسكر هنا"}
             </span>
             <input 
               type="file" 

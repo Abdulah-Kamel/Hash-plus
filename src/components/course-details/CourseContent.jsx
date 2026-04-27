@@ -184,7 +184,7 @@ const CourseContent = ({ courseDetails, courses }) => {
                   <div className="flex flex-col items-start">
                     <div>
                       <h3 className="text-lg font-semibold text-primary">
-                        {courseDetails?.instructor}
+                        {typeof courseDetails?.instructor === 'object' ? courseDetails?.instructor?.name : courseDetails?.instructor}
                       </h3>
                       <p className="text-muted-foreground mt-1">مبرمجه</p>
                     </div>

@@ -40,11 +40,11 @@ const TargetLearnersSection = ({
       <section className="space-y-4">
         <div className="text-right">
           <h2 className="text-xl font-bold text-gray-900">
-            ماذا سيتعلم الطلاب في دورتك؟
+            ماذا سيتعلم الطلاب في معسكرك؟
           </h2>
           <p className="text-sm text-gray-400 mt-2 leading-relaxed">
             يجب عليك إدخال ما لا يقل عن 4 أهداف تعليمية أو نتائج يمكن للمتعلمين
-            أن يتوقعوا تحقيقها بعد إكمال الدورة التدريبية الخاصة بك.
+            أن يتوقعوا تحقيقها بعد إكمال المعسكر الخاص بك.
           </p>
         </div>
 
@@ -65,11 +65,11 @@ const TargetLearnersSection = ({
       <section className="space-y-4">
         <div className="text-right">
           <h2 className="text-xl font-bold text-gray-900">
-            ما هي المتطلبات أو الشروط الأساسية لأخذ دورتك؟
+            ما هي المتطلبات أو الشروط الأساسية لأخذ معسكرك؟
           </h2>
           <p className="text-sm text-gray-400 mt-2 leading-relaxed">
             اذكر المهارات والخبرات والأدوات والمعدات المطلوبة للمتعلمين قبل
-            الالتحاق بدورتك. إذا لم تكن هناك متطلبات، فاستغل هذه المساحة لتخفيف
+            الالتحاق بمعسكرك. إذا لم تكن هناك متطلبات، فاستغل هذه المساحة لتخفيف
             العوائق أمام المبتدئين.
           </p>
         </div>

@@ -18,7 +18,9 @@ const CourseGrid = () => {
       setLoading(true);
       const res = await getAllContents();
       if (res.success) {
-        setAllCourses(res.data.data || [], res.data.pagination);
+        const allContents = res.data.data || [];
+        const bootcamps = allContents.filter(c => c.contentType === "bootcamp");
+        setAllCourses(bootcamps, res.data.pagination);
         applyFilters();
         setLoading(false);
       } else {

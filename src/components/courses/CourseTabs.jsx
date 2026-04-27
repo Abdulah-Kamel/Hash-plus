@@ -16,7 +16,7 @@ const CourseTabs = () => {
       const res = await getAllContents();
       if (res.success) {
         // Extract unique content types from the data
-        const types = [...new Set((res.data.data || []).map((item) => item.contentType))];
+        const types = ["bootcamp"];
         setContentTypes(types);
       } else {
         console.log(res.error);

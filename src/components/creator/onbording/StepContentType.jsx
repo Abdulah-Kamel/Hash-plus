@@ -1,4 +1,6 @@
 "use client";
+// NOTE: This component is hidden for Phase 1 (Bootcamps-only mode)
+// It is kept for future use when subscriptions/courses are re-enabled.
 import React from "react";
 import {
   FormControl,

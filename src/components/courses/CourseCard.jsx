@@ -16,7 +16,7 @@ const contentTypeLabels = {
 };
 
 const CourseCard = ({ course }) => {
-  const price = course.price?.amount ?? 0;
+  const price = course.price?.amount;
   const currency = course.price?.currency ?? "SAR";
   const duration = course.metadata?.duration ?? 0;
   const modulesCount = course.metadata?.modulesCount ?? 0;
@@ -24,7 +24,7 @@ const CourseCard = ({ course }) => {
   const ratingsCount = course.metadata?.ratingsCount ?? 0;
   const thumbnail = course.thumbnail;
   const contentTypeLabel = contentTypeLabels[course.contentType] || course.contentType;
-
+console.log(course);
   return (
     <Card className="w-full max-w-sm flex flex-col overflow-hidden rounded-2xl pt-0 gap-1 p-4">
       <Link href={`/course/${course._id}`} className="block">

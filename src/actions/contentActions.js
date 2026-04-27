@@ -1,18 +1,15 @@
 "use server";
+import { handleActionError } from "@/lib/handleActionError";
 
-import { cookies } from "next/headers";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 export async function getAllContents(query = "") {
-  const token = (await cookies()).get("user-token")?.value;
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents${query}`,
       {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
+        requireAuth: false,
         cache: "no-store"
       },
     );
@@ -26,21 +23,17 @@ export async function getAllContents(query = "") {
     const final = await res.json();
     console.log(final);
     return { success: true, data: final };
-  } catch (err) {
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 // انتهت صلاحية الجلسة. يرجى تسجيل الدخول مرة اخرى
 
 export async function getContentById(id) {
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${id}`,
       {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
+        requireAuth: false,
       },
     );
 
@@ -53,23 +46,15 @@ export async function getContentById(id) {
     const final = await res.json();
     console.log(final);
     return { success: true, data: final };
-  } catch (err) {
-    console.log(err);
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 
 export async function createContent(data) {
-  const token = (await cookies()).get("user-token")?.value;
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(data),
       },
     );
@@ -83,23 +68,15 @@ export async function createContent(data) {
     const final = await res.json();
     console.log(final);
     return { success: true, data: final };
-  } catch (err) {
-    console.log(err);
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }
 
 export async function updateContent(id, data) {
-  const token = (await cookies()).get("user-token")?.value;
   try {
-    const res = await fetch(
+    const res = await fetchWithAuth(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/contents/${id}`,
       {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify(data),
       },
     );
@@ -114,8 +91,5 @@ export async function updateContent(id, data) {
     const final = await res.json();
     console.log(final)
     return { success: true, data: final };
-  } catch (err) {
-      console.log(err);
-    return { success: false, error: "An unexpected error occurred." };
-  }
+  } catch(err) { return handleActionError(err); }
 }

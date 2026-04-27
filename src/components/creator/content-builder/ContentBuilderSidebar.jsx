@@ -18,14 +18,15 @@ const sidebarSections = [
       { key: "curriculum", label: "المقرر" },
       { key: "captions", label: "التعليقات التوضيحية" },
       { key: "attachments", label: "الملحقات" },
+      { key: "final-project", label: "المشروع النهائي" },
     ],
   },
   {
-    title: "نشر الدورة الخاصة بك",
+    title: "نشر المعسكر الخاص بك",
     items: [
-      { key: "landing-page", label: "صفحة هبوط الدورة التدريبية" },
+      { key: "landing-page", label: "صفحة هبوط المعسكر" },
       { key: "pricing", label: "السعر" },
-      { key: "messages", label: "رسائل الدورة" },
+      { key: "messages", label: "رسائل المعسكر" },
     ],
   },
 ];

@@ -15,9 +15,9 @@ export default function PricingSection({ form, setForm }) {
 
       {/* Set Price Section */}
       <div className="space-y-4">
-        <h3 className="text-base font-bold text-gray-900 text-right">حدد سعرًا لدورتك</h3>
+        <h3 className="text-base font-bold text-gray-900 text-right">حدد سعرًا لمعسكرك</h3>
         <p className="text-[14px] font-medium text-gray-400 leading-relaxed text-right">
-          يرجى تحديد العملة وفئة السعر لدورتك. إذا كنت ترغب في تقديم دورتك مجانًا، يجب ألا تتجاوز مدة الفيديو ساعتين. كما أن الدورات التي تتضمن اختبارات تدريبية لا يمكن أن تكون مجانية.
+          يرجى تحديد العملة وفئة السعر لمعسكرك. إذا كنت ترغب في تقديم معسكرك مجانًا، يجب ألا تتجاوز مدة الفيديو ساعتين. كما أن المعسكرات التي تتضمن اختبارات تدريبية لا يمكن أن تكون مجانية.
         </p>
 
         <div className="grid grid-cols-2 gap-4 pt-2">
@@ -25,18 +25,18 @@ export default function PricingSection({ form, setForm }) {
           <div className="space-y-2">
              <label className="block text-sm font-semibold text-gray-800 text-right">العملة</label>
              <select
-               value={form.currency || "ريال سعودي"}
+               value={form.currency || "SAR"}
                onChange={(e) => handleUpdate("currency", e.target.value)}
                className="w-full text-right h-12 border border-gray-200 rounded-lg px-3 outline-none focus-visible:ring-primary bg-white"
              >
-               <option value="ريال سعودي">ريال سعودي</option>
-               <option value="دولار أمريكي">دولار أمريكي</option>
+               <option value="SAR">ريال سعودي</option>
+               <option value="USD">دولار أمريكي</option>
              </select>
           </div>
 
           {/* Base Price (Second in RTL = Left) */}
           <div className="space-y-2">
-             <label className="block text-sm font-semibold text-gray-800 text-right">سعر الدورة الأساسي</label>
+             <label className="block text-sm font-semibold text-gray-800 text-right">سعر المعسكر الأساسي</label>
              <Input 
                type="number"
                value={form.price || ""} 
@@ -48,35 +48,7 @@ export default function PricingSection({ form, setForm }) {
           </div>
         </div>
 
-        {/* Discount Section */}
-        <div className="grid grid-cols-2 gap-4 items-end">
-          {/* Checkbox (Right) */}
-          <div className="flex justify-start pb-3">
-             <label className="flex items-center gap-2 cursor-pointer select-none">
-                <input 
-                  type="checkbox" 
-                  checked={form.hasDiscount || false} 
-                  onChange={(e) => handleUpdate("hasDiscount", e.target.checked)}
-                  className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
-                />
-                <span className="text-sm font-semibold text-gray-800">لدي خصم</span>
-             </label>
-          </div>
 
-          {/* Percentage (Left) */}
-          <div className="space-y-2">
-             <label className="block text-sm font-semibold text-gray-800 text-right">نسبة الخصم</label>
-             <Input 
-               type="number"
-               value={form.discount || ""} 
-               onChange={(e) => handleUpdate("discount", e.target.value)} 
-               disabled={!form.hasDiscount}
-               className="text-right h-12 disabled:opacity-50" 
-               placeholder="100"
-               dir="ltr"
-             />
-          </div>
-        </div>
       </div>
 
       {/* Account Linking */}

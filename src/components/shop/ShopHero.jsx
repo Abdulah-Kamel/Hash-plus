@@ -28,7 +28,7 @@ const ShopHero = () => {
       </div>
       
       <Container className="relative z-10 py-16 text-center text-white">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">التعليم</h1>
+        <h1 className="text-4xl md:text-6xl font-bold mb-6">المعسكرات التعليمية</h1>
         <p className="text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
           منصتنا توفر تجربة تعليمية شاملة مع أحدث التقنيات في مجال التعليم الرقمي<br/>
           لضمان تقديم أفضل تجربة تعليمية ممكنة وتحقيق أهدافك التعليمية

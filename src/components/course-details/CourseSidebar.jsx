@@ -51,7 +51,7 @@ const CourseSidebar = ({ courseDetails }) => {
             </Button>
 
             <div className="mt-4">
-                <h3>هذه الدوره تحتوى على:</h3>
+                <h3>هذا المعسكر يحتوي على:</h3>
                 <ul className="space-y-4 mt-3">
                     <li className="flex items-center gap-2 text-muted-foreground">
                         <FileDown />
@@ -75,7 +75,7 @@ const CourseSidebar = ({ courseDetails }) => {
                     </li>
                     <li className="flex items-center gap-2 text-muted-foreground">
                         <Trophy />
-                        <span>شهادة بنهاية الدورة</span>
+                        <span>شهادة بنهاية المعسكر</span>
                     </li>
                 </ul>
             </div>
@@ -83,7 +83,7 @@ const CourseSidebar = ({ courseDetails }) => {
           <CardFooter className="border-t mx-4">
               <Button variant={"outline"} className="w-full py-6 text-primary hover:text-primary border-none cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-lg">
                   <Send className="size-6"/>
-                  شارك الدورة مع أصدقائك
+                  شارك المعسكر مع أصدقائك
               </Button>
           </CardFooter>
       </Card>

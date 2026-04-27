@@ -57,16 +57,16 @@ const data = [
     isActive: true,
   },
   {
-    title: "المحتوى",
+    title: "المعسكرات",
     url: "/creator/courses",
     icon: Book,
     items: [
       {
-        title: "جميع الدورات",
+        title: "جميع المعسكرات",
         url: "/creator/courses",
       },
       {
-        title: "إنشاء دورة جديدة",
+        title: "إنشاء معسكر جديد",
         url: "/creator/courses/new",
       },
       {

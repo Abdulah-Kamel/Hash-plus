@@ -17,6 +17,7 @@ export const handleLogin = async (data) => {
         
         if (!res.ok) {
           const error = await res.json();
+          console.log("error", error);
           // Return an error object
           return { success: false, error: error.error };
         }
@@ -40,6 +41,7 @@ export const handleLogin = async (data) => {
         return {success: true, data: final};
     } catch (err) {
         // Return a generic error object
+        console.log("err", err);
         return {success: false, error: "An unexpected error occurred."};
     }
 }

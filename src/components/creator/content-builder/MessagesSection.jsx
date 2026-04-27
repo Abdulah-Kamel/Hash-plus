@@ -10,7 +10,7 @@ export default function MessagesSection({ form, setForm }) {
   return (
     <div className="space-y-8" dir="rtl">
       <div>
-         <h2 className="text-xl font-bold text-gray-900 text-right">رسائل الدورة</h2>
+         <h2 className="text-xl font-bold text-gray-900 text-right">رسائل المعسكر</h2>
       </div>
 
       <div className="space-y-4">

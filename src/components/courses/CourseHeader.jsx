@@ -7,7 +7,7 @@ const CourseHeader = () => {
     <>
       <div className="text-right mb-12">
         <h2 className="text-4xl font-bold tracking-tight leading-normal text-gray-900 sm:text-5xl">
-          أفضل الدورات المقدمة <br /> خصيصاً إليك
+          أفضل المعسكرات المقدمة <br /> خصيصاً إليك
         </h2>
       </div>
       <Image

@@ -91,27 +91,6 @@ const FilterAccordion = ({ idPrefix = "" }) => {
         </AccordionContent>
       </AccordionItem>
 
-      {/* نوع المحتوى - Content Type */}
-      <AccordionItem value="content">
-        <AccordionTrigger>نوع المحتوى</AccordionTrigger>
-        <AccordionContent className="flex flex-col gap-3 mt-1">
-          <div className="flex flex-col gap-3">
-            {contentTypes.map((type) => (
-              <div className="flex items-center gap-3" key={type.value}>
-                <Checkbox
-                  id={`${type.value}-content${idPrefix}`}
-                  checked={selectedContentTypes.includes(type.value)}
-                  onCheckedChange={() => toggleContentType(type.value)}
-                />
-                <Label htmlFor={`${type.value}-content${idPrefix}`} className="text-sm font-light cursor-pointer">
-                  {type.label}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-
       {/* التقييم - Rating */}
       <AccordionItem value="rating">
         <AccordionTrigger>التقييم</AccordionTrigger>

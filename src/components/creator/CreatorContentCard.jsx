@@ -14,7 +14,7 @@ const contentTypeLabels = {
 
 const CreatorContentCard = ({ course }) => {
   const thumbnail = course.thumbnail?.url || course1;
-  const contentTypeLabel = contentTypeLabels[course.contentType] || course.contentType;
+  const contentTypeLabel = "معسكر";
 
   return (
     <Card className="w-full max-w-sm flex flex-col overflow-hidden rounded-2xl pt-0 gap-1 p-4 shadow-sm border border-gray-100">

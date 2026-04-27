@@ -11,12 +11,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { getAllContents } from "@/actions/contentActions";
 import CreatorContentCard from "@/components/creator/CreatorContentCard";
 import { Loader2, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [contents, setContents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchMyContents = async () => {
@@ -33,9 +35,10 @@ const page = () => {
         // Filter the requested contents locally inside the browser
         const filteredList = Array.isArray(list) 
           ? list.filter(c => 
-              c.instructor === userId || 
+              (c.instructor === userId || 
               c.instructor?._id === userId || 
-              c.instructor?.id === userId
+              c.instructor?.id === userId) && 
+              c.contentType === "bootcamp"
             )
           : [];
           
@@ -45,12 +48,16 @@ const page = () => {
     };
 
     if (!authLoading) {
+      if (!user) {
+        router.push("/auth/login");
+        return;
+      }
       if (user?.status === "pending") {
          setIsVerified(true);
       }
       fetchMyContents();
     }
-  }, [user, authLoading]);
+  }, [user, authLoading, router]);
 
   return (
     <>
@@ -90,7 +97,7 @@ const page = () => {
               </p>
               <Link href="/creator/onbording">
                 <Button className="px-8 py-6 rounded-full text-lg mt-4 bg-primary text-white hover:bg-primary/90">
-                  انشاء محتوى
+                  انشاء معسكر
                 </Button>
               </Link>
             </CardContent>
@@ -98,11 +105,11 @@ const page = () => {
         ) : (
           <div className="flex flex-col gap-6" dir="rtl">
             <div className="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900">المحتوى الخاص بك</h2>
+              <h2 className="text-2xl font-bold text-gray-900">المعسكرات الخاصة بك</h2>
               <Link href="/creator/onbording">
                 <Button className="rounded-full px-6 flex gap-2 w-auto">
                   <Plus className="w-5 h-5" />
-                  إنشاء محتوى جديد
+                  إنشاء معسكر جديد
                 </Button>
               </Link>
             </div>

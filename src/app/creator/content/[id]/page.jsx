@@ -12,6 +12,7 @@ import AttachmentsSection from "@/components/creator/content-builder/Attachments
 import LandingPageSection from "@/components/creator/content-builder/LandingPageSection";
 import PricingSection from "@/components/creator/content-builder/PricingSection";
 import MessagesSection from "@/components/creator/content-builder/MessagesSection";
+import FinalProjectSection from "@/components/creator/content-builder/FinalProjectSection";
 import { toast } from "sonner";
 
 const ContentBuilderPage = () => {
@@ -20,6 +21,7 @@ const ContentBuilderPage = () => {
   const [activeSection, setActiveSection] = useState("target-learners");
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [originalData, setOriginalData] = useState({});
 
   // Content data
   const [contentTitle, setContentTitle] = useState("");
@@ -43,13 +45,17 @@ const ContentBuilderPage = () => {
   });
   const [pricingForm, setPricingForm] = useState({
     price: "",
-    currency: "ريال سعودي",
-    hasDiscount: false,
-    discount: "",
+    currency: "SAR",
   });
   const [messagesForm, setMessagesForm] = useState({
     welcomeMessage: "",
     congratulationMessage: "",
+  });
+  const [finalProjectForm, setFinalProjectForm] = useState({
+    title: "",
+    description: "",
+    tasks: [],
+    materials: [],
   });
   const [attachments, setAttachments] = useState([]);
   const [captions, setCaptions] = useState({});
@@ -61,6 +67,7 @@ const ContentBuilderPage = () => {
       const res = await getContentById(id);
       if (res.success) {
         const data = res.data.data;
+        setOriginalData(data);
         setContentTitle(data.title || "");
         setContentType(data.contentType || "course");
         setWelcomeVideo(data.welcomeVideo || null);
@@ -84,16 +91,23 @@ const ContentBuilderPage = () => {
         }));
 
         setPricingForm({
-          price: data.price || "",
-          currency: data.currency || "ريال سعودي",
-          hasDiscount: !!data.hasDiscount,
-          discount: data.discount || "",
+          price: data.price?.amount !== undefined ? data.price.amount : (data.price || ""),
+          currency: data.price?.currency || "SAR",
         });
 
         setMessagesForm({
           welcomeMessage: data.welcomeMessage || "",
           congratulationMessage: data.congratulationMessage || "",
         });
+
+        if (data.finalProject) {
+          setFinalProjectForm({
+            title: data.finalProject.title || "",
+            description: data.finalProject.description || "",
+            tasks: data.finalProject.tasks || [],
+            materials: data.finalProject.materials || [],
+          });
+        }
 
         if (data.attachments?.length > 0) {
           setAttachments(data.attachments);
@@ -153,16 +167,46 @@ const ContentBuilderPage = () => {
     setIsSaving(true);
     try {
       const payload = {
+        ...originalData,
         learningOutcomes: cleanOutcomes,
         prerequisites: prerequisites.filter((p) => p && p.trim() !== ""),
-        attachments: attachments.map(a => ({ name: a.name, id: a.id })),
-        captions: Object.fromEntries(
-          Object.entries(captions).map(([k, v]) => [k, { status: v.status, name: v.file?.name }])
-        ),
+        materials: attachments.map(a => ({ name: a.name, id: a.id })),
+        finalProject: finalProjectForm,
         ...landingForm,
-        ...pricingForm,
-        ...messagesForm,
       };
+
+      if (pricingForm.price !== undefined && pricingForm.price !== "") {
+        payload.price = {
+          amount: Number(pricingForm.price),
+          currency: pricingForm.currency || "SAR"
+        };
+      }
+
+      if (messagesForm.welcomeMessage) {
+        payload.welcomeMessage = messagesForm.welcomeMessage;
+      }
+      
+      if (messagesForm.congratulationMessage) {
+        payload.congratulationsMessage = messagesForm.congratulationMessage;
+      }
+
+      // Cleanup legacy keys to satisfy backend validation
+      delete payload.attachments;
+      delete payload.captions;
+      delete payload.currency;
+      delete payload.hasDiscount;
+      delete payload.discount;
+      delete payload.congratulationMessage;
+      delete payload._id;
+      delete payload.slug;
+      delete payload.instructor;
+      delete payload.metadata;
+      delete payload.modules;
+      delete payload.createdAt;
+      delete payload.updatedAt;
+      delete payload.__v;
+      delete payload.reviews;
+      delete payload.id;
 
       // Form overrides to prevent invalid API types
       payload.category = typeof landingForm.category === 'object' ? landingForm.category._id : landingForm.category;
@@ -172,9 +216,12 @@ const ContentBuilderPage = () => {
         payload.welcomeMessage = landingForm.welcomeMessage;
       }
       
-      // Omit thumbnail if null to avoid 'expected object, received null'
+      // Omit objects if null to avoid 'expected object, received null'
       if (!payload.thumbnail) {
         delete payload.thumbnail;
+      }
+      if (!payload.welcomeVideo) {
+        delete payload.welcomeVideo;
       }
 
       const res = await updateContent(id, payload);
@@ -231,6 +278,8 @@ const ContentBuilderPage = () => {
         return <PricingSection form={pricingForm} setForm={setPricingForm} />;
       case "messages":
         return <MessagesSection form={messagesForm} setForm={setMessagesForm} />;
+      case "final-project":
+        return <FinalProjectSection form={finalProjectForm} setForm={setFinalProjectForm} />;
       default:
         return null;
     }

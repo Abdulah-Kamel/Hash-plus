@@ -52,7 +52,7 @@ const CourseHero = ({ courseDetails }) => {
           <Image src={instrctorAvatar} alt={"instructor image"} />
         </div>
         <div>
-          <p className="font-medium">{courseDetails?.instructor}</p>
+          <p className="font-medium">{courseDetails?.instructor?.name}</p>
         </div>
       </div>
     </div>

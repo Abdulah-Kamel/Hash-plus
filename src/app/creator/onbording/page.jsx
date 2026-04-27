@@ -7,16 +7,13 @@ import { Form } from "@/components/ui/form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { createContent } from "@/actions/contentActions";
-import StepContentType from "@/components/creator/onbording/StepContentType";
+// import StepContentType from "@/components/creator/onbording/StepContentType";
 import StepEstimateTime from "@/components/creator/onbording/StepEstimateTime";
 import StepContentName from "@/components/creator/onbording/StepContentName";
 import StepContentCategory from "@/components/creator/onbording/StepContentCategory";
 import StepsHeader from "@/components/creator/steps/StepsHeader";
 
 const formSchema = z.object({
-  contentType: z.enum(["course", "bootcamp"], {
-    required_error: "يرجى اختيار نوع المحتوى",
-  }),
   estimateTime: z.string().min(1, "يرجى اختيار الوقت المتاح"),
   contentName: z.string().min(3, "يجب أن يكون الاسم 3 أحرف على الأقل"),
   contentDescription: z.string().min(10, "يجب أن يكون الوصف 10 أحرف على الأقل"),
@@ -26,13 +23,12 @@ const formSchema = z.object({
 const Page = () => {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const totalSteps = 4;
+  const totalSteps = 3;
   const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      contentType: "",
       estimateTime: "",
       contentName: "",
       contentDescription: "",
@@ -41,10 +37,9 @@ const Page = () => {
   });
 
   const stepFields = {
-    1: ["contentType"],
-    2: ["estimateTime"],
-    3: ["contentName", "contentDescription"],
-    4: ["contentCategory"],
+    1: ["estimateTime"],
+    2: ["contentName", "contentDescription"],
+    3: ["contentCategory"],
   };
 
   const nextStep = async () => {
@@ -60,7 +55,7 @@ const Page = () => {
     try {
       // Build the content payload matching the API schema
       const payload = {
-        contentType: data.contentType,
+        contentType: "bootcamp",
         title: data.contentName,
         category: data.contentCategory,
         description: data.contentDescription,
@@ -73,13 +68,11 @@ const Page = () => {
       };
 
       // Add bootcamp-specific fields
-      if (data.contentType === "bootcamp") {
-        payload.startDate = new Date().toISOString().split("T")[0];
-        payload.endDate = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .split("T")[0];
-        payload.totalProjects = 0;
-      }
+      payload.startDate = new Date().toISOString().split("T")[0];
+      payload.endDate = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split("T")[0];
+      payload.totalProjects = 1;
 
     
       const res = await createContent(payload);
@@ -113,10 +106,9 @@ const Page = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               {/* Step Content */}
               <div className="min-h-[400px] flex flex-col justify-start">
-                {step === 1 && <StepContentType form={form} />}
-                {step === 2 && <StepEstimateTime form={form} />}
-                {step === 3 && <StepContentName form={form} />}
-                {step === 4 && <StepContentCategory form={form} />}
+                {step === 1 && <StepEstimateTime form={form} />}
+                {step === 2 && <StepContentName form={form} />}
+                {step === 3 && <StepContentCategory form={form} />}
               </div>
             </form>
           </Form>

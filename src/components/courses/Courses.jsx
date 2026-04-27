@@ -16,7 +16,9 @@ const Courses = () => {
       const res = await getAllContents();
       if (res.success) {
         console.log(res.data);
-        setCourses(res.data.data);
+        const allContents = res.data.data || [];
+        const bootcamps = allContents.filter(c => c.contentType === "bootcamp");
+        setCourses(bootcamps);
         setLoading(false);
       } else {
         console.log(res.error);

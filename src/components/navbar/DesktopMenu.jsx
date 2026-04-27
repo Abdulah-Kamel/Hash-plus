@@ -31,7 +31,7 @@ ListItem.displayName = "ListItem";
 
 const DesktopMenu = ({ navLinks }) => {
   return (
-    <div className="hidden lg:flex lg:w-auto lg:order-1">
+    <div className="hidden xl:flex xl:w-auto xl:order-1">
       <NavigationMenu>
         <NavigationMenuList dir={'rtl'}>
           {navLinks.map((link) => {

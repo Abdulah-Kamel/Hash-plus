@@ -7,7 +7,7 @@ export const navLinks = [
   },
   {
     id: 2,
-    label: 'الدورات',
+    label: 'المعسكرات',
     href: '/shop',
   },
   {
@@ -16,9 +16,7 @@ export const navLinks = [
     href: '/shop',
     hasDropdown: true,
     dropdownItems: [
-      { id: 'edu-1', label: 'البرامج الدراسيهية', href: '/shop/?category=education' },
-      { id: 'edu-2', label: 'مذكرات', href: '/shop/?category=notes' },
-      { id: 'edu-3', label: 'معسكرات', href: '/shop/?category=quizzes' },
+      { id: 'edu-3', label: 'المعسكرات', href: '/shop' },
     ],
   },
   {

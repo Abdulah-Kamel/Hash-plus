@@ -7,11 +7,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { getAllContents } from "@/actions/contentActions";
 import CreatorContentCard from "@/components/creator/CreatorContentCard";
 import { Loader2, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function CoursesPage() {
   const [contents, setContents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchMyContents = async () => {
@@ -31,9 +33,10 @@ export default function CoursesPage() {
         const filteredList = Array.isArray(list)
           ? list.filter(
               (c) =>
-                c.instructor === userId ||
+                (c.instructor === userId ||
                 c.instructor?._id === userId ||
-                c.instructor?.id === userId,
+                c.instructor?.id === userId) &&
+                c.contentType === "bootcamp"
             )
           : [];
 
@@ -43,13 +46,17 @@ export default function CoursesPage() {
     };
 
     if (!authLoading) {
+      if (!user) {
+        router.push("/auth/login");
+        return;
+      }
       fetchMyContents();
     }
-  }, [user, authLoading]);
+  }, [user, authLoading, router]);
 
   return (
     <>
-      <CreatorTopBar title="المحتوى" />
+      <CreatorTopBar title="المعسكرات" />
       <div className="mt-8 px-4 lg:px-8">
         {isLoading || authLoading ? (
           <div className="flex items-center justify-center p-20">
@@ -59,12 +66,11 @@ export default function CoursesPage() {
           <div className="flex flex-col gap-6" dir="rtl">
             <div className="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
               <h2 className="text-2xl font-bold text-gray-900">
-                جميع المحتوى الخاص بك
-              </h2>
+                جميع المعسكرات الخاصة بك
               <Link href="/creator/onbording">
                 <Button className="rounded-full px-6 flex gap-2 w-auto bg-primary text-white hover:bg-primary/90">
                   <Plus className="w-5 h-5" />
-                  إنشاء دورة جديدة
+                  إنشاء معسكر جديد
                 </Button>
               </Link>
             </div>
@@ -72,11 +78,11 @@ export default function CoursesPage() {
             {contents.length === 0 ? (
               <div className="text-center p-20 bg-white rounded-2xl border border-gray-100 mt-4">
                 <p className="text-xl font-medium text-gray-500">
-                  لا يوجد محتوى حالياً.
+                  لا توجد معسكرات حالياً.
                 </p>
                 <Link href="/creator/onbording" className="inline-block mt-4">
                   <Button className="rounded-full px-8 py-6 text-lg hover:bg-primary/90">
-                    ابدأ بإنشاء محتواك الأول
+                    ابدأ بإنشاء معسكرك الأول
                   </Button>
                 </Link>
               </div>
