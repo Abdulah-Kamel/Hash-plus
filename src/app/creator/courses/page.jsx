@@ -67,6 +67,7 @@ export default function CoursesPage() {
             <div className="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
               <h2 className="text-2xl font-bold text-gray-900">
                 جميع المعسكرات الخاصة بك
+              </h2>
               <Link href="/creator/onbording">
                 <Button className="rounded-full px-6 flex gap-2 w-auto bg-primary text-white hover:bg-primary/90">
                   <Plus className="w-5 h-5" />
