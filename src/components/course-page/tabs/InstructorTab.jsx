@@ -8,7 +8,8 @@ import {coursesData} from "@/data/coursesData";
 import HorizontalCourseCard from "@/components/course-details/HorizontalCourseCard";
 import {TabsContent} from "@/components/ui/tabs";
 import React from "react";
-const InstructorTab = () => {
+const InstructorTab = ({ courseData }) => {
+    const instructorName = typeof courseData?.instructor === 'object' ? courseData?.instructor?.name : courseData?.instructor;
 
     return (
         <TabsContent value="instructor" className="space-y-6">
@@ -17,8 +18,8 @@ const InstructorTab = () => {
                     <div className="flex items-center gap-6">
                         <div className="flex flex-col items-start">
                             <div>
-                                <h3 className="text-lg font-semibold text-primary">ولاء القحطاني</h3>
-                                <p className="text-muted-foreground mt-1">مبرمجه</p>
+                                <h3 className="text-lg font-semibold text-primary">{instructorName || "معلم غير معروف"}</h3>
+                                <p className="text-muted-foreground mt-1">مبرمج</p>
                             </div>
                             <div className="flex items-center gap-4">
                                 <Avatar className="w-22 h-22 bg-gray-100 mt-2">

@@ -3,8 +3,15 @@ import { cookies } from "next/headers";
 
 export const handleEmailConfirm = async (data) => {
   const cookie = await cookies();
-  const user = JSON.parse(cookie.get("user").value);
+  const userCookie = cookie.get("user")?.value;
+  let user = {};
   try {
+    user = userCookie ? JSON.parse(userCookie) : {};
+  } catch {
+    user = {};
+  }
+  try {
+    const token = cookie.get("user-token")?.value;
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/auth/verify-otp`,
       {
@@ -12,6 +19,7 @@ export const handleEmailConfirm = async (data) => {
         body: JSON.stringify({ email: user.email, ...data }),
         headers: {
           "Content-Type": "application/json; charset=utf-8",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
       },
     );

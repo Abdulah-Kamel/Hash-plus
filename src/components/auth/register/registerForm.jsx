@@ -37,19 +37,7 @@ const RegisterForm = ({ role }) => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
         "كلمة السر يجب أن تحتوي على حرف كبير، حرف صغير، رقم ورمز خاص",
       ),
-    // phone: z
-    //   .string("رقم الهاتف مطلوب")---------
-    //   .min(1, "رقم الهاتف مطلوب")
-    //   .refine((val) => isValidPhoneNumber(val), "رقم الهاتف غير صحيح"),
-    //     confirmPassword: z.string(),
-    //     terms: z
-    //       .boolean()
-    //       .refine((val) => val === true, "يجب الموافقة على الشروط والأحكام"),
-    //     role: z.string(),
-    //   })
-    //   .refine((data) => data.password === data.confirmPassword, {
-    //     path: ["confirmPassword"],
-    //     message: "كلمات السر غير متطابقة",
+    role: z.string(),
   });
 
   const { handleSubmit, control, reset } = useForm({
@@ -59,9 +47,6 @@ const RegisterForm = ({ role }) => {
       name: "",
       email: "",
       password: "",
-      // phone: '',
-      // confirmPassword: '',
-      // terms: false,
     },
   });
 
@@ -71,11 +56,7 @@ const RegisterForm = ({ role }) => {
       name: "",
       email: "",
       password: "",
-      // phone: '',
-      // confirmPassword: '',
-      // terms: false,
     });
-    setValue("");
   }, [role, reset]);
 
   async function onSubmit(data) {
@@ -121,7 +102,6 @@ const RegisterForm = ({ role }) => {
           type="email"
           autoComplete="email"
         />
-        {/* <PhoneField control={control} name="phone" label="رقم الهاتف" placeholder="رقم الهاتف" PhoneInput={PhoneInput} getCountryCallingCode={getCountryCallingCode} value={value} setValue={setValue}/> */}
         <PasswordField
           control={control}
           name="password"
@@ -129,31 +109,6 @@ const RegisterForm = ({ role }) => {
           placeholder="ادخل كلمة السر"
           autoComplete="new-password"
         />
-        {/* <PasswordField control={control} name="confirmPassword" label="اعد كتابة كلمة السر" placeholder="اعد كتابة كلمة السر" autoComplete="new-password" />
-
-                <Controller
-                    name="terms"
-                    control={control}
-                    render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <div className="flex items-center space-x-2">
-                                <Checkbox
-                                    id={field.name}
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                    aria-invalid={fieldState.invalid}
-                                />
-                                <FieldLabel
-                                    htmlFor={field.name}
-                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                    أوافق على الشروط والأحكام
-                                </FieldLabel>
-                            </div>
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                        </Field>
-                    )}
-                /> */}
 
         {/* Submit Buttons */}
         <div className="flex-col gap-2">

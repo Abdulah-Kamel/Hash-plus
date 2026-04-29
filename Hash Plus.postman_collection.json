@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "f5c4c4aa-9dc2-47f4-8460-4fa126f268d0",
+    "_postman_id": "135b4084-2e9a-4aba-94ae-e9aa4e65157d",
     "name": "Hash Plus",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "44127010"
@@ -1015,100 +1015,6 @@
           "response": []
         },
         {
-          "name": "complete Course Final Project",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PATCH",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"links\": [\r\n        \"link a\",\r\n        \"link b\"\r\n    ],\r\n    \"notes\": \"notes.......\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/final-project/course",
-              "host": [
-                "{{URL}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "final-project",
-                "course"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "complete Bootcamp Final Project",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PATCH",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"links\": [\r\n        \"link a\",\r\n        \"link b\"\r\n    ],\r\n    \"notes\": \"notes.......\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/final-project/bootcamp",
-              "host": [
-                "{{URL}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "final-project",
-                "bootcamp"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
           "name": "delete content by id",
           "request": {
             "auth": {
@@ -1150,93 +1056,8 @@
       ]
     },
     {
-      "name": "Modules",
+      "name": "Course Modules",
       "item": [
-        {
-          "name": "get module by id (for develpoment only)",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "modules",
-                ":moduleId"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": "69cd4b8b864399f4dd71957c"
-                },
-                {
-                  "key": "moduleId",
-                  "value": "69cd60d7c85448e00472a419"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get my module by id (for Instructor)",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/instructor",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "modules",
-                ":moduleId",
-                "instructor"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": "69cd4b8b864399f4dd71957c"
-                },
-                {
-                  "key": "moduleId",
-                  "value": "69cd60d7c85448e00472a419"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
         {
           "name": "get course module by id",
           "request": {
@@ -1253,7 +1074,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/course",
+              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId",
               "host": [
                 "{{local}}"
               ],
@@ -1262,95 +1083,9 @@
                 "v1",
                 "contents",
                 ":contentId",
+                "courses",
                 "modules",
-                ":moduleId",
-                "course"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
-                },
-                {
-                  "key": "moduleId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get bootcamp module by id",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/bootcamp",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "modules",
-                ":moduleId",
-                "bootcamp"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
-                },
-                {
-                  "key": "moduleId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get course module answers",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/modules/:moduleId/course-answer",
-              "host": [
-                "{{URL}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "modules",
-                ":moduleId",
-                "course-answer"
+                ":moduleId"
               ],
               "variable": [
                 {
@@ -1391,17 +1126,17 @@
               }
             },
             "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/modules/course",
+              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules",
               "host": [
-                "{{URL}}"
+                "{{local}}"
               ],
               "path": [
                 "api",
                 "v1",
                 "contents",
                 ":contentId",
-                "modules",
-                "course"
+                "courses",
+                "modules"
               ],
               "variable": [
                 {
@@ -1438,70 +1173,18 @@
               }
             },
             "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/modules/:moduleId/course",
+              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId",
               "host": [
-                "{{URL}}"
+                "{{local}}"
               ],
               "path": [
                 "api",
                 "v1",
                 "contents",
                 ":contentId",
+                "courses",
                 "modules",
-                ":moduleId",
-                "course"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
-                },
-                {
-                  "key": "moduleId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "answer course module",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PATCH",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"answers\": [\r\n        {\r\n            \"_id\": \"\",\r\n            \"question\": \"question a\",\r\n            \"answer\": \"answer a\"\r\n        },\r\n        {\r\n            \"_id\": \"\",\r\n            \"question\": \"question a\",\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ]\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/modules/:moduleId/course-answer",
-              "host": [
-                "{{URL}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "modules",
-                ":moduleId",
-                "course-answer"
+                ":moduleId"
               ],
               "variable": [
                 {
@@ -1542,7 +1225,7 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/course",
+              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId",
               "host": [
                 "{{local}}"
               ],
@@ -1551,9 +1234,9 @@
                 "v1",
                 "contents",
                 ":contentId",
+                "courses",
                 "modules",
-                ":moduleId",
-                "course"
+                ":moduleId"
               ],
               "variable": [
                 {
@@ -1570,7 +1253,7 @@
           "response": []
         },
         {
-          "name": "create bootcamp module",
+          "name": "get course module answers",
           "request": {
             "auth": {
               "type": "bearer",
@@ -1582,39 +1265,30 @@
                 }
               ]
             },
-            "method": "POST",
+            "method": "GET",
             "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"moduleType\": \"video\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"url\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"url\",\r\n        \"imageUrl\": \"imageUrl\",\r\n        \"description\": \"description\"\r\n    },\r\n    \"liveSessionData\": {\r\n        \"startTime\": \"09:00\",\r\n        \"endTime\": \"17:00\",\r\n        \"timezone\": \"Asia/Riyadh\",\r\n        \"date\": \"2029-04-06\",\r\n        \"meetLink\": \"\",\r\n        \"liveStreamUrl\": \"\"\r\n    }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
             "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/sections/:sectionId/modules/bootcamp",
+              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId/answers",
               "host": [
-                "{{URL}}"
+                "{{local}}"
               ],
               "path": [
                 "api",
                 "v1",
                 "contents",
                 ":contentId",
-                "sections",
-                ":sectionId",
+                "courses",
                 "modules",
-                "bootcamp"
+                ":moduleId",
+                "answers"
               ],
               "variable": [
                 {
                   "key": "contentId",
-                  "value": "69d3a46f6393e0185a1c35f3"
+                  "value": ""
                 },
                 {
-                  "key": "sectionId",
+                  "key": "moduleId",
                   "value": ""
                 }
               ]
@@ -1623,54 +1297,7 @@
           "response": []
         },
         {
-          "name": "create bootcamp section",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"project a\",\r\n            \"description\": \"description\",\r\n            \"githubUrl\": \"githubUrl\",\r\n            \"liveDemoUrl\": \"liveDemoUrl\"\r\n        }\r\n    ]\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/sections/bootcamp",
-              "host": [
-                "{{URL}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "sections",
-                "bootcamp"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": "69d3a46f6393e0185a1c35f3"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "update bootcamp module by id",
+          "name": "answer course module",
           "request": {
             "auth": {
               "type": "bearer",
@@ -1686,7 +1313,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"title\": \"module a updated\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": \"url\",\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"answers\": [\r\n        {\r\n            \"_id\": \"\",\r\n            \"question\": \"question a\",\r\n            \"answer\": \"answer a\"\r\n        },\r\n        {\r\n            \"_id\": \"\",\r\n            \"question\": \"question a\",\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1694,7 +1321,7 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/bootcamp",
+              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId/answers",
               "host": [
                 "{{local}}"
               ],
@@ -1703,9 +1330,10 @@
                 "v1",
                 "contents",
                 ":contentId",
+                "courses",
                 "modules",
                 ":moduleId",
-                "bootcamp"
+                "answers"
               ],
               "variable": [
                 {
@@ -1722,7 +1350,7 @@
           "response": []
         },
         {
-          "name": "delete bootcamp module by id",
+          "name": "complete Course Final Project",
           "request": {
             "auth": {
               "type": "bearer",
@@ -1734,11 +1362,11 @@
                 }
               ]
             },
-            "method": "DELETE",
+            "method": "PATCH",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"Development\"\r\n}",
+              "raw": "{\r\n    \"links\": [\r\n        \"link a\",\r\n        \"link b\"\r\n    ],\r\n    \"notes\": \"notes.......\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1746,26 +1374,495 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/modules/:moduleId/bootcamp",
+              "raw": "{{URL}}/api/v1/contents/:contentId/courses/final-project",
               "host": [
-                "{{local}}"
+                "{{URL}}"
               ],
               "path": [
                 "api",
                 "v1",
                 "contents",
                 ":contentId",
-                "modules",
-                ":moduleId",
-                "bootcamp"
+                "courses",
+                "final-project"
               ],
               "variable": [
                 {
                   "key": "contentId",
                   "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bootcamp (Sections  \\ Modules)",
+      "item": [
+        {
+          "name": "Sections",
+          "item": [
+            {
+              "name": "add bootcamp section",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
                 },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"project a\",\r\n            \"description\": \"description\",\r\n            \"githubUrl\": \"githubUrl\",\r\n            \"liveDemoUrl\": \"liveDemoUrl\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{URL}}/api/v1/contents/:contentId/bootcamps/sections",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69d3a46f6393e0185a1c35f3"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get bootcamp section by section id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": ""
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update bootcamp section by section id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"module a updated\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": \"url\",\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": ""
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "remove bootcamp section by section id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Development\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": ""
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Modules",
+          "item": [
+            {
+              "name": "get bootcamp module by module id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId/modules/:moduleId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": ""
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": ""
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add bootcamp module",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"moduleType\": \"video\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"url\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"url\",\r\n        \"imageUrl\": \"imageUrl\",\r\n        \"description\": \"description\"\r\n    },\r\n    \"liveSessionData\": {\r\n        \"startTime\": \"09:00\",\r\n        \"endTime\": \"17:00\",\r\n        \"timezone\": \"Asia/Riyadh\",\r\n        \"date\": \"2029-04-06\",\r\n        \"meetLink\": \"\",\r\n        \"liveStreamUrl\": \"\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId/modules",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId",
+                    "modules"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69d3a46f6393e0185a1c35f3"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update bootcamp module by id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"module a updated\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": \"url\",\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId/modules/:moduleId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": ""
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": ""
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete bootcamp module by id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Development\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId/modules/:moduleId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": ""
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": ""
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "complete Bootcamp Final Project",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
                 {
-                  "key": "moduleId",
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"links\": [\r\n        \"link a\",\r\n        \"link b\"\r\n    ],\r\n    \"notes\": \"notes.......\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/api/v1/contents/:contentId/bootcamps/final-project",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contents",
+                ":contentId",
+                "bootcamps",
+                "final-project"
+              ],
+              "variable": [
+                {
+                  "key": "contentId",
                   "value": ""
                 }
               ]

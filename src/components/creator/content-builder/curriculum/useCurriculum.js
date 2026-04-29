@@ -4,14 +4,20 @@ import {
   createCourseModule,
   deleteCourseModule,
   updateCourseModule,
-  createBootcampModule,
-  deleteBootcampModule,
-  updateBootcampModule,
+  createBootcampSection,
+  updateBootcampSection,
+  deleteBootcampSection,
+  createBootcampSectionModule,
+  updateBootcampSectionModule,
+  deleteBootcampSectionModule,
 } from "@/actions/moduleActions";
 import { toast } from "sonner";
 
-const createDefaultSection = (title, items = []) => ({
-  id: `section-${Date.now()}-${Math.random()}`,
+// ─── Helpers ──────────────────────────────────────────────────
+
+const createDefaultSection = (title, items = [], apiId = null) => ({
+  id: apiId || `section-${Date.now()}-${Math.random()}`,
+  apiId,           // real backend _id — needed for nested module calls
   title,
   isEditing: false,
   items,
@@ -22,41 +28,58 @@ const createDefaultSection = (title, items = []) => ({
 // Map a raw API module into a section item
 const toItem = (mod) => ({
   id: mod._id || `item-${Math.random()}`,
-  type: mod.moduleType,
+  type: mod.moduleType || "video",
   title: mod.title,
   moduleData: mod,
 });
 
+// Map a raw API bootcamp section into the local section shape
+const toBootcampSection = (section) => ({
+  ...createDefaultSection(section.title, (section.modules || []).map(toItem), section._id),
+  sectionData: section,
+});
+
+// ─── Hook ─────────────────────────────────────────────────────
+
 export function useCurriculum(contentId, contentType = "course", modules = [], onModulesChange) {
+  const isBootcamp = contentType === "bootcamp";
+
   const [sections, setSections] = useState(() => {
-    // All API modules are flat items — load them into one default section
-    const items = modules.map(toItem);
-    return [createDefaultSection("القسم الأول", items)];
+    if (isBootcamp) {
+      // modules prop for bootcamps should be an array of section objects
+      // each containing { _id, title, modules: [...] }
+      if (modules?.length && modules[0]?.modules !== undefined) {
+        return modules.map(toBootcampSection);
+      }
+      return [createDefaultSection("القسم الأول")];
+    }
+    // Course: flat modules go into a single default section
+    return [createDefaultSection("القسم الأول", modules.map(toItem))];
   });
 
-  // Sync sections when modules prop updates from API
+  // Sync when modules prop refreshes from API
   useEffect(() => {
-    setSections((prevSections) => {
-      // If we already have modules and we're just syncing, preserve section IDs
-      // but if we're doing a total reload, re-build the default section.
-      // Currently making it simple: just override the single section.
-      const items = modules.map(toItem);
-      return [createDefaultSection("القسم الأول", items)];
-    });
-  }, [modules]);
+    if (isBootcamp) {
+      if (modules?.length && modules[0]?.modules !== undefined) {
+        setSections(modules.map(toBootcampSection));
+      } else {
+        setSections([createDefaultSection("القسم الأول")]);
+      }
+    } else {
+      setSections([createDefaultSection("القسم الأول", modules.map(toItem))]);
+    }
+  }, [modules, contentType]);
 
   const [openMenuId, setOpenMenuId] = useState(null);
   const [isCreatingSection, setIsCreatingSection] = useState(false);
   const [isSavingForm, setIsSavingForm] = useState(false);
 
-  // Add-content dialog state
   const [dialogState, setDialogState] = useState({
     open: false,
     sectionId: null,
     formData: { title: "" },
   });
 
-  // Edit-module dialog state
   const [editDialogState, setEditDialogState] = useState({
     open: false,
     sectionId: null,
@@ -64,65 +87,66 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
     isSaving: false,
   });
 
-  // --- Section CRUD ---
+  // ─── Section CRUD ──────────────────────────────────────────
 
   const addSection = useCallback(async () => {
     const newTitle = `القسم ${sections.length + 1}`;
     setIsCreatingSection(true);
 
     try {
-      const isBootcamp = contentType === "bootcamp";
-      const payload = isBootcamp ? { title: newTitle } : { moduleType: "video", title: newTitle };
-      
-      const res = isBootcamp 
-        ? await createBootcampModule(contentId, payload)
-        : await createCourseModule(contentId, payload);
-
-      const moduleData = res.success ? res.data?.data : null;
-      setSections((prev) => [...prev, createDefaultSection(newTitle, moduleData)]);
-
-      if (res.success) {
-        toast.success("تم إضافة القسم بنجاح");
-        onModulesChange?.();
+      if (isBootcamp) {
+        const res = await createBootcampSection(contentId, { title: newTitle });
+        if (res.success) {
+          const apiSection = res.data?.data;
+          setSections((prev) => [...prev, createDefaultSection(newTitle, [], apiSection?._id)]);
+          toast.success("تم إضافة القسم بنجاح");
+          onModulesChange?.();
+        } else {
+          toast.error(res.error || "فشل إضافة القسم");
+        }
       } else {
-        toast.error(res.error || "فشل إضافة القسم في الخادم");
+        const res = await createCourseModule(contentId, { moduleType: "video", title: newTitle });
+        if (res.success) {
+          setSections((prev) => [...prev, createDefaultSection(newTitle)]);
+          toast.success("تم إضافة القسم بنجاح");
+          onModulesChange?.();
+        } else {
+          toast.error(res.error || "فشل إضافة القسم");
+        }
       }
     } catch {
       setSections((prev) => [...prev, createDefaultSection(newTitle)]);
+      toast.error("حدث خطأ أثناء إضافة القسم");
     }
 
     setIsCreatingSection(false);
-  }, [contentId, sections.length, onModulesChange]);
+  }, [contentId, isBootcamp, sections.length, onModulesChange]);
 
   const deleteSection = useCallback(
     async (sectionId) => {
       const section = sections.find((s) => s.id === sectionId);
-      if (section?.moduleData?._id) {
-        try {
-          if (contentType === "bootcamp") {
-            await deleteBootcampModule(contentId, section.moduleData._id);
-          } else {
-            await deleteCourseModule(contentId, section.moduleData._id);
-          }
-          toast.success("تم حذف القسم");
-        } catch {
-          toast.error("فشل حذف القسم");
+      try {
+        if (isBootcamp && section?.apiId) {
+          await deleteBootcampSection(contentId, section.apiId);
+        } else if (!isBootcamp && section?.apiId) {
+          await deleteCourseModule(contentId, section.apiId);
         }
+        toast.success("تم حذف القسم");
+      } catch {
+        toast.error("فشل حذف القسم");
       }
       setSections((prev) => prev.filter((s) => s.id !== sectionId));
       setOpenMenuId(null);
       onModulesChange?.();
     },
-    [contentId, sections, onModulesChange]
+    [contentId, isBootcamp, sections, onModulesChange]
   );
 
-  // --- Title editing ---
+  // ─── Title editing ─────────────────────────────────────────
 
   const toggleEdit = useCallback((sectionId) => {
     setSections((prev) =>
-      prev.map((s) =>
-        s.id === sectionId ? { ...s, isEditing: !s.isEditing } : s
-      )
+      prev.map((s) => (s.id === sectionId ? { ...s, isEditing: !s.isEditing } : s))
     );
     setOpenMenuId(null);
   }, []);
@@ -137,27 +161,23 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
     async (sectionId) => {
       const section = sections.find((s) => s.id === sectionId);
       setSections((prev) =>
-        prev.map((s) =>
-          s.id === sectionId ? { ...s, isEditing: false } : s
-        )
+        prev.map((s) => (s.id === sectionId ? { ...s, isEditing: false } : s))
       );
-
-      if (section?.moduleData?._id) {
-        try {
-          if (contentType === "bootcamp") {
-            await updateBootcampModule(contentId, section.moduleData._id, { title: section.title });
-          } else {
-            await updateCourseModule(contentId, section.moduleData._id, { title: section.title });
-          }
-        } catch {
-          console.error("Failed to update section title");
+      if (!section?.apiId) return;
+      try {
+        if (isBootcamp) {
+          await updateBootcampSection(contentId, section.apiId, { title: section.title });
+        } else {
+          await updateCourseModule(contentId, section.apiId, { title: section.title });
         }
+      } catch {
+        console.error("Failed to update section title");
       }
     },
-    [contentId, sections]
+    [contentId, isBootcamp, sections]
   );
 
-  // --- Dialog form ---
+  // ─── Add-content dialog ────────────────────────────────────
 
   const openAddDialog = useCallback((sectionId) => {
     setDialogState({ open: true, sectionId, formData: { title: "" } });
@@ -169,7 +189,14 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
 
   const saveDialogForm = useCallback(
     async (form) => {
-      const { title, description, moduleType, videoUrl, linkUrl, linkDate, taskUrl, taskImageUrl, taskDescription, quizSubType, questions } = form;
+      const {
+        title, description, moduleType,
+        videoUrl, linkUrl, linkDate,
+        taskUrl, taskImageUrl, taskDescription,
+        quizSubType, questions,
+        // live session fields
+        liveStartTime, liveEndTime, liveTimezone, liveDate, liveMeetLink, liveStreamUrl,
+      } = form;
       const { sectionId } = dialogState;
       if (!title?.trim()) {
         toast.error("يرجى إدخال اسم المحتوى");
@@ -177,94 +204,93 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
       }
 
       const type = moduleType || "video";
-      const isBootcamp = contentType === "bootcamp";
 
-      // Type-specific validation for course only
+      // Validation for course only
       if (!isBootcamp) {
-        if (type === "video" && !videoUrl?.trim()) {
-          toast.error("يرجى إدخال رابط الفيديو");
-          return;
-        }
-      if (type === "link" && !linkUrl?.trim()) {
-        toast.error("يرجى إدخال الرابط");
-        return;
+        if (type === "video" && !videoUrl?.trim()) { toast.error("يرجى إدخال رابط الفيديو"); return; }
+        if (type === "link" && !linkUrl?.trim()) { toast.error("يرجى إدخال الرابط"); return; }
+        if (type === "link" && !linkDate?.trim()) { toast.error("يرجى إدخال التاريخ"); return; }
+        if (type === "task" && !taskUrl?.trim()) { toast.error("يرجى إدخال رابط التكليف"); return; }
+        if (type === "quiz" && !quizSubType) { toast.error("يرجى اختيار نوع الاختبار"); return; }
       }
-      if (type === "link" && !linkDate?.trim()) {
-        toast.error("يرجى إدخال التاريخ");
-        return;
-      }
-      if (type === "task" && !taskUrl?.trim()) {
-        toast.error("يرجى إدخال رابط التكليف");
-        return;
-      }
-      if (type === "quiz" && !quizSubType) {
-        toast.error("يرجى اختيار نوع الاختبار");
-        return;
-      }
-    }
 
-    setIsSavingForm(true);
+      setIsSavingForm(true);
       try {
-        const payload = { moduleType: type, title };
-
-        // Add optional description for link/task
-        if (description?.trim()) {
-          payload.description = description.trim();
-        }
-
-        if (type === "video" && videoUrl?.trim()) {
-          payload.videoData = { url: videoUrl.trim() };
-        }
-        if (type === "link") {
-          payload.linkData = {
-            url: linkUrl.trim(),
-            date: linkDate.trim(),
-          };
-        }
-        if (type === "task") {
-          payload.taskData = {
-            url: taskUrl.trim(),
-            ...(taskImageUrl?.trim() && { imageUrl: taskImageUrl.trim() }),
-            ...(taskDescription?.trim() && { description: taskDescription.trim() }),
-          };
-        }
-        if (type === "quiz") {
-          // API expects: quizData = [{ question, options: string[], answer: string }]
-          // Writing questions omit options/answer (open-ended)
-          payload.quizData = (questions || []).map((q) => {
-            const item = { question: q.text };
-            if (quizSubType === "mcq" && q.answers?.length) {
-              item.options = q.answers.map((a) => a.text);
-              const correct = q.answers.find((a) => a.isCorrect);
-              if (correct) item.answer = correct.text;
-            }
-            return item;
-          });
-        }
-
         let res;
+
         if (isBootcamp) {
-          // Bootcamp specific payload
-          // form has timeStart, timeEnd, timezone, liveSession, video, projects
-          const bootcampPayload = {
-            title,
-          };
-          if (description?.trim()) bootcampPayload.description = description.trim();
-          if (form.timeStart) bootcampPayload.timeStart = form.timeStart;
-          if (form.timeEnd) bootcampPayload.timeEnd = form.timeEnd;
-          if (form.timezone) bootcampPayload.timezone = form.timezone;
-          if (form.liveSessionUrl?.trim()) bootcampPayload.liveSession = { url: form.liveSessionUrl.trim() };
-          if (form.videoUrl?.trim()) bootcampPayload.video = { url: form.videoUrl.trim() };
-          if (form.projects?.length) {
-            bootcampPayload.projects = form.projects.map(p => ({
-              title: p.title || "",
-              description: p.description || "",
-              githubUrl: p.githubUrl || "",
-              liveDemoUrl: p.liveDemoUrl || ""
-            }));
+          // Find the section's backend apiId
+          const section = sections.find((s) => s.id === sectionId);
+          const apiSectionId = section?.apiId;
+          if (!apiSectionId) {
+            toast.error("لم يتم حفظ القسم بعد على الخادم، يرجى حفظه أولاً");
+            setIsSavingForm(false);
+            return;
           }
-          res = await createBootcampModule(contentId, bootcampPayload);
+
+          const payload = { moduleType: type, title };
+          if (description?.trim()) payload.description = description.trim();
+
+          if (type === "video" && videoUrl?.trim()) {
+            payload.videoData = { url: videoUrl.trim() };
+          }
+          if (type === "link") {
+            payload.linkData = { url: linkUrl?.trim(), date: linkDate?.trim() };
+          }
+          if (type === "task") {
+            payload.taskData = {
+              url: taskUrl?.trim(),
+              ...(taskImageUrl?.trim() && { imageUrl: taskImageUrl.trim() }),
+              ...(taskDescription?.trim() && { description: taskDescription.trim() }),
+            };
+          }
+          if (type === "quiz") {
+            payload.quizData = (questions || []).map((q) => {
+              const item = { question: q.text };
+              if (quizSubType === "mcq" && q.answers?.length) {
+                item.options = q.answers.map((a) => a.text);
+                const correct = q.answers.find((a) => a.isCorrect);
+                if (correct) item.answer = correct.text;
+              }
+              return item;
+            });
+          }
+          if (type === "liveSession") {
+            payload.liveSessionData = {
+              startTime: liveStartTime || "",
+              endTime: liveEndTime || "",
+              timezone: liveTimezone || "Asia/Riyadh",
+              date: liveDate || "",
+              meetLink: liveMeetLink || "",
+              liveStreamUrl: liveStreamUrl || "",
+            };
+          }
+
+          res = await createBootcampSectionModule(contentId, apiSectionId, payload);
         } else {
+          // Course module
+          const payload = { moduleType: type, title };
+          if (description?.trim()) payload.description = description.trim();
+          if (type === "video" && videoUrl?.trim()) payload.videoData = { url: videoUrl.trim() };
+          if (type === "link") payload.linkData = { url: linkUrl.trim(), date: linkDate.trim() };
+          if (type === "task") {
+            payload.taskData = {
+              url: taskUrl.trim(),
+              ...(taskImageUrl?.trim() && { imageUrl: taskImageUrl.trim() }),
+              ...(taskDescription?.trim() && { description: taskDescription.trim() }),
+            };
+          }
+          if (type === "quiz") {
+            payload.quizData = (questions || []).map((q) => {
+              const item = { question: q.text };
+              if (quizSubType === "mcq" && q.answers?.length) {
+                item.options = q.answers.map((a) => a.text);
+                const correct = q.answers.find((a) => a.isCorrect);
+                if (correct) item.answer = correct.text;
+              }
+              return item;
+            });
+          }
           res = await createCourseModule(contentId, payload);
         }
 
@@ -279,7 +305,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
                       ...s.items,
                       {
                         id: newModule?._id || `item-${Date.now()}`,
-                        type: moduleType || "video",
+                        type,
                         title,
                         moduleData: newModule,
                       },
@@ -299,10 +325,10 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
       }
       setIsSavingForm(false);
     },
-    [contentId, contentType, dialogState, closeAddDialog, onModulesChange]
+    [contentId, isBootcamp, sections, dialogState, closeAddDialog, onModulesChange]
   );
 
-  // --- Edit dialog ---
+  // ─── Edit dialog ───────────────────────────────────────────
 
   const openEditDialog = useCallback((sectionId, item) => {
     setEditDialogState({ open: true, sectionId, item, isSaving: false });
@@ -316,58 +342,85 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
     async (form) => {
       const { sectionId, item } = editDialogState;
       const moduleId = item?.moduleData?._id;
-      if (!moduleId) {
-        toast.error("لا يمكن تعديل هذا المحتوى");
-        return;
-      }
+      if (!moduleId) { toast.error("لا يمكن تعديل هذا المحتوى"); return; }
 
       setEditDialogState((prev) => ({ ...prev, isSaving: true }));
       try {
-        const { moduleType: type, title, description, videoUrl, linkUrl, linkDate,
-                taskUrl, taskImageUrl, taskDescription, quizSubType, questions } = form;
-
-        const payload = { title };
-        if (description?.trim()) payload.description = description.trim();
-
-        if (type === "video" && videoUrl?.trim())  payload.videoData = { url: videoUrl.trim() };
-        if (type === "link")  payload.linkData = { url: linkUrl.trim(), date: linkDate.trim() };
-        if (type === "task")  payload.taskData = {
-          url: taskUrl.trim(),
-          ...(taskImageUrl?.trim()    && { imageUrl: taskImageUrl.trim() }),
-          ...(taskDescription?.trim() && { description: taskDescription.trim() }),
-        };
-        if (type === "quiz")  payload.quizData = (questions || []).map((q) => {
-          const qItem = { question: q.text };
-          if (quizSubType === "mcq" && q.answers?.length) {
-            qItem.options = q.answers.map((a) => a.text);
-            const correct = q.answers.find((a) => a.isCorrect);
-            if (correct) qItem.answer = correct.text;
-          }
-          return qItem;
-        });
+        const {
+          moduleType: type, title, description,
+          videoUrl, linkUrl, linkDate,
+          taskUrl, taskImageUrl, taskDescription,
+          quizSubType, questions,
+          liveStartTime, liveEndTime, liveTimezone, liveDate, liveMeetLink, liveStreamUrl,
+        } = form;
 
         let res;
-        if (contentType === "bootcamp") {
-          const bootcampPayload = { title };
-          if (description?.trim()) bootcampPayload.description = description.trim();
-          if (form.timeStart) bootcampPayload.timeStart = form.timeStart;
-          if (form.timeEnd) bootcampPayload.timeEnd = form.timeEnd;
-          if (form.timezone) bootcampPayload.timezone = form.timezone;
-          if (form.liveSessionUrl?.trim()) bootcampPayload.liveSession = { url: form.liveSessionUrl.trim() };
-          if (form.videoUrl?.trim()) bootcampPayload.video = { url: form.videoUrl.trim() };
-          if (form.projects?.length) {
-            bootcampPayload.projects = form.projects.map(p => ({
-              title: p.title || "",
-              description: p.description || "",
-              githubUrl: p.githubUrl || "",
-              liveDemoUrl: p.liveDemoUrl || ""
-            }));
+
+        if (isBootcamp) {
+          const section = sections.find((s) => s.id === sectionId);
+          const apiSectionId = section?.apiId;
+          if (!apiSectionId) { toast.error("القسم غير محفوظ على الخادم"); return; }
+
+          const payload = { title };
+          if (description?.trim()) payload.description = description.trim();
+          if (type === "video" && videoUrl?.trim()) payload.videoData = { url: videoUrl.trim() };
+          if (type === "link") payload.linkData = { url: linkUrl?.trim(), date: linkDate?.trim() };
+          if (type === "task") {
+            payload.taskData = {
+              url: taskUrl?.trim(),
+              ...(taskImageUrl?.trim() && { imageUrl: taskImageUrl.trim() }),
+              ...(taskDescription?.trim() && { description: taskDescription.trim() }),
+            };
           }
-          res = await updateBootcampModule(contentId, moduleId, bootcampPayload);
-          payload = bootcampPayload; // Sync payload for local state update
+          if (type === "quiz") {
+            payload.quizData = (questions || []).map((q) => {
+              const qItem = { question: q.text };
+              if (quizSubType === "mcq" && q.answers?.length) {
+                qItem.options = q.answers.map((a) => a.text);
+                const correct = q.answers.find((a) => a.isCorrect);
+                if (correct) qItem.answer = correct.text;
+              }
+              return qItem;
+            });
+          }
+          if (type === "liveSession") {
+            payload.liveSessionData = {
+              startTime: liveStartTime || "",
+              endTime: liveEndTime || "",
+              timezone: liveTimezone || "Asia/Riyadh",
+              date: liveDate || "",
+              meetLink: liveMeetLink || "",
+              liveStreamUrl: liveStreamUrl || "",
+            };
+          }
+
+          res = await updateBootcampSectionModule(contentId, apiSectionId, moduleId, payload);
         } else {
+          const payload = { title };
+          if (description?.trim()) payload.description = description.trim();
+          if (type === "video" && videoUrl?.trim()) payload.videoData = { url: videoUrl.trim() };
+          if (type === "link") payload.linkData = { url: linkUrl?.trim(), date: linkDate?.trim() };
+          if (type === "task") {
+            payload.taskData = {
+              url: taskUrl?.trim(),
+              ...(taskImageUrl?.trim() && { imageUrl: taskImageUrl.trim() }),
+              ...(taskDescription?.trim() && { description: taskDescription.trim() }),
+            };
+          }
+          if (type === "quiz") {
+            payload.quizData = (questions || []).map((q) => {
+              const qItem = { question: q.text };
+              if (quizSubType === "mcq" && q.answers?.length) {
+                qItem.options = q.answers.map((a) => a.text);
+                const correct = q.answers.find((a) => a.isCorrect);
+                if (correct) qItem.answer = correct.text;
+              }
+              return qItem;
+            });
+          }
           res = await updateCourseModule(contentId, moduleId, payload);
         }
+
         if (res.success) {
           setSections((prev) =>
             prev.map((s) =>
@@ -376,7 +429,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
                     ...s,
                     items: s.items.map((i) =>
                       i.id === item.id
-                        ? { ...i, title, moduleData: res.data?.data || { ...i.moduleData, ...payload } }
+                        ? { ...i, title, moduleData: res.data?.data || { ...i.moduleData } }
                         : i
                     ),
                   }
@@ -394,17 +447,21 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
       }
       setEditDialogState((prev) => ({ ...prev, isSaving: false }));
     },
-    [contentId, contentType, editDialogState, closeEditDialog, onModulesChange]
+    [contentId, isBootcamp, sections, editDialogState, closeEditDialog, onModulesChange]
   );
 
-  // --- Item deletion ---
+  // ─── Item deletion ─────────────────────────────────────────
 
   const deleteItem = useCallback(
     async (sectionId, itemId, moduleId) => {
       if (moduleId) {
         try {
-          if (contentType === "bootcamp") {
-            await deleteBootcampModule(contentId, moduleId);
+          if (isBootcamp) {
+            const section = sections.find((s) => s.id === sectionId);
+            const apiSectionId = section?.apiId;
+            if (apiSectionId) {
+              await deleteBootcampSectionModule(contentId, apiSectionId, moduleId);
+            }
           } else {
             await deleteCourseModule(contentId, moduleId);
           }
@@ -422,7 +479,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
       );
       onModulesChange?.();
     },
-    [contentId, contentType, onModulesChange]
+    [contentId, isBootcamp, sections, onModulesChange]
   );
 
   return {

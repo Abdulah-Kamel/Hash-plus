@@ -8,6 +8,7 @@ import {
   X,
   ListChecks,
   PenLine,
+  Radio,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,10 +23,11 @@ import {
 // Constants
 // ─────────────────────────────────────────────────────────────────────────────
 const CONTENT_TYPES = [
-  { id: "video", label: "فيديو",   icon: Video },
-  { id: "link",  label: "رابط",    icon: Link },
-  { id: "task",  label: "ملف",     icon: FileText },
-  { id: "quiz",  label: "اختبار",  icon: ClipboardList },
+  { id: "video",       label: "فيديو",    icon: Video,        forBootcamp: true  },
+  { id: "link",        label: "رابط",     icon: Link,         forBootcamp: false },
+  { id: "task",        label: "ملف",      icon: FileText,     forBootcamp: true  },
+  { id: "quiz",        label: "اختبار",   icon: ClipboardList, forBootcamp: true  },
+  { id: "liveSession", label: "بث مباشر", icon: Radio,        forBootcamp: true  },
 ];
 
 const QUIZ_SUBTYPES = [
@@ -54,6 +56,13 @@ const EMPTY_FORM = {
   taskImageUrl: "",
   taskDescription: "",
   questions: [],
+  // live session
+  liveStartTime: "",
+  liveEndTime: "",
+  liveTimezone: "Asia/Riyadh",
+  liveDate: "",
+  liveMeetLink: "",
+  liveStreamUrl: "",
 };
 
 // Helpers to create blank question / answer objects
@@ -70,9 +79,11 @@ const typeLabel = (type) =>
 // ─────────────────────────────────────────────────────────────────────────────
 // Step 1 — Content type picker
 // ─────────────────────────────────────────────────────────────────────────────
-const TypeSelector = ({ selected, onSelect }) => (
+const TypeSelector = ({ selected, onSelect, contentType }) => {
+  const types = CONTENT_TYPES.filter(t => contentType === "bootcamp" ? t.forBootcamp : true);
+  return (
   <div className="grid grid-cols-2 gap-3 py-2" dir="rtl">
-    {CONTENT_TYPES.map(({ id, label, icon: Icon }) => (
+    {types.map(({ id, label, icon: Icon }) => (
       <button
         key={id}
         type="button"
@@ -89,7 +100,8 @@ const TypeSelector = ({ selected, onSelect }) => (
       </button>
     ))}
   </div>
-);
+  );
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Step 1.5 — Quiz subtype picker (MCQ vs Writing)
@@ -275,75 +287,47 @@ const TaskForm = ({ formData, onChange }) => (
   </div>
 );
 
-// ─── Bootcamp form ───────────────────────────────────────────────────────────
-const BootcampForm = ({ formData, onChange }) => {
-  const projects = formData.projects || [];
-  const addProject = () => onChange({ ...formData, projects: [...projects, { id: crypto.randomUUID(), title: "", description: "", githubUrl: "", liveDemoUrl: "" }] });
-  const removeProject = (id) => onChange({ ...formData, projects: projects.filter(p => p.id !== id) });
-  const updateProject = (id, field, value) => onChange({
-    ...formData,
-    projects: projects.map(p => p.id === id ? { ...p, [field]: value } : p)
-  });
-
-  return (
-    <div className="flex flex-col gap-4 py-2" dir="rtl">
-      <TitleField value={formData.title} onChange={(e) => onChange({ ...formData, title: e.target.value })} />
-      
+// ─── Live Session form (bootcamp only) ───────────────────────────────────────
+const LiveSessionForm = ({ formData, onChange }) => (
+  <div className="flex flex-col gap-4 py-2" dir="rtl">
+    <TitleField value={formData.title} onChange={(e) => onChange({ ...formData, title: e.target.value })} />
+    <div className="flex flex-col gap-1.5">
+      <label className="text-sm font-semibold text-gray-800 text-right">الوصف</label>
+      <Input value={formData.description || ""} onChange={e => onChange({ ...formData, description: e.target.value })} placeholder="وصف الجلسة" className="text-right h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="rtl" />
+    </div>
+    <div className="flex flex-col gap-1.5">
+      <label className="text-sm font-semibold text-gray-800 text-right">التاريخ <span className="text-red-500">*</span></label>
+      <Input type="date" value={formData.liveDate || ""} onChange={e => onChange({ ...formData, liveDate: e.target.value })} className="h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="ltr" />
+    </div>
+    <div className="grid grid-cols-2 gap-4">
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-semibold text-gray-800 text-right">الوصف</label>
-        <Input value={formData.description || ""} onChange={e => onChange({ ...formData, description: e.target.value })} className="text-right h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="rtl" />
+        <label className="text-sm font-semibold text-gray-800 text-right">وقت البدء</label>
+        <Input type="time" value={formData.liveStartTime || ""} onChange={e => onChange({ ...formData, liveStartTime: e.target.value })} className="h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="ltr" />
       </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-semibold text-gray-800 text-right">وقت البدء</label>
-          <Input type="time" value={formData.timeStart || ""} onChange={e => onChange({ ...formData, timeStart: e.target.value })} className="text-right h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="ltr" />
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-semibold text-gray-800 text-right">وقت الانتهاء</label>
-          <Input type="time" value={formData.timeEnd || ""} onChange={e => onChange({ ...formData, timeEnd: e.target.value })} className="text-right h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="ltr" />
-        </div>
-      </div>
-      
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-semibold text-gray-800 text-right">المنطقة الزمنية</label>
-        <select value={formData.timezone || "Asia/Riyadh"} onChange={e => onChange({ ...formData, timezone: e.target.value })} className="h-11 border border-gray-200 rounded-lg px-3 outline-none focus-visible:ring-primary bg-white pt-0">
-          <option value="Asia/Riyadh">Asia/Riyadh</option>
-          <option value="Africa/Cairo">Africa/Cairo</option>
-          <option value="Asia/Dubai">Asia/Dubai</option>
-          <option value="UTC">UTC</option>
-        </select>
-      </div>
-
-      <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-semibold text-gray-800 text-right">رابط البث المباشر</label>
-        <Input value={formData.liveSessionUrl || ""} onChange={e => onChange({ ...formData, liveSessionUrl: e.target.value })} placeholder="https://zoom.us/..." className="text-right h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="ltr" />
-      </div>
-
-      <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-semibold text-gray-800 text-right">رابط الفيديو المسجل</label>
-        <Input value={formData.videoUrl || ""} onChange={e => onChange({ ...formData, videoUrl: e.target.value })} placeholder="https://youtube.com/..." className="text-right h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="ltr" />
-      </div>
-
-      <div className="flex flex-col gap-3 py-2 border-t border-gray-100 pt-4 max-h-[25vh] overflow-y-auto pr-1">
-        <div className="flex justify-between items-center">
-            <label className="text-sm font-semibold text-gray-800 text-right">المشاريع التطبيقية</label>
-            <button type="button" onClick={addProject} className="text-primary text-xs font-medium hover:underline cursor-pointer">+ أضف مشروع</button>
-        </div>
-        {projects.map((p, i) => (
-          <div key={p.id} className="border border-gray-100 rounded-lg p-3 flex flex-col gap-3 bg-gray-50/50 relative">
-            <button type="button" onClick={() => removeProject(p.id)} className="absolute top-2 left-2 text-gray-400 hover:text-red-500 cursor-pointer"><X className="w-4 h-4" /></button>
-            <span className="text-xs font-medium text-gray-500">مشروع {i + 1}</span>
-            <Input value={p.title} onChange={e => updateProject(p.id, "title", e.target.value)} placeholder="اسم المشروع" className="h-9 bg-white border-gray-200" />
-            <Input value={p.description} onChange={e => updateProject(p.id, "description", e.target.value)} placeholder="الوصف" className="h-9 bg-white border-gray-200" />
-            <Input value={p.githubUrl} onChange={e => updateProject(p.id, "githubUrl", e.target.value)} placeholder="رابط GitHub" className="h-9 bg-white border-gray-200" dir="ltr" />
-            <Input value={p.liveDemoUrl} onChange={e => updateProject(p.id, "liveDemoUrl", e.target.value)} placeholder="رابط العرض الحي" className="h-9 bg-white border-gray-200" dir="ltr" />
-          </div>
-        ))}
+        <label className="text-sm font-semibold text-gray-800 text-right">وقت الانتهاء</label>
+        <Input type="time" value={formData.liveEndTime || ""} onChange={e => onChange({ ...formData, liveEndTime: e.target.value })} className="h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="ltr" />
       </div>
     </div>
-  );
-};
+    <div className="flex flex-col gap-1.5">
+      <label className="text-sm font-semibold text-gray-800 text-right">المنطقة الزمنية</label>
+      <select value={formData.liveTimezone || "Asia/Riyadh"} onChange={e => onChange({ ...formData, liveTimezone: e.target.value })} className="h-11 border border-gray-200 rounded-lg px-3 outline-none bg-white">
+        <option value="Asia/Riyadh">Asia/Riyadh (السعودية)</option>
+        <option value="Africa/Cairo">Africa/Cairo (مصر)</option>
+        <option value="Asia/Dubai">Asia/Dubai (الإمارات)</option>
+        <option value="UTC">UTC</option>
+      </select>
+    </div>
+    <div className="flex flex-col gap-1.5">
+      <label className="text-sm font-semibold text-gray-800 text-right">رابط الاجتماع (Zoom / Meet)</label>
+      <Input value={formData.liveMeetLink || ""} onChange={e => onChange({ ...formData, liveMeetLink: e.target.value })} placeholder="https://zoom.us/j/..." className="h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="ltr" />
+    </div>
+    <div className="flex flex-col gap-1.5">
+      <label className="text-sm font-semibold text-gray-800 text-right">رابط البث المباشر</label>
+      <Input value={formData.liveStreamUrl || ""} onChange={e => onChange({ ...formData, liveStreamUrl: e.target.value })} placeholder="https://youtube.com/live/..." className="h-11 border-gray-200 rounded-lg focus-visible:ring-primary" dir="ltr" />
+    </div>
+  </div>
+);
 
 // ─── Quiz form — full question builder ───────────────────────────────────────
 const QuizForm = ({ formData, onChange, quizSubType }) => {
@@ -495,18 +479,15 @@ const QuizForm = ({ formData, onChange, quizSubType }) => {
   );
 };
 
-// Dispatcher
-const ContentForm = ({ formData, onChange, selectedType, quizSubType, contentType }) => {
-  if (contentType === "bootcamp") {
-    return <BootcampForm formData={formData} onChange={onChange} />;
-  }
-
+// Dispatcher — works for both course and bootcamp types
+const ContentForm = ({ formData, onChange, selectedType, quizSubType }) => {
   switch (selectedType) {
-    case "video": return <VideoForm formData={formData} onChange={onChange} />;
-    case "link":  return <LinkForm  formData={formData} onChange={onChange} />;
-    case "task":  return <TaskForm  formData={formData} onChange={onChange} />;
-    case "quiz":  return <QuizForm  formData={formData} onChange={onChange} quizSubType={quizSubType} />;
-    default:      return <QuizForm  formData={formData} onChange={onChange} quizSubType={quizSubType} />;
+    case "video":       return <VideoForm       formData={formData} onChange={onChange} />;
+    case "link":        return <LinkForm        formData={formData} onChange={onChange} />;
+    case "task":        return <TaskForm        formData={formData} onChange={onChange} />;
+    case "quiz":        return <QuizForm        formData={formData} onChange={onChange} quizSubType={quizSubType} />;
+    case "liveSession": return <LiveSessionForm formData={formData} onChange={onChange} />;
+    default:            return <VideoForm       formData={formData} onChange={onChange} />;
   }
 };
 
@@ -525,15 +506,13 @@ const isQuizValid = (formData, quizSubType) => {
   });
 };
 
-const isFormValid = (formData, type, quizSubType, contentType) => {
+const isFormValid = (formData, type, quizSubType) => {
   if (!formData.title.trim()) return false;
-  
-  if (contentType === "bootcamp") return true;
-
-  if (type === "video") return !!formData.videoUrl?.trim();
-  if (type === "link")  return !!formData.linkUrl?.trim() && !!formData.linkDate?.trim();
-  if (type === "task")  return !!formData.taskUrl?.trim();
-  if (type === "quiz")  return isQuizValid(formData, quizSubType);
+  if (type === "video")       return !!formData.videoUrl?.trim();
+  if (type === "link")        return !!formData.linkUrl?.trim() && !!formData.linkDate?.trim();
+  if (type === "task")        return !!formData.taskUrl?.trim();
+  if (type === "quiz")        return isQuizValid(formData, quizSubType);
+  if (type === "liveSession") return !!formData.liveDate?.trim();
   return true;
 };
 
@@ -548,7 +527,7 @@ const AddContentDialog = ({
   initialType = null,
   contentType = "course"
 }) => {
-  const [step, setStep] = useState(initialType || contentType === "bootcamp" ? STEP.FORM : STEP.TYPE);
+  const [step, setStep] = useState(initialType ? STEP.FORM : STEP.TYPE);
   const [selectedType, setSelectedType] = useState(initialType ?? "video");
   const [quizSubType, setQuizSubType] = useState("mcq");
   const [formData, setFormData] = useState(EMPTY_FORM);
@@ -556,7 +535,7 @@ const AddContentDialog = ({
   // Reset when dialog re-opens
   const handleOpenChange = (isOpen) => {
     if (isOpen) {
-      setStep((initialType || contentType === "bootcamp") ? STEP.FORM : STEP.TYPE);
+      setStep(initialType ? STEP.FORM : STEP.TYPE);
       setSelectedType(initialType ?? "video");
       setQuizSubType("mcq");
       setFormData(EMPTY_FORM);
@@ -604,7 +583,7 @@ const AddContentDialog = ({
     return `إضافة محتوى — ${typeLabel(selectedType)}`;
   };
 
-  const canSave = !isSaving && isFormValid(formData, selectedType, quizSubType, contentType);
+  const canSave = !isSaving && isFormValid(formData, selectedType, quizSubType);
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -625,7 +604,7 @@ const AddContentDialog = ({
         {/* Step 1: Content type selector */}
         {step === STEP.TYPE && (
           <>
-            <TypeSelector selected={selectedType} onSelect={setSelectedType} />
+            <TypeSelector selected={selectedType} onSelect={setSelectedType} contentType={contentType} />
             <div className="flex justify-between gap-3 pt-2">
               <Button
                 type="button"
@@ -678,29 +657,16 @@ const AddContentDialog = ({
               onChange={setFormData}
               selectedType={selectedType}
               quizSubType={quizSubType}
-              contentType={contentType}
             />
             <div className="flex justify-between gap-3 pt-2">
-              {contentType === "course" && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleBack}
-                  className="rounded-full px-6 border-gray-300 text-gray-700 cursor-pointer"
-                >
-                  رجوع
-                </Button>
-              )}
-              {contentType === "bootcamp" && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => handleOpenChange(false)}
-                  className="rounded-full px-6 border-gray-300 text-gray-700 cursor-pointer"
-                >
-                  إلغاء
-                </Button>
-              )}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleBack}
+                className="rounded-full px-6 border-gray-300 text-gray-700 cursor-pointer"
+              >
+                رجوع
+              </Button>
               <Button
                 type="button"
                 onClick={handleSave}

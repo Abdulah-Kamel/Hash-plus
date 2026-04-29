@@ -3,6 +3,7 @@ import { Share2, Star } from "lucide-react";
 import AskAi from "@/components/course-page/AskAi";
 
 const CourseHeader = ({ courseDetails }) => {
+  const isBootcamp = courseDetails?.contentType === "bootcamp";
   const radius = 20;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (50 / 100) * circumference;
@@ -47,11 +48,11 @@ const CourseHeader = ({ courseDetails }) => {
           </div>
           <div className="flex items-center gap-1.5">
             <Star className="w-8 h-8 text-[#E4E4E7]" />
-            <p className="text-xs sm:text-sm">قيم الدورة</p>
+            <p className="text-xs sm:text-sm">{isBootcamp ? "قيم المعسكر" : "قيم الدورة"}</p>
           </div>
           <button className="flex items-center cursor-pointer gap-1.5 px-2 sm:px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-50 duration-200">
             <Share2 className="w-4 h-4 text-gray-600" />
-            <p className="text-gray-700 text-xs sm:text-sm">شارك الدورة</p>
+            <p className="text-gray-700 text-xs sm:text-sm">{isBootcamp ? "شارك المعسكر" : "شارك الدورة"}</p>
           </button>
           <AskAi />
         </div>

@@ -28,7 +28,7 @@ export const handleRegister = async (data) => {
         httpOnly: true,
         sameSite: "strict",
       });
-      cookie.set("user", JSON.stringify(final.data.data), {
+      cookie.set("user", JSON.stringify(final.data), {
         httpOnly: true,
         sameSite: "strict",
       });

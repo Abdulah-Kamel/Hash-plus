@@ -9,9 +9,9 @@ const SummaryTab = ({ courseData }) => {
     return (
         <TabsContent value="summary">
             <CourseDescription description={courseData?.description} />
-            <CourseRequirements requirements={courseData?.requirements} />
-            <CourseOutcomes outcomes={courseData?.whatYouWillLearn} />
-            <CourseStats />
+            <CourseRequirements requirements={courseData?.prerequisites} />
+            <CourseOutcomes outcomes={courseData?.learningOutcomes} />
+            <CourseStats courseData={courseData} />
         </TabsContent>
     );
 };
