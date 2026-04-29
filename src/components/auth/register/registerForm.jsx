@@ -21,6 +21,7 @@ import PhoneInput, {
 } from "react-phone-number-input";
 import { Spinner } from "@/components/ui/spinner";
 import { useRouter } from "next/navigation";
+import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 
 const RegisterForm = ({ role }) => {
   const [loading, setLoading] = useState(false);
@@ -119,22 +120,10 @@ const RegisterForm = ({ role }) => {
           >
             {loading ? <Spinner className="size-8" /> : "إنشاء حساب"}
           </Button>
-          <Button
-            variant="outline"
-            className="w-full cursor-pointer px-5 py-2 sm:py-6 rounded-lg mt-2 max-sm:text-xs"
-            disabled={loading}
-          >
-            {loading ? (
-              <Spinner className="size-8" />
-            ) : (
-              "تسجيل الدخول عن طريق جوجل"
-            )}
-            <Image
-              src={googleIcon}
-              alt="google logog icon"
-              className="h-5 w-5"
-            />
-          </Button>
+          <GoogleAuthButton
+            redirectTo="/"
+            label="إنشاء حساب عن طريق جوجل"
+          />
           <div className="max-sm:text-xs text-center mt-6 font-light">
             لديك حساب بالفعل؟
             <Link

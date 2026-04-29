@@ -16,6 +16,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
+import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 
 const LoginForm = ({ role }) => {
   const [loading, setLoading] = useState(false);
@@ -156,22 +157,10 @@ const LoginForm = ({ role }) => {
           >
             {loading ? <Spinner className="size-8" /> : "تسجيل الدخول"}
           </Button>
-          <Button
-            variant="outline"
-            className="w-full cursor-pointer px-5 py-2 sm:py-6 rounded-lg mt-2 max-sm:text-xs"
-            disabled={loading}
-          >
-            {loading ? (
-              <Spinner className="size-8" />
-            ) : (
-              "تسجيل الدخول عن طريق جوجل"
-            )}
-            <Image
-              src={googleIcon}
-              alt="google logog icon"
-              className="h-5 w-5"
-            />
-          </Button>
+          <GoogleAuthButton
+            redirectTo={role === "teacher" ? "/creator/home" : "/"}
+            label="تسجيل الدخول عن طريق جوجل"
+          />
           <div className="mt-3 max-sm:text-xs text-center font-light">
             ليس لديك حساب؟
             <Link

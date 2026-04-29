@@ -6,6 +6,7 @@ import { NavBar } from "@/components/navbar";
 import Footer from "@/components/footer";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const alexandria = Alexandria({
   variable: "--font-alexandria",
@@ -104,16 +105,18 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="antialiased">
-        <Toaster />
-        {!isCreator ? (
-          <>
-            <NavBar />
-            {children}
-            <Footer />
-          </>
-        ) : (
-          <>{children}</>
-        )}
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+          <Toaster />
+          {!isCreator ? (
+            <>
+              <NavBar />
+              {children}
+              <Footer />
+            </>
+          ) : (
+            <>{children}</>
+          )}
+        </GoogleOAuthProvider>
       </body>
     </html>
   );
