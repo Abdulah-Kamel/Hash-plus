@@ -7,6 +7,8 @@ import SectionHeader from "./curriculum/SectionHeader";
 import SectionItemsList from "./curriculum/SectionItemsList";
 import AddContentDialog from "./curriculum/AddContentDialog";
 import EditModuleDialog from "./curriculum/EditModuleDialog";
+import AddSectionDialog from "./curriculum/AddSectionDialog";
+import { EditSectionDialog, DeleteSectionDialog } from "./curriculum/SectionDialogs";
 
 const CurriculumSection = ({ contentId, contentType = "course", modules = [], onModulesChange }) => {
   const {
@@ -17,7 +19,18 @@ const CurriculumSection = ({ contentId, contentType = "course", modules = [], on
     isSavingForm,
     dialogState,
     editDialogState,
+    addSectionDialogOpen,
+    setAddSectionDialogOpen,
+    editSectionDialog,
+    setEditSectionDialog,
+    deleteSectionDialog,
+    setDeleteSectionDialog,
     addSection,
+    submitNewSection,
+    openEditSection,
+    submitEditSection,
+    openDeleteSection,
+    confirmDeleteSection,
     deleteSection,
     toggleEdit,
     updateTitle,
@@ -46,6 +59,20 @@ const CurriculumSection = ({ contentId, contentType = "course", modules = [], on
 
       {/* Sections */}
       <div className="space-y-4">
+        {sections.length === 0 && contentType === "bootcamp" && (
+          <div className="border-2 border-dashed border-gray-200 rounded-xl p-10 text-center">
+            <p className="text-gray-400 text-sm mb-4">لا توجد أقسام بعد — ابدأ بإضافة أول قسم للمعسكر</p>
+            <button
+              type="button"
+              onClick={addSection}
+              disabled={isCreatingSection}
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm font-medium cursor-pointer disabled:opacity-50"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span>{isCreatingSection ? "جاري الإضافة..." : "إضافة أول قسم"}</span>
+            </button>
+          </div>
+        )}
         {sections.map((section) => (
           <div
             key={section.id}
@@ -57,7 +84,7 @@ const CurriculumSection = ({ contentId, contentType = "course", modules = [], on
               onToggleMenu={() =>
                 setOpenMenuId(openMenuId === section.id ? null : section.id)
               }
-              onToggleEdit={() => toggleEdit(section.id)}
+              onToggleEdit={() => contentType === "bootcamp" ? openEditSection(section.id) : toggleEdit(section.id)}
               onUpdateTitle={updateTitle}
               onSaveTitle={saveTitle}
               onDelete={() => deleteSection(section.id)}
@@ -119,6 +146,36 @@ const CurriculumSection = ({ contentId, contentType = "course", modules = [], on
         item={editDialogState.item}
         onSave={saveEditForm}
         isSaving={editDialogState.isSaving}
+      />
+
+      {/* Add Section Dialog (bootcamp only) */}
+      {contentType === "bootcamp" && (
+        <AddSectionDialog
+          open={addSectionDialogOpen}
+          onOpenChange={setAddSectionDialogOpen}
+          onSave={submitNewSection}
+          isSaving={isCreatingSection}
+        />
+      )}
+
+      {/* Edit Section Dialog (bootcamp only) */}
+      {contentType === "bootcamp" && (
+        <EditSectionDialog
+          open={editSectionDialog.open}
+          onOpenChange={(isOpen) => !isOpen && setEditSectionDialog({ open: false, section: null, isSaving: false })}
+          section={editSectionDialog.section}
+          onSave={submitEditSection}
+          isSaving={editSectionDialog.isSaving}
+        />
+      )}
+
+      {/* Delete Section Dialog */}
+      <DeleteSectionDialog
+        open={deleteSectionDialog.open}
+        onOpenChange={(isOpen) => !isOpen && setDeleteSectionDialog({ open: false, section: null, isDeleting: false })}
+        section={deleteSectionDialog.section}
+        onConfirm={confirmDeleteSection}
+        isDeleting={deleteSectionDialog.isDeleting}
       />
     </div>
   );

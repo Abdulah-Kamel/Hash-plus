@@ -15,6 +15,60 @@ import MessagesSection from "@/components/creator/content-builder/MessagesSectio
 import FinalProjectSection from "@/components/creator/content-builder/FinalProjectSection";
 import { toast } from "sonner";
 
+// ─── Per-section completion checks ───────────────────────────────────────────
+const getSectionCompletion = (sectionKey, state, contentType) => {
+  const {
+    learningOutcomes, prerequisites,
+    landingForm, pricingForm, messagesForm,
+    finalProjectForm, modules,
+  } = state;
+
+  switch (sectionKey) {
+    case "target-learners":
+      return learningOutcomes.filter((o) => o?.trim()).length > 0;
+
+    case "intro-video":
+      return true; // optional
+
+    case "curriculum":
+      return contentType === "bootcamp"
+        ? true // bootcamp sections managed separately, always allow
+        : modules.length > 0;
+
+    case "captions":
+    case "attachments":
+      return true; // optional
+
+    case "final-project":
+      if (contentType !== "bootcamp") return true; // only required for bootcamp
+      return (
+        finalProjectForm.description?.trim().length >= 10 &&
+        finalProjectForm.tasks?.length >= 1 &&
+        finalProjectForm.materials?.length >= 1
+      );
+
+    case "landing-page":
+      return (
+        !!landingForm.title?.trim() &&
+        !!landingForm.description?.trim() &&
+        !!landingForm.category &&
+        (!!landingForm.welcomeMessage?.trim() || !!messagesForm.welcomeMessage?.trim())
+      );
+
+    case "pricing":
+      return pricingForm.price !== "" && pricingForm.price !== undefined;
+
+    case "messages":
+      return (
+        !!messagesForm.welcomeMessage?.trim() &&
+        !!messagesForm.congratulationMessage?.trim()
+      );
+
+    default:
+      return true;
+  }
+};
+
 const ContentBuilderPage = () => {
   const { id } = useParams();
   const router = useRouter();
@@ -27,13 +81,10 @@ const ContentBuilderPage = () => {
   const [contentTitle, setContentTitle] = useState("");
   const [contentType, setContentType] = useState("course");
   const [welcomeVideo, setWelcomeVideo] = useState(null);
-  const [modules, setModules] = useState([]);
-  const [learningOutcomes, setLearningOutcomes] = useState([
-  ]);
-  const [prerequisites, setPrerequisites] = useState([
-    "احتراف التصميم",
-    "معرفة قواعد تجربة المستخدم",
-  ]);
+  const [modules, setModules] = useState([]);       // course flat modules
+  const [bootcampSections, setBootcampSections] = useState([]); // bootcamp sections
+  const [learningOutcomes, setLearningOutcomes] = useState([]);
+  const [prerequisites, setPrerequisites] = useState([]);
   const [landingForm, setLandingForm] = useState({
     title: "",
     description: "",
@@ -60,6 +111,31 @@ const ContentBuilderPage = () => {
   const [attachments, setAttachments] = useState([]);
   const [captions, setCaptions] = useState({});
 
+  // ── Compute completion state for all sections ─────────────────────────────
+  const formState = {
+    learningOutcomes, prerequisites, landingForm,
+    pricingForm, messagesForm, finalProjectForm, modules,
+  };
+
+  const sectionCompletion = {
+    "target-learners": getSectionCompletion("target-learners", formState, contentType),
+    "intro-video": getSectionCompletion("intro-video", formState, contentType),
+    "curriculum": getSectionCompletion("curriculum", formState, contentType),
+    "captions": getSectionCompletion("captions", formState, contentType),
+    "attachments": getSectionCompletion("attachments", formState, contentType),
+    "final-project": getSectionCompletion("final-project", formState, contentType),
+    "landing-page": getSectionCompletion("landing-page", formState, contentType),
+    "pricing": getSectionCompletion("pricing", formState, contentType),
+    "messages": getSectionCompletion("messages", formState, contentType),
+  };
+
+  // Required sections that must be complete before saving
+  const requiredSections = contentType === "bootcamp"
+    ? ["target-learners", "final-project", "landing-page", "pricing", "messages"]
+    : ["target-learners", "landing-page", "pricing", "messages"];
+
+  const allRequiredComplete = requiredSections.every((s) => sectionCompletion[s]);
+
   // Fetch content data
   const fetchContent = async () => {
     if (!id) return;
@@ -71,15 +147,13 @@ const ContentBuilderPage = () => {
         setContentTitle(data.title || "");
         setContentType(data.contentType || "course");
         setWelcomeVideo(data.welcomeVideo || null);
+        // courses use data.modules; bootcamps use data.sections
         setModules(data.modules || []);
-        if (data.learningOutcomes?.length > 0) {
-          setLearningOutcomes(data.learningOutcomes);
-        }
-        if (data.prerequisites?.length > 0) {
-          setPrerequisites(data.prerequisites);
-        }
+        setBootcampSections(data.sections || []);
+        if (data.learningOutcomes?.length > 0) setLearningOutcomes(data.learningOutcomes);
+        if (data.prerequisites?.length > 0) setPrerequisites(data.prerequisites);
 
-        setLandingForm(prev => ({
+        setLandingForm((prev) => ({
           ...prev,
           title: data.title || "",
           description: data.description || "",
@@ -97,7 +171,7 @@ const ContentBuilderPage = () => {
 
         setMessagesForm({
           welcomeMessage: data.welcomeMessage || "",
-          congratulationMessage: data.congratulationMessage || "",
+          congratulationMessage: data.congratulationsMessage || "",
         });
 
         if (data.finalProject) {
@@ -109,13 +183,8 @@ const ContentBuilderPage = () => {
           });
         }
 
-        if (data.attachments?.length > 0) {
-          setAttachments(data.attachments);
-        }
-
-        if (data.captions && typeof data.captions === 'object') {
-          setCaptions(data.captions);
-        }
+        if (data.attachments?.length > 0) setAttachments(data.attachments);
+        if (data.captions && typeof data.captions === "object") setCaptions(data.captions);
       }
     } catch (err) {
       console.error("Failed to fetch content:", err);
@@ -128,13 +197,11 @@ const ContentBuilderPage = () => {
     fetchContent();
   }, [id]);
 
-  // Generic update handler that PATCHes the content
+  // Generic update handler
   const handleUpdate = async (data) => {
     try {
       const res = await updateContent(id, data);
-      if (!res.success) {
-        console.error("Failed to update content:", res.error);
-      }
+      if (!res.success) console.error("Failed to update content:", res.error);
       return res;
     } catch (err) {
       console.error("Error updating content:", err);
@@ -142,90 +209,63 @@ const ContentBuilderPage = () => {
     }
   };
 
-  // Save button handler — saves all current section data
+  // Save handler — gated behind allRequiredComplete
   const handleSave = async () => {
-    // Pre-save validation based on backend rules
-    const cleanOutcomes = learningOutcomes.filter((o) => o?.trim() !== "");
-    if (cleanOutcomes.length === 0) {
-      toast.error("يرجى إضافة ما سيتعلمه الطلاب (مخرج تعليمي واحد على الأقل)");
-      setActiveSection("target-learners");
-      return;
-    }
-
-    if (!landingForm.welcomeMessage?.trim() && !messagesForm.welcomeMessage?.trim()) {
-      toast.error("يرجى كتابة رسالة الترحيب في قسم صفحة الهبوط");
-      setActiveSection("landing-page");
-      return;
-    }
-
-    if (!landingForm.category) {
-      toast.error("يرجى اختيار تصنيف المحتوى");
-      setActiveSection("landing-page");
+    if (!allRequiredComplete) {
+      // Find and navigate to first incomplete required section
+      const firstIncomplete = requiredSections.find((s) => !sectionCompletion[s]);
+      if (firstIncomplete) setActiveSection(firstIncomplete);
+      toast.error("يرجى إكمال جميع الأقسام المطلوبة قبل الحفظ");
       return;
     }
 
     setIsSaving(true);
     try {
+      const cleanOutcomes = learningOutcomes.filter((o) => o?.trim() !== "");
+
       const payload = {
         ...originalData,
         learningOutcomes: cleanOutcomes,
         prerequisites: prerequisites.filter((p) => p && p.trim() !== ""),
-        materials: attachments.map(a => ({ name: a.name, id: a.id })),
-        finalProject: finalProjectForm,
+        materials: attachments.map((a) => ({ name: a.name, id: a.id })),
+        finalProject: {
+          title: finalProjectForm.title || "المشروع النهائي",
+          description: finalProjectForm.description,
+          tasks: finalProjectForm.tasks,
+          materials: finalProjectForm.materials,
+        },
         ...landingForm,
       };
 
       if (pricingForm.price !== undefined && pricingForm.price !== "") {
         payload.price = {
           amount: Number(pricingForm.price),
-          currency: pricingForm.currency || "SAR"
+          currency: pricingForm.currency || "SAR",
         };
       }
 
-      if (messagesForm.welcomeMessage) {
-        payload.welcomeMessage = messagesForm.welcomeMessage;
-      }
-      
-      if (messagesForm.congratulationMessage) {
-        payload.congratulationsMessage = messagesForm.congratulationMessage;
-      }
+      if (messagesForm.welcomeMessage) payload.welcomeMessage = messagesForm.welcomeMessage;
+      if (messagesForm.congratulationMessage) payload.congratulationsMessage = messagesForm.congratulationMessage;
 
-      // Cleanup legacy keys to satisfy backend validation
-      delete payload.attachments;
-      delete payload.captions;
-      delete payload.currency;
-      delete payload.hasDiscount;
-      delete payload.discount;
-      delete payload.congratulationMessage;
-      delete payload._id;
-      delete payload.slug;
-      delete payload.instructor;
-      delete payload.metadata;
-      delete payload.modules;
-      delete payload.createdAt;
-      delete payload.updatedAt;
-      delete payload.__v;
-      delete payload.reviews;
-      delete payload.id;
+      // Remove keys the backend rejects
+      const keysToDelete = [
+        "attachments", "captions", "currency", "hasDiscount", "discount",
+        "congratulationMessage", "_id", "slug", "instructor", "metadata",
+        "modules", "sections", "createdAt", "updatedAt", "__v", "reviews", "id",
+      ];
+      keysToDelete.forEach((k) => delete payload[k]);
 
-      // Form overrides to prevent invalid API types
-      payload.category = typeof landingForm.category === 'object' ? landingForm.category._id : landingForm.category;
-      
-      // Override welcomeMessage in case it was in landingForm
-      if (landingForm.welcomeMessage) {
-        payload.welcomeMessage = landingForm.welcomeMessage;
-      }
-      
-      // Omit objects if null to avoid 'expected object, received null'
-      if (!payload.thumbnail) {
-        delete payload.thumbnail;
-      }
-      if (!payload.welcomeVideo) {
-        delete payload.welcomeVideo;
-      }
+      // Normalize category to string id
+      payload.category = typeof landingForm.category === "object"
+        ? landingForm.category._id
+        : landingForm.category;
+
+      if (landingForm.welcomeMessage) payload.welcomeMessage = landingForm.welcomeMessage;
+
+      if (!payload.thumbnail) delete payload.thumbnail;
+      if (!payload.welcomeVideo) delete payload.welcomeVideo;
 
       const res = await updateContent(id, payload);
-
       if (res.success) {
         toast.success("تم الحفظ بنجاح");
       } else {
@@ -239,7 +279,7 @@ const ContentBuilderPage = () => {
     }
   };
 
-  // Render active section content
+  // Render active section
   const renderSection = () => {
     switch (activeSection) {
       case "target-learners":
@@ -264,7 +304,7 @@ const ContentBuilderPage = () => {
           <CurriculumSection
             contentId={id}
             contentType={contentType}
-            modules={modules}
+            modules={contentType === "bootcamp" ? bootcampSections : modules}
             onModulesChange={fetchContent}
           />
         );
@@ -287,22 +327,19 @@ const ContentBuilderPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Top Bar */}
       <ContentBuilderTopBar
         title={contentTitle}
         onSave={handleSave}
         isSaving={isSaving}
+        canSave={allRequiredComplete}
       />
-
-      {/* Body */}
       <div className="flex flex-1">
-        {/* Right Sidebar */}
         <ContentBuilderSidebar
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          sectionCompletion={sectionCompletion}
+          contentType={contentType}
         />
-
-        {/* Main Content */}
         <main className="flex-1 p-8">
           <div className="max-w-3xl mx-auto bg-white rounded-xl border border-gray-200 p-8">
             {loading ? (

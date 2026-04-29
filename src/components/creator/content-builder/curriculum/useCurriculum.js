@@ -46,12 +46,9 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
 
   const [sections, setSections] = useState(() => {
     if (isBootcamp) {
-      // modules prop for bootcamps should be an array of section objects
-      // each containing { _id, title, modules: [...] }
-      if (modules?.length && modules[0]?.modules !== undefined) {
-        return modules.map(toBootcampSection);
-      }
-      return [createDefaultSection("القسم الأول")];
+      // modules prop is an array of bootcamp section objects { _id, title, modules: [] }
+      if (modules?.length > 0) return modules.map(toBootcampSection);
+      return []; // no sections yet — user must create via API
     }
     // Course: flat modules go into a single default section
     return [createDefaultSection("القسم الأول", modules.map(toItem))];
@@ -60,10 +57,10 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
   // Sync when modules prop refreshes from API
   useEffect(() => {
     if (isBootcamp) {
-      if (modules?.length && modules[0]?.modules !== undefined) {
+      if (modules?.length > 0) {
         setSections(modules.map(toBootcampSection));
       } else {
-        setSections([createDefaultSection("القسم الأول")]);
+        setSections([]); // empty bootcamp — show empty state
       }
     } else {
       setSections([createDefaultSection("القسم الأول", modules.map(toItem))]);
@@ -87,62 +84,128 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
     isSaving: false,
   });
 
+  // Controls the "Add Section" dialog (bootcamp only)
+  const [addSectionDialogOpen, setAddSectionDialogOpen] = useState(false);
+
+  // Controls the "Edit Section" dialog (bootcamp only)
+  const [editSectionDialog, setEditSectionDialog] = useState({ open: false, section: null, isSaving: false });
+
+  // Controls the "Delete Section" confirmation dialog
+  const [deleteSectionDialog, setDeleteSectionDialog] = useState({ open: false, section: null, isDeleting: false });
+
   // ─── Section CRUD ──────────────────────────────────────────
 
-  const addSection = useCallback(async () => {
-    const newTitle = `القسم ${sections.length + 1}`;
-    setIsCreatingSection(true);
+  // Opens the add-section dialog (bootcamp) OR directly creates a section (course)
+  const addSection = useCallback(() => {
+    if (isBootcamp) {
+      setAddSectionDialogOpen(true);
+    } else {
+      // course: create immediately with a default title
+      const newTitle = `القسم ${sections.length + 1}`;
+      setIsCreatingSection(true);
+      createCourseModule(contentId, { moduleType: "video", title: newTitle })
+        .then((res) => {
+          if (res.success) {
+            setSections((prev) => [...prev, createDefaultSection(newTitle)]);
+            toast.success("تم إضافة القسم بنجاح");
+            onModulesChange?.();
+          } else {
+            toast.error(res.error || "فشل إضافة القسم");
+          }
+        })
+        .catch(() => toast.error("حدث خطأ أثناء إضافة القسم"))
+        .finally(() => setIsCreatingSection(false));
+    }
+  }, [isBootcamp, contentId, sections.length, onModulesChange]);
 
-    try {
-      if (isBootcamp) {
-        const res = await createBootcampSection(contentId, { title: newTitle });
+  // Called by AddSectionDialog onSave — receives { title, description }
+  const submitNewSection = useCallback(
+    async ({ title, description }) => {
+      setIsCreatingSection(true);
+      try {
+        const res = await createBootcampSection(contentId, { title, description });
         if (res.success) {
           const apiSection = res.data?.data;
-          setSections((prev) => [...prev, createDefaultSection(newTitle, [], apiSection?._id)]);
+          setSections((prev) => [...prev, createDefaultSection(title, [], apiSection?._id)]);
           toast.success("تم إضافة القسم بنجاح");
+          setAddSectionDialogOpen(false);
           onModulesChange?.();
         } else {
           toast.error(res.error || "فشل إضافة القسم");
         }
-      } else {
-        const res = await createCourseModule(contentId, { moduleType: "video", title: newTitle });
-        if (res.success) {
-          setSections((prev) => [...prev, createDefaultSection(newTitle)]);
-          toast.success("تم إضافة القسم بنجاح");
-          onModulesChange?.();
-        } else {
-          toast.error(res.error || "فشل إضافة القسم");
-        }
+      } catch {
+        toast.error("حدث خطأ أثناء إضافة القسم");
+      } finally {
+        setIsCreatingSection(false);
       }
+    },
+    [contentId, onModulesChange]
+  );
+
+  // Opens delete confirmation dialog instead of immediate delete
+  const openDeleteSection = useCallback((sectionId) => {
+    const section = sections.find((s) => s.id === sectionId);
+    if (section) setDeleteSectionDialog({ open: true, section, isDeleting: false });
+    setOpenMenuId(null);
+  }, [sections]);
+
+  const confirmDeleteSection = useCallback(async () => {
+    const { section } = deleteSectionDialog;
+    if (!section) return;
+    setDeleteSectionDialog((prev) => ({ ...prev, isDeleting: true }));
+    try {
+      if (isBootcamp && section.apiId) {
+        await deleteBootcampSection(contentId, section.apiId);
+      } else if (!isBootcamp && section.apiId) {
+        await deleteCourseModule(contentId, section.apiId);
+      }
+      setSections((prev) => prev.filter((s) => s.id !== section.id));
+      toast.success("تم حذف القسم");
+      onModulesChange?.();
     } catch {
-      setSections((prev) => [...prev, createDefaultSection(newTitle)]);
-      toast.error("حدث خطأ أثناء إضافة القسم");
+      toast.error("فشل حذف القسم");
+    } finally {
+      setDeleteSectionDialog({ open: false, section: null, isDeleting: false });
     }
+  }, [deleteSectionDialog, contentId, isBootcamp, onModulesChange]);
 
-    setIsCreatingSection(false);
-  }, [contentId, isBootcamp, sections.length, onModulesChange]);
+  // ─── Section edit dialog (bootcamp) ───────────────────────────────────────
 
-  const deleteSection = useCallback(
-    async (sectionId) => {
+  const openEditSection = useCallback((sectionId) => {
+    const section = sections.find((s) => s.id === sectionId);
+    if (section) setEditSectionDialog({ open: true, section, isSaving: false });
+    setOpenMenuId(null);
+  }, [sections]);
+
+  const submitEditSection = useCallback(
+    async (sectionId, { title, description }) => {
+      setEditSectionDialog((prev) => ({ ...prev, isSaving: true }));
       const section = sections.find((s) => s.id === sectionId);
       try {
         if (isBootcamp && section?.apiId) {
-          await deleteBootcampSection(contentId, section.apiId);
+          await updateBootcampSection(contentId, section.apiId, { title, description });
         } else if (!isBootcamp && section?.apiId) {
-          await deleteCourseModule(contentId, section.apiId);
+          await updateCourseModule(contentId, section.apiId, { title });
         }
-        toast.success("تم حذف القسم");
+        setSections((prev) =>
+          prev.map((s) =>
+            s.id === sectionId
+              ? { ...s, title, sectionData: { ...s.sectionData, description } }
+              : s
+          )
+        );
+        toast.success("تم تعديل القسم");
+        setEditSectionDialog({ open: false, section: null, isSaving: false });
+        onModulesChange?.();
       } catch {
-        toast.error("فشل حذف القسم");
+        toast.error("فشل تعديل القسم");
+        setEditSectionDialog((prev) => ({ ...prev, isSaving: false }));
       }
-      setSections((prev) => prev.filter((s) => s.id !== sectionId));
-      setOpenMenuId(null);
-      onModulesChange?.();
     },
     [contentId, isBootcamp, sections, onModulesChange]
   );
 
-  // ─── Title editing ─────────────────────────────────────────
+  // ─── Title editing (inline — kept for course) ─────────────────────────────
 
   const toggleEdit = useCallback((sectionId) => {
     setSections((prev) =>
@@ -490,8 +553,19 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
     isSavingForm,
     dialogState,
     editDialogState,
+    addSectionDialogOpen,
+    setAddSectionDialogOpen,
+    editSectionDialog,
+    setEditSectionDialog,
+    deleteSectionDialog,
+    setDeleteSectionDialog,
     addSection,
-    deleteSection,
+    submitNewSection,
+    openEditSection,
+    submitEditSection,
+    openDeleteSection,
+    confirmDeleteSection,
+    deleteSection: openDeleteSection, // map to old name to keep existing UI from breaking
     toggleEdit,
     updateTitle,
     saveTitle,

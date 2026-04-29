@@ -8,13 +8,15 @@ import {
   GripVertical,
   Pencil,
   Link2,
+  Radio,
 } from "lucide-react";
 
 const TYPE_CONFIG = {
-  video: { icon: Video,         label: "فيديو" },
-  quiz:  { icon: FileQuestion,  label: "اختبار" },
-  task:  { icon: ClipboardList, label: "تكليف" },
-  link:  { icon: Link2,         label: "رابط" },
+  video:       { icon: Video,         label: "فيديو" },
+  quiz:        { icon: FileQuestion,  label: "اختبار" },
+  task:        { icon: ClipboardList, label: "تكليف" },
+  link:        { icon: Link2,         label: "رابط" },
+  liveSession: { icon: Radio,         label: "جلسة مباشرة" },
 };
 
 const SectionItemsList = ({ items = [], onDelete, onEdit }) => {

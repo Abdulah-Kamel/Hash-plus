@@ -64,18 +64,6 @@ export default function LandingPageSection({ form, setForm }) {
             className="w-full text-right p-3 border border-gray-200 rounded-lg focus-visible:ring-primary focus-visible:border-primary outline-none transition-all min-h-[120px]"
           />
         </div>
-
-        {/* Welcome Message */}
-        <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-800 text-right">رسالة الترحيب</label>
-          <p className="text-[13px] text-gray-500 text-right">رسالة تظهر للطلاب عند اشتراكهم في المعسكر.</p>
-          <textarea
-            value={form.welcomeMessage || ""}
-            onChange={(e) => handleUpdate("welcomeMessage", e.target.value)}
-            className="w-full text-right p-3 border border-gray-200 rounded-lg focus-visible:ring-primary focus-visible:border-primary outline-none transition-all min-h-[120px]"
-          />
-        </div>
-
         {/* Category */}
         <div className="space-y-2">
           <label className="block text-sm font-semibold text-gray-800 text-right">نوع المحتوى</label>

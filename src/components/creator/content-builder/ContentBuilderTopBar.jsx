@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-const ContentBuilderTopBar = ({ title = "", onSave, isSaving = false }) => {
+const ContentBuilderTopBar = ({ title = "", onSave, isSaving = false, canSave = true }) => {
   return (
     <header className="flex items-center justify-between px-6 py-3 border-b border-gray-200 bg-white sticky top-0 z-10">
       {/* Right side - back button and title */}
@@ -24,13 +24,23 @@ const ContentBuilderTopBar = ({ title = "", onSave, isSaving = false }) => {
 
       {/* Left side - action buttons */}
       <div className="flex items-center gap-3">
-        <Button
-          onClick={onSave}
-          disabled={isSaving}
-          className="px-6 rounded-full bg-primary hover:bg-primary/90 text-white cursor-pointer"
-        >
-          {isSaving ? "جاري الحفظ..." : "حفظ"}
-        </Button>
+        <div className="flex flex-col items-end gap-0.5">
+          <Button
+            onClick={onSave}
+            disabled={isSaving || !canSave}
+            title={!canSave ? "أكمل جميع الأقسام المطلوبة أولاً" : ""}
+            className={`px-6 rounded-full text-white cursor-pointer transition-all ${
+              canSave
+                ? "bg-primary hover:bg-primary/90"
+                : "bg-gray-300 cursor-not-allowed"
+            }`}
+          >
+            {isSaving ? "جاري الحفظ..." : "حفظ"}
+          </Button>
+          {!canSave && (
+            <span className="text-xs text-amber-500">أكمل الأقسام المطلوبة ⚠</span>
+          )}
+        </div>
       </div>
     </header>
   );

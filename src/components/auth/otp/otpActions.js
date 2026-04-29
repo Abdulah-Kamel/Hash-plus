@@ -16,7 +16,7 @@ export const handleEmailConfirm = async (data) => {
       `${process.env.NEXT_PUBLIC_BASE_API}/api/v1/auth/verify-otp`,
       {
         method: "POST",
-        body: JSON.stringify({ ...data }),
+        body: JSON.stringify({ email: user.email, ...data }),
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
