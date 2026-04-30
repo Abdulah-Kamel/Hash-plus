@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import VideoUploader from "../VideoUploader";
 import {
   Dialog,
   DialogContent,
@@ -173,29 +174,43 @@ const TitleField = ({ value, onChange }) => (
   </div>
 );
 
-const VideoForm = ({ formData, onChange }) => (
-  <div className="flex flex-col gap-4 py-2" dir="rtl">
-    <TitleField
-      value={formData.title}
-      onChange={(e) => onChange({ ...formData, title: e.target.value })}
-    />
-    <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-semibold text-gray-800 text-right">
-        رابط الفيديو <span className="text-red-500">*</span>
-      </label>
-      <Input
-        value={formData.videoUrl || ""}
-        onChange={(e) => onChange({ ...formData, videoUrl: e.target.value })}
-        placeholder="https://www.youtube.com/watch?v=..."
-        className="text-right h-11 border-gray-200 rounded-lg focus-visible:ring-primary focus-visible:border-primary"
-        dir="rtl"
+const VideoForm = ({ formData, onChange }) => {
+  const handleUploadComplete = (result) => {
+    onChange({
+      ...formData,
+      videoData: {
+        key: result.key,
+        uploadId: result.uploadId,
+        url: result.url || "",
+        size: 0,
+        duration: 0,
+      },
+    });
+  };
+
+  return (
+    <div className="flex flex-col gap-4 py-2" dir="rtl">
+      <TitleField
+        value={formData.title}
+        onChange={(e) => onChange({ ...formData, title: e.target.value })}
       />
-      <p className="text-xs text-gray-400 text-right">
-        رابط YouTube أو Vimeo أو رابط فيديو مباشر
-      </p>
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-semibold text-gray-800 text-right">
+          رفع الفيديو <span className="text-red-500">*</span>
+        </label>
+        <VideoUploader
+          onUploadComplete={handleUploadComplete}
+          label="اسحب الفيديو هنا أو اضغط للاختيار"
+        />
+        {formData.videoData?.key && (
+          <p className="text-xs text-green-600 text-right mt-1">
+            ✓ تم رفع الفيديو
+          </p>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const LinkForm = ({ formData, onChange }) => (
   <div className="flex flex-col gap-4 py-2" dir="rtl">
@@ -508,7 +523,7 @@ const isQuizValid = (formData, quizSubType) => {
 
 const isFormValid = (formData, type, quizSubType) => {
   if (!formData.title.trim()) return false;
-  if (type === "video")       return !!formData.videoUrl?.trim();
+  if (type === "video")       return !!formData.videoData?.key;
   if (type === "link")        return !!formData.linkUrl?.trim() && !!formData.linkDate?.trim();
   if (type === "task")        return !!formData.taskUrl?.trim();
   if (type === "quiz")        return isQuizValid(formData, quizSubType);

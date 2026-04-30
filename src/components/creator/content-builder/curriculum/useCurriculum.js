@@ -254,7 +254,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
     async (form) => {
       const {
         title, description, moduleType,
-        videoUrl, linkUrl, linkDate,
+        videoData, videoUrl, linkUrl, linkDate,
         taskUrl, taskImageUrl, taskDescription,
         quizSubType, questions,
         // live session fields
@@ -270,7 +270,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
 
       // Validation for course only
       if (!isBootcamp) {
-        if (type === "video" && !videoUrl?.trim()) { toast.error("يرجى إدخال رابط الفيديو"); return; }
+        if (type === "video" && !videoData?.key) { toast.error("يرجى رفع الفيديو"); return; }
         if (type === "link" && !linkUrl?.trim()) { toast.error("يرجى إدخال الرابط"); return; }
         if (type === "link" && !linkDate?.trim()) { toast.error("يرجى إدخال التاريخ"); return; }
         if (type === "task" && !taskUrl?.trim()) { toast.error("يرجى إدخال رابط التكليف"); return; }
@@ -294,7 +294,9 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
           const payload = { moduleType: type, title };
           if (description?.trim()) payload.description = description.trim();
 
-          if (type === "video" && videoUrl?.trim()) {
+          if (type === "video" && videoData?.key) {
+            payload.videoData = videoData;
+          } else if (type === "video" && videoUrl?.trim()) {
             payload.videoData = { url: videoUrl.trim() };
           }
           if (type === "link") {
@@ -334,7 +336,11 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
           // Course module
           const payload = { moduleType: type, title };
           if (description?.trim()) payload.description = description.trim();
-          if (type === "video" && videoUrl?.trim()) payload.videoData = { url: videoUrl.trim() };
+          if (type === "video" && videoData?.key) {
+            payload.videoData = videoData;
+          } else if (type === "video" && videoUrl?.trim()) {
+            payload.videoData = { url: videoUrl.trim() };
+          }
           if (type === "link") payload.linkData = { url: linkUrl.trim(), date: linkDate.trim() };
           if (type === "task") {
             payload.taskData = {
