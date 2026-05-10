@@ -183,7 +183,7 @@ const ContentBuilderPage = () => {
           });
         }
 
-        if (data.attachments?.length > 0) setAttachments(data.attachments);
+        if (data.materials?.length > 0) setAttachments(data.materials);
         if (data.captions && typeof data.captions === "object") setCaptions(data.captions);
       }
     } catch (err) {
@@ -200,7 +200,15 @@ const ContentBuilderPage = () => {
   // Generic update handler
   const handleUpdate = async (data) => {
     try {
-      const res = await updateContent(id, data);
+      // Include contentType to satisfy backend validation for partial updates
+      const payload = { ...data };
+      if (originalData?.contentType) {
+        payload.contentType = originalData.contentType;
+      } else if (landingForm?.contentType) {
+        payload.contentType = landingForm.contentType;
+      }
+
+      const res = await updateContent(id, payload);
       if (!res.success) console.error("Failed to update content:", res.error);
       return res;
     } catch (err) {
@@ -227,7 +235,7 @@ const ContentBuilderPage = () => {
         ...originalData,
         learningOutcomes: cleanOutcomes,
         prerequisites: prerequisites.filter((p) => p && p.trim() !== ""),
-        materials: attachments.map((a) => ({ name: a.name, id: a.id })),
+        materials: attachments.map((a) => ({ name: a.name, url: a.url })),
         finalProject: {
           title: finalProjectForm.title || "المشروع النهائي",
           description: finalProjectForm.description,
@@ -313,7 +321,7 @@ const ContentBuilderPage = () => {
       case "attachments":
         return <AttachmentsSection attachments={attachments} setAttachments={setAttachments} />;
       case "landing-page":
-        return <LandingPageSection form={landingForm} setForm={setLandingForm} />;
+        return <LandingPageSection form={landingForm} setForm={setLandingForm} contentId={id} onUpdate={handleUpdate} />;
       case "pricing":
         return <PricingSection form={pricingForm} setForm={setPricingForm} />;
       case "messages":

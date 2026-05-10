@@ -31,6 +31,7 @@ const formatSize = (bytes) => {
  *   accept                   — accepted file types (default "video/*")
  *   label                    — upload area label
  */
+
 const VideoUploader = ({
   onUploadComplete,
   maxSizeMB = 2048,

@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "135b4084-2e9a-4aba-94ae-e9aa4e65157d",
+    "_postman_id": "cd5edd83-6ef1-4d65-918f-bd5775cda843",
     "name": "Hash Plus",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "44127010"
@@ -39,7 +39,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"بركة الأدمن\",\r\n    \"email\": \"mob6640@gmail.com\",\r\n    \"password\": \"mob6640@\",\r\n    \"role\": \"student\" // enum([\"student\", \"instructor\"])\r\n}",
+              "raw": "// instructor\r\n// {\r\n//     \"name\": \"بركة المعلم\",\r\n//     \"email\": \"barakamohamed946@gmail.com\",\r\n//     \"password\": \"barakamohamed946@\",\r\n//     \"role\": \"instructor\" // enum([\"student\", \"instructor\"])\r\n// }\r\n\r\n// admin\r\n// {\r\n//     \"name\": \"بركة الأدمن\",\r\n//     \"email\": \"mob6640@gmail.com\",\r\n//     \"password\": \"mob6640@\",\r\n//     \"role\": \"student\" // enum([\"student\", \"instructor\"])\r\n// }\r\n\r\n// student\r\n{\r\n    \"name\": \"بركة الطالب\",\r\n    \"email\": \"mhmdahmdbusiness@gmail.com\",\r\n    \"password\": \"mhmdahmdbusiness@\",\r\n    \"role\": \"student\" // enum([\"student\", \"instructor\"])\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -47,9 +47,9 @@
               }
             },
             "url": {
-              "raw": "{{URL}}/api/v1/auth/signup",
+              "raw": "{{local}}/api/v1/auth/signup",
               "host": [
-                "{{URL}}"
+                "{{local}}"
               ],
               "path": [
                 "api",
@@ -92,7 +92,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "// instructor\r\n// {\r\n//     \"email\": \"barakamohamed946@gmail.com\",\r\n//     \"password\": \"barakamohamed946@\"\r\n// }\r\n\r\n// admin\r\n{\r\n    \"email\": \"mob6640@gmail.com\",\r\n    \"password\": \"mob6640@\"\r\n}\r\n\r\n// student\r\n// {\r\n//     \"email\": \"mhmdahmdbusiness@gmail.com\",\r\n//     \"password\": \"mhmdahmdbusiness@\"\r\n// }",
+              "raw": "// instructor\r\n// {\r\n//     \"email\": \"barakamohamed946@gmail.com\",\r\n//     \"password\": \"barakamohamed946@\"\r\n// }\r\n\r\n// admin\r\n// {\r\n//     \"email\": \"mob6640@gmail.com\",\r\n//     \"password\": \"mob6640@\"\r\n// }\r\n\r\n// student\r\n{\r\n    \"email\": \"mhmdahmdbusiness@gmail.com\",\r\n    \"password\": \"mhmdahmdbusiness@\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -100,9 +100,9 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/auth/login",
+              "raw": "{{URL}}/api/v1/auth/login",
               "host": [
-                "{{local}}"
+                "{{URL}}"
               ],
               "path": [
                 "api",
@@ -132,7 +132,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"\",\r\n    \"otp\": \"509065\"\r\n}",
+              "raw": "{\r\n    \"email\": \"mhmdahmdbusiness@gmail.com\",\r\n    \"otp\": \"944818\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -140,9 +140,9 @@
               }
             },
             "url": {
-              "raw": "{{URL}}/api/v1/auth/verify-otp",
+              "raw": "{{local}}/api/v1/auth/verify-otp",
               "host": [
-                "{{URL}}"
+                "{{local}}"
               ],
               "path": [
                 "api",
@@ -223,7 +223,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQ1NDNlMjFhMDI3M2VmYzY2YTQ3NTAwMDI0NDFjYjIxNTFjYjIzNWYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzMzc2MjA1NzY5NTItdWJqNGIwY2JodDRiNDc3NW9jaHV0MG45amZnMW44NmYuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIzMzc2MjA1NzY5NTItdWJqNGIwY2JodDRiNDc3NW9jaHV0MG45amZnMW44NmYuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDI3OTExMTkxOTI1MjA0OTgxNzkiLCJlbWFpbCI6ImFiZHVsbGFoa2FtZWw3NTBAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTc2NTQ0OTEwMywibmFtZSI6IkFiZHVsbGFoIEthbWVsIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0tlSHg0c0pKdHR3VVFndjJiQUxzSVJoc1VZZ2k1QXllcXM1RUhYcUNEUERZQW1DRDd5PXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkFiZHVsbGFoIiwiZmFtaWx5X25hbWUiOiJLYW1lbCIsImlhdCI6MTc2NTQ0OTQwMywiZXhwIjoxNzY1NDUzMDAzLCJqdGkiOiIwMDUyMWQ4NGNjNjhmZDhjZmRjYjI3MTY4NzlmNTZhYTAwNmUxZDYxIn0.NRQZOXHu9VTrSG5lDpbQoCyK5i-vdzV2TwTo6wXoE0IyID44bBNJ3htJb3wP5ky5QuLtF_RpVaj0WmIcte34NYQtw4vjnMRh-f0OhJla8ZhFxr7kZ2YKm6w5nFe5w043ycWh3Af8IseWbJMLRoRBzvSr2URPcbArOu0ms0-nSuFdAKRUpTc4nd1j1AyPO2f21UQT_FS14dcavUSLCnV-Iodgk5lVpdE_Qb2D6cz0c8ckQAgFFZOcXFH1SIW_tssK6UBOOFwLx4KVhT_yrtPi3_Y5l4sqk_SkMXKmlsvxmXDW_dCmPVbM-QkACB2TEvqE4MvGygPGmp3Rpq159IT61Q\"\r\n}",
+              "raw": "{\r\n    \"token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjE5Y2FhZWNkZThmNDg1ZThmNTkzOGY0OGFiYTBjZTdhMzU4MWYwMjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzMzc2MjA1NzY5NTItMHFkMGJzZnV0MzB0NXQ3YjFybnI4Z210MDJvY3U5ZmwuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIzMzc2MjA1NzY5NTItMHFkMGJzZnV0MzB0NXQ3YjFybnI4Z210MDJvY3U5ZmwuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDI3OTExMTkxOTI1MjA0OTgxNzkiLCJlbWFpbCI6ImFiZHVsbGFoa2FtZWw3NTBAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTc3NzQ3Mzg3MCwibmFtZSI6IkFiZHVsbGFoIEthbWVsIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0s0Z3lrS3padzFTOEFDRTlvNFdGVlNMb2lld3NiLVA5LUNRakpaaTVMazRmUGNIWGJ5eEE9czk2LWMiLCJnaXZlbl9uYW1lIjoiQWJkdWxsYWgiLCJmYW1pbHlfbmFtZSI6IkthbWVsIiwiaWF0IjoxNzc3NDc0MTcwLCJleHAiOjE3Nzc0Nzc3NzAsImp0aSI6IjNiMGJhZWU2ZmM4Y2ZmM2M0NjdhM2NkZDcxNzFlNTJiMTBjNWYzMDMifQ.ZgpcS8tGRGd5KrDCeTGS6JdCmlhShaN7AmHFY_bXUATfehTRq9VWD6kSqFRHcAIlfZv-Lrtjk3nrlG7vIA_3k4m4-65lDls7_2nHsRq_XYY7umwchWpt2GlL-wCh4cvuQdG1ohSF26uygg2aT1bl4Rg8uA6w3Ke8CZHRIWqxyHGIRX3VRQkMwMOLKFKlB7096VlLafbgjnf3ySi7EL5mhDViewkhHjDUtHRY3SoNfgInHrmcUUnkUB5eHreInwSBzr8IoezIesp3yX2hyZ5PtR41ZwzWqXD8iWL1qJD2jTLA13qSg4h-3QnMdNettTbPR22oTUBYIey2LB2qjhMuFg\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -474,9 +474,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{URL}}/api/v1/profiles",
+              "raw": "{{local}}/api/v1/profiles",
               "host": [
-                "{{URL}}"
+                "{{local}}"
               ],
               "path": [
                 "api",
@@ -908,7 +908,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"contentType\": \"course\", // [\"course\",\"bootcamp\"]\r\n    \"title\": \"كورس برمجة 4\",\r\n    \"category\": \"69cd4b18864399f4dd71956c\",\r\n    \"description\": \"description\",\r\n    \"instructor\": \"69cd4a00864399f4dd71955a\",\r\n    \"learningOutcomes\": [\r\n        \"learningOutcomes, learningOutcomes\"\r\n    ],\r\n    \"prerequisites\": [\r\n        \"prerequisites, prerequisites\"\r\n    ],\r\n    \"welcomeMessage\": \"welcomeMessage\",\r\n    \"congratulationsMessage\": \"congratulationsMessage\",\r\n    \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n    \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n    \"materials\": [\r\n        \"materials\",\r\n        \"materials\",\r\n        \"materials\"\r\n    ],\r\n    \"price\": {\r\n        \"amount\": 299.99,\r\n        \"currency\": \"SAR\"\r\n    },\r\n    \"thumbnail\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\"\r\n    },\r\n    \"welcomeVideo\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"size\": 300,\r\n        \"duration\": 30\r\n    },\r\n    \"finalProject\": {\r\n        \"title\": \"Final Project\",\r\n        \"description\": \"description\",\r\n        \"tasks\": [\r\n            \"task a\",\r\n            \"task b\"\r\n        ],\r\n        \"materials\": [\r\n            \"a\",\r\n            \"b\"\r\n        ]\r\n    }\r\n}\r\n// {\r\n//     \"contentType\": \"bootcamp\", // [\"course\",\"bootcamp\"]\r\n//     \"title\": \"معسكر تصميم 1\",\r\n//     \"category\": \"69a734afa43b42513e42e558\",\r\n//     \"instructor\": \"69b9cd36eac491d75031c962\",\r\n//     \"description\": \"description\",\r\n//     \"learningOutcomes\": [\r\n//         \"learningOutcomes, learningOutcomes\"\r\n//     ],\r\n//     \"prerequisites\": [\r\n//         \"prerequisites, prerequisites\"\r\n//     ],\r\n//     \"welcomeMessage\": \"welcomeMessage\",\r\n//     \"congratulationsMessage\": \"congratulationsMessage\",\r\n//     \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n//     \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n//     \"materials\": [\r\n//         \"materials\",\r\n//         \"materials\",\r\n//         \"materials\"\r\n//     ],\r\n//     \"price\": {\r\n//         \"amount\": 299.99,\r\n//         \"currency\": \"SAR\"\r\n//     },\r\n//     \"thumbnail\": {\r\n//         \"url\": \"\",\r\n//         \"key\": \"\"\r\n//     },\r\n//     \"welcomeVideo\": {\r\n//         \"url\": \"\",\r\n//         \"key\": \"\",\r\n//         \"size\": 300,\r\n//         \"duration\": 30\r\n//     },\r\n//     \"finalProject\": {\r\n//         \"title\": \"Final Project\",\r\n//         \"description\": \"\",\r\n//         \"tasks\": [\r\n//             \"task a\",\r\n//             \"task b\"\r\n//         ],\r\n//         \"materials\": [\r\n//             \"a\",\r\n//             \"b\"\r\n//         ]\r\n//     },\r\n//     \"startDate\": \"2026-04-01\",\r\n//     \"endDate\": \"2026-08-01\",\r\n//     \"totalProjects\": 10\r\n// }",
+              "raw": "{\r\n    \"contentType\": \"course\", // [\"course\",\"bootcamp\"]\r\n    \"title\": \"كورس تصميم\",\r\n    \"category\": \"69daacc528001b96a9ceba89\",\r\n    \"description\": \"description\",\r\n    \"instructor\": \"69f8efd2859d59931f68d845\",\r\n    \"learningOutcomes\": [\r\n        \"learningOutcomes, learningOutcomes\"\r\n    ],\r\n    \"prerequisites\": [\r\n        \"prerequisites, prerequisites\"\r\n    ],\r\n    \"welcomeMessage\": \"welcomeMessage\",\r\n    \"congratulationsMessage\": \"congratulationsMessage\",\r\n    \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n    \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n    \"materials\": [\r\n        \"materials\",\r\n        \"materials\",\r\n        \"materials\"\r\n    ],\r\n    \"price\": {\r\n        \"amount\": 299.99,\r\n        \"currency\": \"SAR\"\r\n    },\r\n    \"thumbnail\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"uploadId\"\r\n    },\r\n    \"welcomeVideo\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"size\": 300,\r\n        \"uploadId\": \"uploadId\",\r\n        \"duration\": 30\r\n    },\r\n    \"finalProject\": {\r\n        \"title\": \"Final Project\",\r\n        \"description\": \"description\",\r\n        \"tasks\": [\r\n            \"task a\",\r\n            \"task b\"\r\n        ],\r\n        \"materials\": [\r\n            \"a\",\r\n            \"b\"\r\n        ]\r\n    }\r\n}\r\n// {\r\n//     \"contentType\": \"bootcamp\", // [\"course\",\"bootcamp\"]\r\n//     \"title\": \"معسكر تصميم جديد\",\r\n//     \"category\": \"69daacc528001b96a9ceba89\",\r\n//     \"instructor\": \"69f8efd2859d59931f68d845\",\r\n//     \"description\": \"description\",\r\n//     \"learningOutcomes\": [\r\n//         \"learningOutcomes, learningOutcomes\"\r\n//     ],\r\n//     \"prerequisites\": [\r\n//         \"prerequisites, prerequisites\"\r\n//     ],\r\n//     \"welcomeMessage\": \"welcomeMessage\",\r\n//     \"congratulationsMessage\": \"congratulationsMessage\",\r\n//     \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n//     \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n//     \"materials\": [\r\n//         \"materials\",\r\n//         \"materials\",\r\n//         \"materials\"\r\n//     ],\r\n//     \"price\": {\r\n//         \"amount\": 299.99,\r\n//         \"currency\": \"SAR\"\r\n//     },\r\n//     \"thumbnail\": {\r\n//         \"url\": \"https://example.com\",\r\n//         \"key\": \"key\",\r\n//         \"uploadId\": \"uploadId\"\r\n//     },\r\n//     \"welcomeVideo\": {\r\n//         \"url\": \"https://example.com\",\r\n//         \"key\": \"key\",\r\n//         \"size\": 300,\r\n//         \"uploadId\": \"uploadId\",\r\n//         \"duration\": 30\r\n//     },\r\n//     \"finalProject\": {\r\n//         \"title\": \"Final Project\",\r\n//         \"description\": \"description\",\r\n//         \"tasks\": [\r\n//             \"task a\",\r\n//             \"task b\"\r\n//         ],\r\n//         \"materials\": [\r\n//             \"a\",\r\n//             \"b\"\r\n//         ]\r\n//     },\r\n//     \"startDate\": \"2026-04-01\",\r\n//     \"endDate\": \"2026-08-01\",\r\n//     \"totalProjects\": 10\r\n// }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -916,9 +916,9 @@
               }
             },
             "url": {
-              "raw": "{{URL}}/api/v1/contents",
+              "raw": "{{local}}/api/v1/contents",
               "host": [
-                "{{URL}}"
+                "{{local}}"
               ],
               "path": [
                 "api",
@@ -961,7 +961,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{local}}/api/v1/contents/69cd4c9d5169d542ebfbf5fb",
+              "raw": "{{local}}/api/v1/contents/:contentId",
               "host": [
                 "{{local}}"
               ],
@@ -969,7 +969,13 @@
                 "api",
                 "v1",
                 "contents",
-                "69cd4c9d5169d542ebfbf5fb"
+                ":contentId"
+              ],
+              "variable": [
+                {
+                  "key": "contentId",
+                  "value": "69f8f23fb48c43feb324a166"
+                }
               ]
             }
           },
@@ -992,7 +998,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"title\": \"معسكر تسويق 2\",\r\n    \"category\": \"69a734afa43b42513e42e558\",\r\n    \"description\": \"description\",\r\n    \"learningOutcomes\": [\r\n        \"learningOutcomes, learningOutcomes\"\r\n    ],\r\n    \"prerequisites\": [\r\n        \"prerequisites, prerequisites\"\r\n    ],\r\n    \"welcomeMessage\": \"welcomeMessage\",\r\n    \"congratulationsMessage\": \"congratulationsMessage\",\r\n    \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n    \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n    \"materials\": [\r\n        \"materials\",\r\n        \"materials\",\r\n        \"materials\"\r\n    ],\r\n    \"price\": {\r\n        \"amount\": 299.99,\r\n        \"currency\": \"SAR\"\r\n    },\r\n    \"thumbnail\": {\r\n        \"url\": \"\",\r\n        \"key\": \"\"\r\n    },\r\n    \"welcomeVideo\": {\r\n        \"url\": \"\",\r\n        \"key\": \"\",\r\n        \"size\": 300,\r\n        \"duration\": 30\r\n    },\r\n    \"finalProject\": {\r\n        \"title\": \"Final Project\",\r\n        \"description\": \"\",\r\n        \"tasks\": [\r\n            \"task a\",\r\n            \"task b\"\r\n        ],\r\n        \"materials\": [\r\n            \"a\",\r\n            \"b\"\r\n        ]\r\n    },\r\n    \"startDate\": \"2026-04-01\",\r\n    \"endDate\": \"2026-08-01\",\r\n    \"totalProjects\": 10\r\n}",
+              "raw": "{\r\n    \"title\": \"معسكر تسويق 2\",\r\n    \"category\": \"69a734afa43b42513e42e558\",\r\n    \"description\": \"description\",\r\n    \"learningOutcomes\": [\r\n        \"learningOutcomes, learningOutcomes\"\r\n    ],\r\n    \"prerequisites\": [\r\n        \"prerequisites, prerequisites\"\r\n    ],\r\n    \"welcomeMessage\": \"welcomeMessage\",\r\n    \"congratulationsMessage\": \"congratulationsMessage\",\r\n    \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n    \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n    \"materials\": [\r\n        \"materials\",\r\n        \"materials\",\r\n        \"materials\"\r\n    ],\r\n    \"price\": {\r\n        \"amount\": 299.99,\r\n        \"currency\": \"SAR\"\r\n    },\r\n    \"thumbnail\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"uploadId\"\r\n    },\r\n    \"welcomeVideo\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"size\": 300,\r\n        \"duration\": 30\r\n    },\r\n    \"finalProject\": {\r\n        \"title\": \"Final Project\",\r\n        \"description\": \"\",\r\n        \"tasks\": [\r\n            \"task a\",\r\n            \"task b\"\r\n        ],\r\n        \"materials\": [\r\n            \"a\",\r\n            \"b\"\r\n        ]\r\n    },\r\n    \"startDate\": \"2026-04-01\",\r\n    \"endDate\": \"2026-08-01\",\r\n    \"totalProjects\": 10\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1056,350 +1062,507 @@
       ]
     },
     {
-      "name": "Course Modules",
+      "name": "Courses",
       "item": [
         {
-          "name": "get course module by id",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "courses",
-                "modules",
-                ":moduleId"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
+          "name": "Sections",
+          "item": [
+            {
+              "name": "add course section",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
                 },
-                {
-                  "key": "moduleId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "create course module",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"moduleType\": \"video\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"module (video)\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"url\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"url\",\r\n        \"imageUrl\": \"imageUrl\",\r\n        \"description\": \"description\"\r\n    },\r\n    \"linkData\": {\r\n        \"url\": \"url\",\r\n        \"date\": \"2029-04-06\"\r\n    }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "courses",
-                "modules"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": "69d39d39676d83dd5ee9c558"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "update course module by id",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PATCH",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"moduleType\": \"link\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"module (link) updated\",\r\n    \"description\": \"description updated\",\r\n    \"videoData\": {\r\n        \"url\": \"url updated\",\r\n        \"key\": \"key updated\",\r\n        \"uploadId\": \"123\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"taskData\": {\r\n        \"url\": \"url updated\",\r\n        \"imageUrl\": \"imageUrl updated\",\r\n        \"description\": \"description updated\"\r\n    },\r\n    \"linkData\": {\r\n        \"url\": \"url updated\",\r\n        \"date\": \"2029-04-06\"\r\n    }\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "courses",
-                "modules",
-                ":moduleId"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"section a\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
                 },
-                {
-                  "key": "moduleId",
-                  "value": ""
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "delete course module by id",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
+              },
+              "response": []
             },
-            "method": "DELETE",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\": \"Development\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "courses",
-                "modules",
-                ":moduleId"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
+            {
+              "name": "get course section by section id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
                 },
-                {
-                  "key": "moduleId",
-                  "value": ""
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections/:sectionId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections",
+                    ":sectionId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f1081dd03e120b015c99e3"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f10b07fac0acdfc3fa01f1"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get course module answers",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
+              },
+              "response": []
             },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId/answers",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "courses",
-                "modules",
-                ":moduleId",
-                "answers"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
+            {
+              "name": "get all course section",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
                 },
-                {
-                  "key": "moduleId",
-                  "value": ""
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "answer course module",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
+              },
+              "response": []
             },
-            "method": "PATCH",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"answers\": [\r\n        {\r\n            \"_id\": \"\",\r\n            \"question\": \"question a\",\r\n            \"answer\": \"answer a\"\r\n        },\r\n        {\r\n            \"_id\": \"\",\r\n            \"question\": \"question a\",\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ]\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{local}}/api/v1/contents/:contentId/courses/modules/:moduleId/answers",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "courses",
-                "modules",
-                ":moduleId",
-                "answers"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
+            {
+              "name": "update course section by section id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
                 },
-                {
-                  "key": "moduleId",
-                  "value": ""
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\": \"module a updated\",\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"project a\",\r\n            \"description\": \"description\",\r\n            \"githubUrl\": \"https://example.com\",\r\n            \"liveDemoUrl\": \"https://example.com\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections/:sectionId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections",
+                    ":sectionId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f1081dd03e120b015c99e3"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f10e998f2cfc12cf04f824"
+                    }
+                  ]
                 }
-              ]
+              },
+              "response": []
+            },
+            {
+              "name": "remove course section by section id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections/:sectionId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections",
+                    ":sectionId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f1081dd03e120b015c99e3"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f2046db5e15cb45279cec5"
+                    }
+                  ]
+                }
+              },
+              "response": []
             }
-          },
-          "response": []
+          ]
         },
         {
-          "name": "complete Course Final Project",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
+          "name": "Modules",
+          "item": [
+            {
+              "name": "get all course module",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections/:sectionId/modules",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections",
+                    ":sectionId",
+                    "modules"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f9fb1aed1700b2fb55fd04"
+                    }
+                  ]
                 }
-              ]
+              },
+              "response": []
             },
-            "method": "PATCH",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"links\": [\r\n        \"link a\",\r\n        \"link b\"\r\n    ],\r\n    \"notes\": \"notes.......\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
+            {
+              "name": "get course module by module id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections/:sectionId/modules/:moduleId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f9fb1aed1700b2fb55fd04"
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": "69f9fbcced1700b2fb55fd0b"
+                    }
+                  ]
                 }
-              }
+              },
+              "response": []
             },
-            "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/courses/final-project",
-              "host": [
-                "{{URL}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "courses",
-                "final-project"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
+            {
+              "name": "add course module",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"moduleType\": \"link\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"link module\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"https://example.com\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"https://example.com\",\r\n        \"image\": {\r\n            \"url\": \"https://example.com\",\r\n            \"key\": \"key\",\r\n            \"uploadId\": \"uploadId\"\r\n        },\r\n        \"description\": \"description\"\r\n    },\r\n    \"linkData\": {\r\n        \"url\": \"https://example.com\",\r\n        \"date\": \"2029-04-06\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections/:sectionId/modules",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections",
+                    ":sectionId",
+                    "modules"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f9fb1aed1700b2fb55fd04"
+                    }
+                  ]
                 }
-              ]
+              },
+              "response": []
+            },
+            {
+              "name": "update course module by id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"moduleType\": \"link\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"link module\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"https://example.com\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"https://example.com\",\r\n        \"image\": {\r\n            \"url\": \"https://example.com\",\r\n            \"key\": \"key\",\r\n            \"uploadId\": \"uploadId\"\r\n        },\r\n        \"description\": \"description\"\r\n    },\r\n    \"linkData\": {\r\n        \"url\": \"https://example.com\",\r\n        \"date\": \"2029-04-06\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections/:sectionId/modules/:moduleId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f1081dd03e120b015c99e3"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f203b32aae934771f53c04"
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": "69f20a66a6d7f409cb1a82a7"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete course module by id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Development\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/courses/sections/:sectionId/modules/:moduleId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "courses",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f1081dd03e120b015c99e3"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f203b32aae934771f53c04"
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": "69f20b39585fdad6f971f53f"
+                    }
+                  ]
+                }
+              },
+              "response": []
             }
-          },
-          "response": []
+          ]
         }
       ]
     },
     {
-      "name": "Bootcamp (Sections  \\ Modules)",
+      "name": "Bootcamps",
       "item": [
         {
           "name": "Sections",
@@ -1421,7 +1584,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"project a\",\r\n            \"description\": \"description\",\r\n            \"githubUrl\": \"githubUrl\",\r\n            \"liveDemoUrl\": \"liveDemoUrl\"\r\n        }\r\n    ]\r\n}",
+                  "raw": "{\r\n    \"title\": \"section b\",\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"project b\",\r\n            \"description\": \"description\",\r\n            \"githubUrl\": \"https://example.com\",\r\n            \"liveDemoUrl\": \"https://example.com\"\r\n        }\r\n    ]\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1429,9 +1592,9 @@
                   }
                 },
                 "url": {
-                  "raw": "{{URL}}/api/v1/contents/:contentId/bootcamps/sections",
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections",
                   "host": [
-                    "{{URL}}"
+                    "{{local}}"
                   ],
                   "path": [
                     "api",
@@ -1444,7 +1607,7 @@
                   "variable": [
                     {
                       "key": "contentId",
-                      "value": "69d3a46f6393e0185a1c35f3"
+                      "value": "69f8f23fb48c43feb324a166"
                     }
                   ]
                 }
@@ -1483,11 +1646,49 @@
                   "variable": [
                     {
                       "key": "contentId",
-                      "value": ""
+                      "value": "69f8f23fb48c43feb324a166"
                     },
                     {
                       "key": "sectionId",
-                      "value": ""
+                      "value": "69f8f2c3b48c43feb324a16f"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all bootcamp section",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f8f23fb48c43feb324a166"
                     }
                   ]
                 }
@@ -1511,7 +1712,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"title\": \"module a updated\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": \"url\",\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
+                  "raw": "{\r\n    \"title\": \"section a updated\",\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"project a\",\r\n            \"description\": \"description\",\r\n            \"githubUrl\": \"https://example.com\",\r\n            \"liveDemoUrl\": \"https://example.com\"\r\n        }\r\n    ]\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1535,11 +1736,11 @@
                   "variable": [
                     {
                       "key": "contentId",
-                      "value": ""
+                      "value": "69f8f23fb48c43feb324a166"
                     },
                     {
                       "key": "sectionId",
-                      "value": ""
+                      "value": "69f8f2c3b48c43feb324a16f"
                     }
                   ]
                 }
@@ -1561,15 +1762,6 @@
                 },
                 "method": "DELETE",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"name\": \"Development\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
                 "url": {
                   "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId",
                   "host": [
@@ -1587,11 +1779,11 @@
                   "variable": [
                     {
                       "key": "contentId",
-                      "value": ""
+                      "value": "69f8f23fb48c43feb324a166"
                     },
                     {
                       "key": "sectionId",
-                      "value": ""
+                      "value": "69f8f363b48c43feb324a18a"
                     }
                   ]
                 }
@@ -1603,6 +1795,50 @@
         {
           "name": "Modules",
           "item": [
+            {
+              "name": "get all bootcamp module",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId/modules",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId",
+                    "modules"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f8f23fb48c43feb324a166"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f8f2c3b48c43feb324a16f"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
             {
               "name": "get bootcamp module by module id",
               "request": {
@@ -1637,15 +1873,15 @@
                   "variable": [
                     {
                       "key": "contentId",
-                      "value": ""
+                      "value": "69f8f23fb48c43feb324a166"
                     },
                     {
                       "key": "sectionId",
-                      "value": ""
+                      "value": "69f8f2c3b48c43feb324a16f"
                     },
                     {
                       "key": "moduleId",
-                      "value": ""
+                      "value": "69f8f5a744cdedc2c3b3709b"
                     }
                   ]
                 }
@@ -1669,7 +1905,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"moduleType\": \"video\", // [\"video\", \"quiz\", \"task\", \"link\"]\r\n    \"title\": \"module a\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"url\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"url\",\r\n        \"imageUrl\": \"imageUrl\",\r\n        \"description\": \"description\"\r\n    },\r\n    \"liveSessionData\": {\r\n        \"startTime\": \"09:00\",\r\n        \"endTime\": \"17:00\",\r\n        \"timezone\": \"Asia/Riyadh\",\r\n        \"date\": \"2029-04-06\",\r\n        \"meetLink\": \"\",\r\n        \"liveStreamUrl\": \"\"\r\n    }\r\n}",
+                  "raw": "{\r\n    \"moduleType\": \"liveSession\", // [\"video\", \"quiz\", \"task\", \"liveSession\"]\r\n    \"title\": \"liveSession module to remove\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a\",\r\n            \"options\": [\r\n                \"answer a\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"https://example.com\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"https://example.com\",\r\n        \"image\": {\r\n            \"url\": \"https://example.com\",\r\n            \"key\": \"key\",\r\n            \"uploadId\": \"uploadId\"\r\n        },\r\n        \"description\": \"description\"\r\n    },\r\n    \"liveSessionData\": {\r\n        \"startTime\": \"09:00\",\r\n        \"endTime\": \"17:00\",\r\n        \"timezone\": \"Asia/Riyadh\",\r\n        \"date\": \"2029-04-06\",\r\n        \"meetLink\": \"https://example.com\",\r\n        \"liveStreamUrl\": \"https://example.com\"\r\n    }\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1694,11 +1930,11 @@
                   "variable": [
                     {
                       "key": "contentId",
-                      "value": "69d3a46f6393e0185a1c35f3"
+                      "value": "69f8f23fb48c43feb324a166"
                     },
                     {
                       "key": "sectionId",
-                      "value": ""
+                      "value": "69f8f2c3b48c43feb324a16f"
                     }
                   ]
                 }
@@ -1722,7 +1958,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"title\": \"module a updated\",\r\n    \"description\": \"description\",\r\n    \"timeStart\": \"09:00\",\r\n    \"timeEnd\": \"17:00\",\r\n    \"timezone\": \"Asia/Riyadh\",\r\n    \"liveSession\": \"url\",\r\n    \"video\": {\r\n        \"key\": \"key\",\r\n        \"url\": \"url\",\r\n        \"duration\": 50,\r\n        \"size\": 5000\r\n    },\r\n    \"projects\": [\r\n        {\r\n            \"title\": \"title 1\",\r\n            \"description\": \"description 1\",\r\n            \"githubUrl\": \"githubUrl 1\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 1\"\r\n        },\r\n        {\r\n            \"title\": \"title 2\",\r\n            \"description\": \"description 2\",\r\n            \"githubUrl\": \"githubUrl 2\",\r\n            \"liveDemoUrl\": \"liveDemoUrl 2\"\r\n        }\r\n    ]\r\n}",
+                  "raw": "{\r\n    \"moduleType\": \"quiz\", // [\"video\", \"quiz\", \"task\", \"liveSession\"]\r\n    \"title\": \"quiz module updated!\",\r\n    \"description\": \"description\",\r\n    \"quizData\": [\r\n        {\r\n            \"question\": \"question a updated\",\r\n            \"options\": [\r\n                \"answer a updated\",\r\n                \"answer b\",\r\n                \"answer c\",\r\n                \"answer d\"\r\n            ],\r\n            \"answer\": \"answer a updated\"\r\n        }\r\n    ],\r\n    \"videoData\": {\r\n        \"key\": \"key updated!\",\r\n        \"uploadId\": \"123\",\r\n        \"url\": \"https://example.com\",\r\n        \"size\": 53423444,\r\n        \"duration\": 45454\r\n    },\r\n    \"taskData\": {\r\n        \"url\": \"https://example.com\",\r\n        \"image\": {\r\n            \"url\": \"https://example.com\",\r\n            \"key\": \"key\",\r\n            \"uploadId\": \"uploadId\"\r\n        },\r\n        \"description\": \"description\"\r\n    },\r\n    \"liveSessionData\": {\r\n        \"startTime\": \"09:00\",\r\n        \"endTime\": \"17:00\",\r\n        \"timezone\": \"Asia/Riyadh\",\r\n        \"date\": \"2029-04-06\",\r\n        \"meetLink\": \"https://example.com\",\r\n        \"liveStreamUrl\": \"https://example.com\"\r\n    }\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1748,15 +1984,15 @@
                   "variable": [
                     {
                       "key": "contentId",
-                      "value": ""
+                      "value": "69f8f23fb48c43feb324a166"
                     },
                     {
                       "key": "sectionId",
-                      "value": ""
+                      "value": "69f8f2c3b48c43feb324a16f"
                     },
                     {
                       "key": "moduleId",
-                      "value": ""
+                      "value": "69f8f59444cdedc2c3b37091"
                     }
                   ]
                 }
@@ -1778,15 +2014,6 @@
                 },
                 "method": "DELETE",
                 "header": [],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"name\": \"Development\"\r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
                 "url": {
                   "raw": "{{local}}/api/v1/contents/:contentId/bootcamps/sections/:sectionId/modules/:moduleId",
                   "host": [
@@ -1806,15 +2033,15 @@
                   "variable": [
                     {
                       "key": "contentId",
-                      "value": ""
+                      "value": "69f8f23fb48c43feb324a166"
                     },
                     {
                       "key": "sectionId",
-                      "value": ""
+                      "value": "69f8f2c3b48c43feb324a16f"
                     },
                     {
                       "key": "moduleId",
-                      "value": ""
+                      "value": "69f8f82444cdedc2c3b3711b"
                     }
                   ]
                 }
@@ -1822,53 +2049,6 @@
               "response": []
             }
           ]
-        },
-        {
-          "name": "complete Bootcamp Final Project",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PATCH",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"links\": [\r\n        \"link a\",\r\n        \"link b\"\r\n    ],\r\n    \"notes\": \"notes.......\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL}}/api/v1/contents/:contentId/bootcamps/final-project",
-              "host": [
-                "{{URL}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "contents",
-                ":contentId",
-                "bootcamps",
-                "final-project"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
         }
       ]
     },
@@ -2064,10 +2244,232 @@
       ]
     },
     {
-      "name": "Learning",
+      "name": "Enrollments",
       "item": [
         {
-          "name": "add to my learning",
+          "name": "Courses",
+          "item": [
+            {
+              "name": "add to enrollments",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/enrollments/courses/:contentId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "enrollments",
+                    "courses",
+                    ":contentId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f8f23fb48c43feb324a166"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "remove content from enrollments by content id",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/enrollments/courses/:contentId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "enrollments",
+                    "courses",
+                    ":contentId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f8f23fb48c43feb324a166"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Bootcamps",
+          "item": [
+            {
+              "name": "add to enrollments",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{local}}/api/v1/enrollments/bootcamps/:contentId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "enrollments",
+                    "bootcamps",
+                    ":contentId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "remove content from enrollments by content id Copy",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/enrollments/bootcamps/:contentId",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "enrollments",
+                    "bootcamps",
+                    ":contentId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "get my enrollments",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/api/v1/enrollments",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "enrollments"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Upload",
+      "item": [
+        {
+          "name": "generate course stream url",
           "request": {
             "auth": {
               "type": "bearer",
@@ -2081,38 +2483,9 @@
             },
             "method": "POST",
             "header": [],
-            "url": {
-              "raw": "{{local}}/api/v1/learning/:contentId",
-              "host": [
-                "{{local}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "learning",
-                ":contentId"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": "69d39d39676d83dd5ee9c558"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "get my learning",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
             "body": {
               "mode": "raw",
-              "raw": "",
+              "raw": "{\r\n  \"key\": \"uploads/<userId>/<uuid>/video.mp4\",\r\n  \"expiresIn\": 3600\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2120,28 +2493,22 @@
               }
             },
             "url": {
-              "raw": "{{URL}}}/api/v1/learning",
+              "raw": "{{URL}}/api/v1/uploads/stream-platform",
               "host": [
-                "{{URL}}}"
+                "{{URL}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "learning"
-              ],
-              "query": [
-                {
-                  "key": "sort",
-                  "value": "-rating",
-                  "disabled": true
-                }
+                "uploads",
+                "stream-platform"
               ]
             }
           },
           "response": []
         },
         {
-          "name": "remove content from my learning by content id",
+          "name": "generate bootcamp stream url",
           "request": {
             "auth": {
               "type": "bearer",
@@ -2153,11 +2520,11 @@
                 }
               ]
             },
-            "method": "DELETE",
+            "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "",
+              "raw": "{\r\n  \"key\": \"uploads/<userId>/<uuid>/video.mp4\",\r\n  \"expiresIn\": 3600\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2165,14 +2532,15 @@
               }
             },
             "url": {
-              "raw": "{{URL}}}/api/v1/learning/:contentId",
+              "raw": "{{URL}}/api/v1/uploads/stream-bootcamp/:contentId",
               "host": [
-                "{{URL}}}"
+                "{{URL}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "learning",
+                "uploads",
+                "stream-bootcamp",
                 ":contentId"
               ],
               "variable": [
@@ -2185,57 +2553,6 @@
           },
           "response": []
         },
-        {
-          "name": "update content progress in my learning by content id",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{JWT}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n     \"rating\": 3\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{URL}}}/api/v1/learning/:contentId/progress",
-              "host": [
-                "{{URL}}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "learning",
-                ":contentId",
-                "progress"
-              ],
-              "variable": [
-                {
-                  "key": "contentId",
-                  "value": ""
-                }
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Upload",
-      "item": [
         {
           "name": "Start Upload",
           "request": {
@@ -2253,7 +2570,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"fileName\": \"fileName\",\r\n    \"fileType\": \"fileType\",\r\n    \"userId\": \"userId\",\r\n    \"partsCount\": 4\r\n}",
+              "raw": "{\r\n    \"fileName\": \"test baraka 1\",\r\n    \"fileType\": \"image/png\",\r\n    \"userId\": \"69e7903299f29a15bd4f9040\",\r\n    \"partsCount\": 1\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2261,9 +2578,9 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/uploads/multipart/start",
+              "raw": "{{URL}}/api/v1/uploads/multipart/start",
               "host": [
-                "{{local}}"
+                "{{URL}}"
               ],
               "path": [
                 "api",
@@ -2293,7 +2610,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"key\": \"key\",\r\n    \"uploadId\": \"uploadId\",\r\n    \"parts\": [\r\n        {\r\n            \"PartNumber\": 1,\r\n            \"ETag\": \"ETag1\"\r\n        },\r\n        {\r\n            \"PartNumber\": 2,\r\n            \"ETag\": \"ETag2\"\r\n        }\r\n    ]\r\n}",
+              "raw": "{\r\n    \"key\": \"uploads/69e7903299f29a15bd4f9040/3a2506ba-19c2-4b1e-9580-02674a34cc01/test baraka 1\",\r\n    \"uploadId\": \"AHPTh5rD3ibxrqjiGQJYe6t4ajK-I6yM2w685R_gqF4_DjZ9SBl9UUvMJN2bAtRQs7nUqtTGCvQmvS2MMdxiQA5WQM_6r6r-vKFabBFkZNOqBkL_zVXNAisFa0TitCGMNUocEAKH3K1LexOfZnuU9GuSpDhRxtAJ2eMZTyrod8qps3Y_IrVSfFQMcXxZuYMAE8jLr8qSxxYaBO0Yt3s9VqiD5kJ8Mk5BWGHUv3nf_Wj8CLvmVIoSPl7uMWYspQarcGUpM2XizKlpCgWKYk9k9NO-hcDICkln6PhrDA4GKP5guTq3_vbgSaGZOUdiqFojcZ5abc5hF8gx_vdBJIHO3SA\",\r\n    \"parts\": [\r\n        {\r\n            \"PartNumber\": 1,\r\n            \"ETag\": \"ETag1\"\r\n        },\r\n        {\r\n            \"PartNumber\": 2,\r\n            \"ETag\": \"ETag2\"\r\n        }\r\n    ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2301,9 +2618,9 @@
               }
             },
             "url": {
-              "raw": "{{local}}/api/v1/uploads/multipart/complete",
+              "raw": "{{URL}}/api/v1/uploads/multipart/complete",
               "host": [
-                "{{local}}"
+                "{{URL}}"
               ],
               "path": [
                 "api",
@@ -2784,7 +3101,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "// {\r\n//     \"contentType\": \"course\", // [\"course\",\"bootcamp\"]\r\n//     \"title\": \"كورس برمجة من الادمن\",\r\n//     \"category\": \"69cd4b18864399f4dd71956c\",\r\n//     \"instructor\": \"69cd4a00864399f4dd71955a\",\r\n//     \"description\": \"description\",\r\n//     \"learningOutcomes\": [\r\n//         \"learningOutcomes, learningOutcomes\"\r\n//     ],\r\n//     \"prerequisites\": [\r\n//         \"prerequisites, prerequisites\"\r\n//     ],\r\n//     \"welcomeMessage\": \"welcomeMessage\",\r\n//     \"congratulationsMessage\": \"congratulationsMessage\",\r\n//     \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n//     \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n//     \"materials\": [\r\n//         \"materials\",\r\n//         \"materials\",\r\n//         \"materials\"\r\n//     ],\r\n//     \"price\": {\r\n//         \"amount\": 299.99,\r\n//         \"currency\": \"SAR\"\r\n//     },\r\n//     \"thumbnail\": {\r\n//         \"url\": \"url\",\r\n//         \"key\": \"key\"\r\n//     },\r\n//     \"welcomeVideo\": {\r\n//         \"url\": \"url\",\r\n//         \"key\": \"key\",\r\n//         \"size\": 300,\r\n//         \"duration\": 30\r\n//     },\r\n//     \"finalProject\": {\r\n//         \"title\": \"Final Project\",\r\n//         \"description\": \"description\",\r\n//         \"tasks\": [\r\n//             \"task a\",\r\n//             \"task b\"\r\n//         ],\r\n//         \"materials\": [\r\n//             \"a\",\r\n//             \"b\"\r\n//         ]\r\n//     }\r\n// }\r\n{\r\n    \"contentType\": \"bootcamp\", // [\"course\",\"bootcamp\"]\r\n    \"title\": \"معسكر تصميم من الادمن\",\r\n    \"category\": \"69a734afa43b42513e42e558\",\r\n    \"instructor\": \"69b9cd36eac491d75031c962\",\r\n    \"description\": \"description\",\r\n    \"learningOutcomes\": [\r\n        \"learningOutcomes, learningOutcomes\"\r\n    ],\r\n    \"prerequisites\": [\r\n        \"prerequisites, prerequisites\"\r\n    ],\r\n    \"welcomeMessage\": \"welcomeMessage\",\r\n    \"congratulationsMessage\": \"congratulationsMessage\",\r\n    \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n    \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n    \"materials\": [\r\n        \"materials\",\r\n        \"materials\",\r\n        \"materials\"\r\n    ],\r\n    \"price\": {\r\n        \"amount\": 299.99,\r\n        \"currency\": \"SAR\"\r\n    },\r\n    \"thumbnail\": {\r\n        \"url\": \"url\",\r\n        \"key\": \"key\"\r\n    },\r\n    \"welcomeVideo\": {\r\n        \"url\": \"url\",\r\n        \"key\": \"key\",\r\n        \"size\": 300,\r\n        \"duration\": 30\r\n    },\r\n    \"finalProject\": {\r\n        \"title\": \"Final Project\",\r\n        \"description\": \"description\",\r\n        \"tasks\": [\r\n            \"task a\",\r\n            \"task b\"\r\n        ],\r\n        \"materials\": [\r\n            \"a\",\r\n            \"b\"\r\n        ]\r\n    },\r\n    \"startDate\": \"2026-04-01\",\r\n    \"endDate\": \"2026-08-01\",\r\n    \"totalProjects\": 10\r\n}",
+                  "raw": "// {\r\n//     \"contentType\": \"course\", // [\"course\",\"bootcamp\"]\r\n//     \"title\": \"كورس برمجة من الادمن\",\r\n//     \"category\": \"69cd4b18864399f4dd71956c\",\r\n//     \"instructor\": \"69cd4a00864399f4dd71955a\",\r\n//     \"description\": \"description\",\r\n//     \"learningOutcomes\": [\r\n//         \"learningOutcomes, learningOutcomes\"\r\n//     ],\r\n//     \"prerequisites\": [\r\n//         \"prerequisites, prerequisites\"\r\n//     ],\r\n//     \"welcomeMessage\": \"welcomeMessage\",\r\n//     \"congratulationsMessage\": \"congratulationsMessage\",\r\n//     \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n//     \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n//     \"materials\": [\r\n//         \"materials\",\r\n//         \"materials\",\r\n//         \"materials\"\r\n//     ],\r\n//     \"price\": {\r\n//         \"amount\": 299.99,\r\n//         \"currency\": \"SAR\"\r\n//     },\r\n// \"thumbnail\": {\r\n//     \"url\": \"https://example.com\",\r\n//     \"key\": \"key\",\r\n//     \"uploadId\": \"uploadId\"\r\n// },\r\n// \"welcomeVideo\": {\r\n//     \"url\": \"https://example.com\",\r\n//     \"key\": \"key\",\r\n//     \"size\": 300,\r\n//     \"uploadId\": \"uploadId\",\r\n//     \"duration\": 30\r\n// },\r\n//     \"finalProject\": {\r\n//         \"title\": \"Final Project\",\r\n//         \"description\": \"description\",\r\n//         \"tasks\": [\r\n//             \"task a\",\r\n//             \"task b\"\r\n//         ],\r\n//         \"materials\": [\r\n//             \"a\",\r\n//             \"b\"\r\n//         ]\r\n//     }\r\n// }\r\n{\r\n    \"contentType\": \"bootcamp\", // [\"course\",\"bootcamp\"]\r\n    \"title\": \"معسكر تصميم من الادمن\",\r\n    \"category\": \"69a734afa43b42513e42e558\",\r\n    \"instructor\": \"69b9cd36eac491d75031c962\",\r\n    \"description\": \"description\",\r\n    \"learningOutcomes\": [\r\n        \"learningOutcomes, learningOutcomes\"\r\n    ],\r\n    \"prerequisites\": [\r\n        \"prerequisites, prerequisites\"\r\n    ],\r\n    \"welcomeMessage\": \"welcomeMessage\",\r\n    \"congratulationsMessage\": \"congratulationsMessage\",\r\n    \"level\": \"intermediate\", // [\"beginner\", \"intermediate\", \"advanced\"]\r\n    \"language\": \"ar\", // [\"ar\", \"en\", \"fr\"]\r\n    \"materials\": [\r\n        \"materials\",\r\n        \"materials\",\r\n        \"materials\"\r\n    ],\r\n    \"price\": {\r\n        \"amount\": 299.99,\r\n        \"currency\": \"SAR\"\r\n    },\r\n    \"thumbnail\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"uploadId\"\r\n    },\r\n    \"welcomeVideo\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"size\": 300,\r\n        \"uploadId\": \"uploadId\",\r\n        \"duration\": 30\r\n    },\r\n    \"finalProject\": {\r\n        \"title\": \"Final Project\",\r\n        \"description\": \"description\",\r\n        \"tasks\": [\r\n            \"task a\",\r\n            \"task b\"\r\n        ],\r\n        \"materials\": [\r\n            \"a\",\r\n            \"b\"\r\n        ]\r\n    },\r\n    \"startDate\": \"2026-04-01\",\r\n    \"endDate\": \"2026-08-01\",\r\n    \"totalProjects\": 10\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2890,6 +3207,836 @@
                 "v1",
                 "dashboard",
                 "analytics"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Submissions",
+      "item": [
+        {
+          "name": "Courses",
+          "item": [
+            {
+              "name": "submit quiz",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"data\": [\r\n        {\r\n            \"_id\": \"69f9fc10ed1700b2fb55fd12\",\r\n            \"question\": \"question a\",\r\n            \"answer\": \"answer a\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/submissions/courses/sections/:sectionId/modules/:moduleId/quiz",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "submissions",
+                    "courses",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId",
+                    "quiz"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f9fb1aed1700b2fb55fd04"
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": "69f9fc10ed1700b2fb55fd11"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "submit task",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"url\": \"https://example.com\",\r\n    \"image\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"uploadId\"\r\n    },\r\n    \"description\": \"description\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/submissions/courses/sections/:sectionId/modules/:moduleId/task",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "submissions",
+                    "courses",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId",
+                    "task"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f9fb1aed1700b2fb55fd04"
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": "69f9fc18ed1700b2fb55fd1a"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "submit final project",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"links\": [\r\n        \"https://example.com\",\r\n        \"https://example.com\"\r\n    ],\r\n    \"notes\": \"notes...\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/submissions/courses/final-project",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "submissions",
+                    "courses",
+                    "final-project"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f9faa4ed1700b2fb55fcfe"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Bootcamps",
+          "item": [
+            {
+              "name": "submit quiz",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"data\": [\r\n        {\r\n            \"_id\": \"69f8f80144cdedc2c3b3710f\",\r\n            \"question\": \"question a updated\",\r\n            \"answer\": \"answer a updated\"\r\n        } \r\n \r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/submissions/bootcamps/sections/:sectionId/modules/:moduleId/quiz",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "submissions",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId",
+                    "quiz"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f8f23fb48c43feb324a166"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f8f2c3b48c43feb324a16f"
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": "69f8f59444cdedc2c3b37091"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "submit task",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"url\": \"https://example.com\",\r\n    \"image\": {\r\n        \"url\": \"https://example.com\",\r\n        \"key\": \"key\",\r\n        \"uploadId\": \"uploadId\"\r\n    },\r\n    \"description\": \"description\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/submissions/bootcamps/sections/:sectionId/modules/:moduleId/task",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "submissions",
+                    "bootcamps",
+                    "sections",
+                    ":sectionId",
+                    "modules",
+                    ":moduleId",
+                    "task"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f8f23fb48c43feb324a166"
+                    },
+                    {
+                      "key": "sectionId",
+                      "value": "69f8f2c3b48c43feb324a16f"
+                    },
+                    {
+                      "key": "moduleId",
+                      "value": "69f8f5a744cdedc2c3b3709b"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "submit final project",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"links\": [\r\n        \"https://example.com\",\r\n        \"https://example.com\"\r\n    ],\r\n    \"notes\": \"notes...\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local}}/api/v1/contents/:contentId/submissions/bootcamps/final-project",
+                  "host": [
+                    "{{local}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "contents",
+                    ":contentId",
+                    "submissions",
+                    "bootcamps",
+                    "final-project"
+                  ],
+                  "variable": [
+                    {
+                      "key": "contentId",
+                      "value": "69f8f23fb48c43feb324a166"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "fetch my submissions",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/api/v1/contents/:contentId/submissions",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contents",
+                ":contentId",
+                "submissions"
+              ],
+              "query": [
+                {
+                  "key": "submissionType",
+                  "value": "quizSubmission",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "submissionType",
+                  "value": "taskSubmission",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "submissionType",
+                  "value": "finalProjectSubmission",
+                  "type": "text",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "contentId",
+                  "value": "69f8f23fb48c43feb324a166"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "fetch all submissions for one content",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/api/v1/contents/:contentId/submissions/all",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contents",
+                ":contentId",
+                "submissions",
+                "all"
+              ],
+              "variable": [
+                {
+                  "key": "contentId",
+                  "value": "69f8f23fb48c43feb324a166"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "feedback on final project",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"rejected\", // [\"approved\", \"rejected\"]\r\n    \"feedback\": \"feedback...\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/api/v1/contents/:contentId/submissions/final-project/feedback",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "contents",
+                ":contentId",
+                "submissions",
+                "final-project",
+                "feedback"
+              ],
+              "variable": [
+                {
+                  "key": "contentId",
+                  "value": "69f8f23fb48c43feb324a166"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Coupons",
+      "item": [
+        {
+          "name": "create new coupon",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"code\": \"svk41c\",\r\n    \"discountType\": \"percentage\", // enum: [\"percentage\", \"fixed\"]\r\n    \"discountValue\": 10,\r\n    \"maxDiscountAmount\": \"50\",\r\n    \"startDate\": \"2026-04-01\",\r\n    \"expiresAt\": \"2026-12-12\",\r\n    \"status\": \"active\", // enum: [\"active\", \"inactive\"]\r\n    \"usageLimit\": 100,\r\n    \"usageLimitPerUser\": 1,\r\n    \"includes\": {\r\n        \"contentType\": \"bootcamp\", // enum: [\"platform\", \"bootcamp\"]\r\n        \"contentIds\": [\r\n            \"69f8f23fb48c43feb324a166\"\r\n        ]\r\n    }\r\n    // ,\"excludes\": {\r\n    //     \"contentType\": \"bootcamp\", // enum: [\"platform\", \"bootcamp\"]\r\n    //     \"contentIds\": [\r\n    //         \"id_a\",\r\n    //         \"id_b\"\r\n    //     ]\r\n    // }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/api/v1/coupons",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupons"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all coupons",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/api/v1/coupons",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupons"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get one coupon by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/api/v1/coupons/:id",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupons",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "69fba5207054da94d488972b"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update one coupon by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"code\": \"svk41c\",\r\n    \"discountType\": \"percentage\", // enum: [\"percentage\", \"fixed\"]\r\n    \"discountValue\": 10,\r\n    \"maxDiscountAmount\": \"50\",\r\n    \"startDate\": \"2026-04-01\",\r\n    \"expiresAt\": \"2026-12-12\",\r\n    \"status\": \"active\", // enum: [\"active\", \"inactive\"]\r\n    \"usageLimit\": 100,\r\n    \"usageLimitPerUser\": 1,\r\n    \"includes\": {\r\n        \"contentType\": \"bootcamp\", // enum: [\"platform\", \"bootcamp\"]\r\n        \"contentIds\": [\r\n            \"69f8f23fb48c43feb324a166\"\r\n        ]\r\n    }\r\n    // ,\"excludes\": {\r\n    //     \"contentType\": \"bootcamp\", // enum: [\"platform\", \"bootcamp\"]\r\n    //     \"contentIds\": [\r\n    //         \"id_a\",\r\n    //         \"id_b\"\r\n    //     ]\r\n    // }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/api/v1/coupons/:id",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupons",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "69fba5207054da94d488972b"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete one coupon by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{local}}/api/v1/coupons/:id",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupons",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "69fba267926a67307a1912dd"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "validate coupon",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"code\": \"SVK41C\",\r\n    \"originalAmount\":500,\r\n    \"contentType\":\"bootcamp\",\r\n    \"contentId\":\"69f8f23fb48c43feb324a166\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local}}/api/v1/coupons/validate",
+              "host": [
+                "{{local}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coupons",
+                "validate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "get cart items",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/cart",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add Bootcamp To Cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/cart/bootcamps/:bootcampId",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "bootcamps",
+                ":bootcampId"
+              ],
+              "variable": [
+                {
+                  "key": "bootcampId",
+                  "value": "69f8f23fb48c43feb324a166"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "remove Bootcamp From Cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{JWT}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/api/v1/cart/bootcamps/:bootcampId",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "bootcamps",
+                ":bootcampId"
+              ],
+              "variable": [
+                {
+                  "key": "bootcampId",
+                  "value": "69f8f23fb48c43feb324a166"
+                }
               ]
             }
           },

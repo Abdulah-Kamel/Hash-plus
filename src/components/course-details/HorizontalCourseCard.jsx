@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,8 @@ import Rating from "../shared/Rating";
 import courseProfile from "@/assets/courseProfile.png";
 import saRyal from "@/assets/saRyal.svg";
 import course1 from "@/assets/course1.png";
+import { useCartStore } from "@/store/useCartStore";
+import { toast } from "sonner";
 
 const contentTypeLabels = {
   course: "كورس",
@@ -22,6 +25,8 @@ const levelLabels = {
 };
 
 const HorizontalCourseCard = ({ course }) => {
+    const addItem = useCartStore((state) => state.addItem);
+
     const price = course?.price?.amount ?? 0;
     const duration = course?.metadata?.duration ?? 0;
     const modulesCount = course?.metadata?.modulesCount ?? 0;
@@ -29,6 +34,26 @@ const HorizontalCourseCard = ({ course }) => {
     const ratingsCount = course?.metadata?.ratingsCount ?? 0;
     const contentTypeLabel = contentTypeLabels[course?.contentType] || course?.contentType;
     const levelLabel = levelLabels[course?.level] || course?.level;
+
+    const handleSubscribe = () => {
+      if (!course?._id && !course?.id) {
+        toast.error("بيانات الدورة غير مكتملة");
+        return;
+      }
+      addItem({
+        id: course._id || course.id,
+        title: course.title || "دورة تدريبية",
+        price: price ?? 0,
+        thumbnail: course.thumbnail || null,
+        contentType: course.contentType || "course",
+        instructor: course.instructor?.name || course.instructor || "ولاء القحطاني",
+        instructorId: course.instructor?._id || course.instructorId || 1,
+        rating: avgRatings,
+        duration: duration,
+        level: course.level || "beginner",
+      });
+      toast.success("تم الإضافة إلى السلة");
+    };
 
     return (
       <Card className="w-full rounded-2xl p-0">
@@ -102,6 +127,7 @@ const HorizontalCourseCard = ({ course }) => {
                   <Image src={saRyal} alt="سعر الدورة" width={24} height={24} />
                 </div>
                 <Button
+                  onClick={handleSubscribe}
                   variant="outline"
                   className="rounded-full max-xl:text-sm px-3 xl:px-8 py-4"
                 >

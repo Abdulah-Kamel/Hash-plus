@@ -10,6 +10,7 @@ import CreatorTopBar from "@/components/creator/CreatorTopBar";
 import { useAuth } from "@/hooks/useAuth";
 import { getAllContents } from "@/actions/contentActions";
 import CreatorContentCard from "@/components/creator/CreatorContentCard";
+import CreatorDashboard from "@/components/creator/CreatorDashboard";
 import { Loader2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -103,23 +104,7 @@ const page = () => {
             </CardContent>
           </Card>
         ) : (
-          <div className="flex flex-col gap-6" dir="rtl">
-            <div className="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900">المعسكرات الخاصة بك</h2>
-              <Link href="/creator/onbording">
-                <Button className="rounded-full px-6 flex gap-2 w-auto">
-                  <Plus className="w-5 h-5" />
-                  إنشاء معسكر جديد
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
-              {contents.map((course) => (
-                <CreatorContentCard key={course._id} course={course} />
-              ))}
-            </div>
-          </div>
+          <CreatorDashboard />
         )}
       </div>
     </>

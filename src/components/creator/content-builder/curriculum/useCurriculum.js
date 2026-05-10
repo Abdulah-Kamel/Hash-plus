@@ -256,7 +256,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
         title, description, moduleType,
         videoData, videoUrl, linkUrl, linkDate,
         taskUrl, taskImageUrl, taskDescription,
-        quizSubType, questions,
+        questions,
         // live session fields
         liveStartTime, liveEndTime, liveTimezone, liveDate, liveMeetLink, liveStreamUrl,
       } = form;
@@ -274,7 +274,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
         if (type === "link" && !linkUrl?.trim()) { toast.error("يرجى إدخال الرابط"); return; }
         if (type === "link" && !linkDate?.trim()) { toast.error("يرجى إدخال التاريخ"); return; }
         if (type === "task" && !taskUrl?.trim()) { toast.error("يرجى إدخال رابط التكليف"); return; }
-        if (type === "quiz" && !quizSubType) { toast.error("يرجى اختيار نوع الاختبار"); return; }
+
       }
 
       setIsSavingForm(true);
@@ -292,7 +292,8 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
           }
 
           const payload = { moduleType: type, title };
-          if (description?.trim()) payload.description = description.trim();
+          // Backend requires description — default to title if not provided
+          payload.description = description?.trim() || title;
 
           if (type === "video" && videoData?.key) {
             payload.videoData = videoData;
@@ -312,7 +313,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
           if (type === "quiz") {
             payload.quizData = (questions || []).map((q) => {
               const item = { question: q.text };
-              if (quizSubType === "mcq" && q.answers?.length) {
+              if (q.answers?.length) {
                 item.options = q.answers.map((a) => a.text);
                 const correct = q.answers.find((a) => a.isCorrect);
                 if (correct) item.answer = correct.text;
@@ -335,7 +336,8 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
         } else {
           // Course module
           const payload = { moduleType: type, title };
-          if (description?.trim()) payload.description = description.trim();
+          // Backend requires description — default to title if not provided
+          payload.description = description?.trim() || title;
           if (type === "video" && videoData?.key) {
             payload.videoData = videoData;
           } else if (type === "video" && videoUrl?.trim()) {
@@ -352,7 +354,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
           if (type === "quiz") {
             payload.quizData = (questions || []).map((q) => {
               const item = { question: q.text };
-              if (quizSubType === "mcq" && q.answers?.length) {
+              if (q.answers?.length) {
                 item.options = q.answers.map((a) => a.text);
                 const correct = q.answers.find((a) => a.isCorrect);
                 if (correct) item.answer = correct.text;
@@ -419,7 +421,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
           moduleType: type, title, description,
           videoUrl, linkUrl, linkDate,
           taskUrl, taskImageUrl, taskDescription,
-          quizSubType, questions,
+          questions,
           liveStartTime, liveEndTime, liveTimezone, liveDate, liveMeetLink, liveStreamUrl,
         } = form;
 
@@ -444,7 +446,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
           if (type === "quiz") {
             payload.quizData = (questions || []).map((q) => {
               const qItem = { question: q.text };
-              if (quizSubType === "mcq" && q.answers?.length) {
+              if (q.answers?.length) {
                 qItem.options = q.answers.map((a) => a.text);
                 const correct = q.answers.find((a) => a.isCorrect);
                 if (correct) qItem.answer = correct.text;
@@ -479,7 +481,7 @@ export function useCurriculum(contentId, contentType = "course", modules = [], o
           if (type === "quiz") {
             payload.quizData = (questions || []).map((q) => {
               const qItem = { question: q.text };
-              if (quizSubType === "mcq" && q.answers?.length) {
+              if (q.answers?.length) {
                 qItem.options = q.answers.map((a) => a.text);
                 const correct = q.answers.find((a) => a.isCorrect);
                 if (correct) qItem.answer = correct.text;

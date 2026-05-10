@@ -3,11 +3,11 @@ import React from "react";
 import { Input } from "../ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
-const CreatorTopBar = () => {
+const CreatorTopBar = ({ title = "الرئيسية" }) => {
   return (
     <section className="bg-white">
       <div className="flex justify-between items-center">
-        <h4>الرئيسية</h4>
+        <h4 className="text-xl font-bold">{title}</h4>
         <div className="flex items-center gap-2">
           <div className="relative">
             <Input

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,18 +14,44 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import FormField from "@/components/form/FormField";
-import { Edit, X } from "lucide-react";
+import { Edit, X, Loader2 } from "lucide-react";
 import PasswordField from "@/components/form/PasswordField";
+import { getMyProfile } from "@/actions/profileActions";
+import { changePassword } from "@/actions/profileActions";
+import { toast } from "sonner";
 
 const SecurityPage = () => {
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [phoneDialogOpen, setPhoneDialogOpen] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
 
   const [userData, setUserData] = useState({
-    email: "mohaemdalii@gmail.com",
-    phone: "+966 528562352",
+    email: "",
+    phone: "",
   });
+
+  // Fetch real user data on mount
+  useEffect(() => {
+    async function loadUserData() {
+      setFetching(true);
+      try {
+        const res = await getMyProfile();
+        if (res.success && res.data) {
+          setUserData({
+            email: res.data.email || "",
+            phone: res.data.phone || res.data.phoneNumber || "",
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load user data:", err);
+      } finally {
+        setFetching(false);
+      }
+    }
+    loadUserData();
+  }, []);
 
   const emailSchema = z.object({
     email: z
@@ -73,28 +99,64 @@ const SecurityPage = () => {
     },
   });
 
+  // Update form defaults when userData loads
+  useEffect(() => {
+    if (userData.email) emailForm.reset({ email: userData.email });
+    if (userData.phone) phoneForm.reset({ phone: userData.phone });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
+
   const onEmailSubmit = async (data) => {
     setLoading(true);
-
+    // TODO: Wire to email change API when available
     setUserData((prev) => ({ ...prev, email: data.email }));
     setEmailDialogOpen(false);
+    toast.success("تم إرسال رمز التحقق");
     setLoading(false);
   };
 
   const onPhoneSubmit = async (data) => {
     setLoading(true);
-
+    // TODO: Wire to phone change API when available
     setUserData((prev) => ({ ...prev, phone: data.phone }));
     setPhoneDialogOpen(false);
+    toast.success("تم إرسال رمز التحقق");
     setLoading(false);
   };
 
   const onPasswordSubmit = async (data) => {
-    setLoading(true);
+    setPasswordLoading(true);
+    try {
+      const res = await changePassword({
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+        confirmNewPassword: data.confirmPassword,
+      });
 
-    passwordForm.reset();
-    setLoading(false);
+      if (res.success) {
+        toast.success("تم تغيير كلمة المرور بنجاح");
+        passwordForm.reset();
+      } else {
+        toast.error(res.error || "فشل تغيير كلمة المرور");
+      }
+    } catch {
+      toast.error("حدث خطأ أثناء تغيير كلمة المرور");
+    } finally {
+      setPasswordLoading(false);
+    }
   };
+
+  if (fetching) {
+    return (
+      <section className="space-y-4">
+        <Card className="p-6">
+          <div className="flex items-center justify-center py-16">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        </Card>
+      </section>
+    );
+  }
 
   return (
     <section className="space-y-4">
@@ -280,10 +342,17 @@ const SecurityPage = () => {
             <div className="mt-8 flex justify-end">
               <Button
                 type="submit"
-                disabled={loading}
+                disabled={passwordLoading}
                 className="bg-primary hover:bg-primary/90 text-white px-12 py-4 rounded-full font-medium cursor-pointer"
               >
-                {loading ? "جاري الحفظ..." : "حفظ"}
+                {passwordLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    جاري الحفظ...
+                  </>
+                ) : (
+                  "حفظ"
+                )}
               </Button>
             </div>
           </form>

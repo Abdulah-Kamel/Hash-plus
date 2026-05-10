@@ -4,6 +4,7 @@ import Link from "next/link";
 import NavSearch from "./NavSearch";
 import { useAuth } from "@/hooks/useAuth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useCartStore } from "@/store/useCartStore";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,8 +21,9 @@ import {
   Settings,
   LogOut,
   ShoppingBag,
+  ShoppingCart,
   Star,
-MessageSquare,
+  MessageSquare,
   Globe,
   LayoutDashboard,
 } from "lucide-react";
@@ -29,6 +31,7 @@ import { logout } from "@/actions/logoutAction";
 
 const NavActions = () => {
   const { user, loading, isAuthenticated } = useAuth();
+  const cartItems = useCartStore((state) => state.items);
 
   const roleLabel =
     user?.role === "instructor"
@@ -57,6 +60,16 @@ const NavActions = () => {
   return (
     <div className="hidden xl:flex items-center gap-2 xl:order-2">
       <NavSearch />
+
+      {/* Cart Button (visible to all users, even guests can add to cart potentially) */}
+      <Link href="/cart" className="relative p-2 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer mr-2">
+        <ShoppingCart className="w-5 h-5 text-gray-600" />
+        {cartItems.length > 0 && (
+          <span className="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+            {cartItems.length}
+          </span>
+        )}
+      </Link>
 
       {isAuthenticated ? (
         <div className="flex items-center gap-3">

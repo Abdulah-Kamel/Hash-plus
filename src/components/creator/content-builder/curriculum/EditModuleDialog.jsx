@@ -6,8 +6,6 @@ import {
   FileText,
   ClipboardList,
   X,
-  ListChecks,
-  PenLine,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -146,7 +144,6 @@ const mkAnswer = () => ({
 });
 
 const QuizEditForm = ({ form, setForm }) => {
-  const isMcq = form.quizSubType === "mcq";
   const questions = form.questions?.length ? form.questions : [];
 
   const updateQs = (qs) => setForm({ ...form, questions: qs });
@@ -157,7 +154,7 @@ const QuizEditForm = ({ form, setForm }) => {
       {
         id: crypto.randomUUID(),
         text: "",
-        answers: isMcq ? [mkAnswer(), mkAnswer()] : [],
+        answers: [mkAnswer(), mkAnswer()],
       },
     ]);
   const removeQ = (qId) => updateQs(questions.filter((q) => q.id !== qId));
@@ -238,11 +235,11 @@ const QuizEditForm = ({ form, setForm }) => {
             <Input
               value={q.text}
               onChange={(e) => updateQText(q.id, e.target.value)}
-              placeholder={isMcq ? "ما هو..." : "اكتب سؤالك هنا..."}
+              placeholder="ما هو..."
               className="text-right h-10 border-gray-200 rounded-lg focus-visible:ring-primary text-sm"
               dir="rtl"
             />
-            {isMcq && (
+            {(
               <div className="flex flex-col gap-2 pr-2 border-r-2 border-gray-100">
                 <span className="text-xs text-gray-500 text-right">
                   الإجابات
@@ -370,10 +367,11 @@ const BootcampEditForm = ({ form, setForm }) => {
 
 const isValid = (form, contentType) => {
   if (!form.title?.trim()) return false;
-  if (contentType === "bootcamp") return true;
 
   switch (form.moduleType) {
     case "video":
+      // For bootcamp, video URL is optional (can be added later)
+      if (contentType === "bootcamp") return true;
       return !!form.videoUrl?.trim();
     case "link":
       return !!form.linkUrl?.trim() && !!form.linkDate?.trim();
@@ -384,18 +382,17 @@ const isValid = (form, contentType) => {
         form.questions?.length > 0 &&
         form.questions.every((q) => {
           if (!q.text?.trim()) return false;
-          if (form.quizSubType === "mcq") {
-            return (
-              q.answers?.length >= 2 &&
-              q.answers.every((a) => a.text?.trim()) &&
-              q.answers.some((a) => a.isCorrect)
-            );
-          }
-          return true;
+          return (
+            q.answers?.length >= 2 &&
+            q.answers.every((a) => a.text?.trim()) &&
+            q.answers.some((a) => a.isCorrect)
+          );
         })
       );
+    case "liveSession":
+      return true; // Live session fields are optional
     default:
-      return false;
+      return true;
   }
 };
 
@@ -404,26 +401,6 @@ const isValid = (form, contentType) => {
 const seedForm = (item, contentType) => {
   const mod = item?.moduleData;
   const type = item?.type || mod?.moduleType || "video";
-
-  if (contentType === "bootcamp") {
-    return {
-      moduleType: "bootcamp",
-      title: item?.title || mod?.title || "",
-      description: mod?.description || "",
-      timeStart: mod?.timeStart || "",
-      timeEnd: mod?.timeEnd || "",
-      timezone: mod?.timezone || "Asia/Riyadh",
-      liveSessionUrl: mod?.liveSession?.url || "",
-      videoUrl: mod?.video?.url || "",
-      projects: (mod?.projects || []).map(p => ({
-        id: crypto.randomUUID(),
-        title: p.title || "",
-        description: p.description || "",
-        githubUrl: p.githubUrl || "",
-        liveDemoUrl: p.liveDemoUrl || ""
-      }))
-    };
-  }
 
   const base = {
     moduleType: type,
@@ -437,7 +414,7 @@ const seedForm = (item, contentType) => {
     taskUrl: mod?.task?.url || mod?.taskData?.url || "",
     taskImageUrl: mod?.task?.imageUrl || mod?.taskData?.imageUrl || "",
     taskDescription: mod?.task?.description || mod?.taskData?.description || "",
-    quizSubType: mod?.quizSubType || "mcq",
+    quizSubType: "mcq",
     questions: (mod?.quiz || mod?.quizData || []).map((q) => ({
       id: crypto.randomUUID(),
       text: q.question || "",
@@ -447,6 +424,13 @@ const seedForm = (item, contentType) => {
         isCorrect: opt === q.answer,
       })),
     })),
+    // Bootcamp-specific fields (always included so the form can use them)
+    liveStartTime: mod?.liveSession?.startTime || mod?.timeStart || "",
+    liveEndTime: mod?.liveSession?.endTime || mod?.timeEnd || "",
+    liveTimezone: mod?.liveSession?.timezone || mod?.timezone || "Asia/Riyadh",
+    liveDate: mod?.liveSession?.date || "",
+    liveMeetLink: mod?.liveSession?.meetLink || "",
+    liveStreamUrl: mod?.liveSession?.liveStreamUrl || mod?.liveSession?.url || "",
   };
   return base;
 };
@@ -457,6 +441,7 @@ const TYPE_LABEL = {
   link: "رابط",
   task: "ملف",
   quiz: "اختبار",
+  liveSession: "جلسة مباشرة",
 };
 
 // ─── Main dialog ──────────────────────────────────────────────────────────────
@@ -479,12 +464,9 @@ const EditModuleDialog = ({
     onSave(form);
   };
 
-  const typeLabel = contentType === "bootcamp" ? "محتوى المعسكر" : (TYPE_LABEL[form.moduleType] ?? form.moduleType);
+  const typeLabel = TYPE_LABEL[form.moduleType] ?? form.moduleType;
 
   const renderForm = () => {
-    if (contentType === "bootcamp") {
-      return <BootcampEditForm form={form} setForm={setForm} />;
-    }
     switch (form.moduleType) {
       case "video":
         return <VideoEditForm form={form} setForm={setForm} />;
@@ -494,8 +476,10 @@ const EditModuleDialog = ({
         return <TaskEditForm form={form} setForm={setForm} />;
       case "quiz":
         return <QuizEditForm form={form} setForm={setForm} />;
+      case "liveSession":
+        return <BootcampEditForm form={form} setForm={setForm} />;
       default:
-        return null;
+        return <VideoEditForm form={form} setForm={setForm} />;
     }
   };
 

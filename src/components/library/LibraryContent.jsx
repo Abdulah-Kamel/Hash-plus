@@ -10,8 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 import courseProfile from "@/assets/courseProfile.png";
 import course1 from "@/assets/course1.png"
-import {coursesData} from "@/data/coursesData";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import { getMyLearning } from "@/actions/learningActions";
+import { Loader2 } from "lucide-react";
 
 const LibraryContent = () => {
     const radius = 20
@@ -19,23 +20,42 @@ const LibraryContent = () => {
     const offset = circumference - (50 / 100) * circumference
     const [activeTab, setActiveTab] = useState('التعليم');
     const [searchQuery, setSearchQuery] = useState('');
+    const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
 
+    React.useEffect(() => {
+        const fetchLearning = async () => {
+            setLoading(true);
+            const res = await getMyLearning();
+            if (res.success) {
+                console.log("res:", res);
+                
+                setCourses(res.data?.data || []);
+            }
+            setLoading(false);
+        };
+        fetchLearning();
+    }, []);
     const tabs = ['التعليم','الشهادات'];
 
-
-    const filteredCourses = coursesData.slice(0,4).filter(course => {
+    const filteredCourses = courses.filter(item => {
+        const course = item.content || item.contentId || item;
         const matchesTab = activeTab === 'التعليم' || course.status === activeTab;
-        const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            course.description.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesSearch = course.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            course.description?.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesTab && matchesSearch;
     });
 
-    const CourseCard = ({ course }) => (
+    const CourseCard = ({ item }) => {
+        const course = item.content || item.contentId || item;
+        const progress = item.progress || 0;
+        
+        return (
         <Card className="w-full rounded-2xl p-0">
             <div className="flex flex-col sm:flex-row gap-4 p-4">
                 {/* Course Image */}
-                <Link href={`/course`} className="block flex-shrink-0">
-                    <Image className="w-full xl:w-64 h-full object-cover rounded-lg" src={course.image} alt={course.title} width={192} height={128} />
+                <Link href={`/course-page/${course._id}`} className="block flex-shrink-0">
+                    <Image className="w-full xl:w-64 h-full object-cover rounded-lg" src={course.thumbnail?.url || course.image || course1} alt={course.title || "Course"} width={192} height={128} />
                 </Link>
 
                 {/* Course Content - arranged horizontally */}
@@ -46,11 +66,13 @@ const LibraryContent = () => {
                             {/* tags section */}
                             <div className="flex items-center gap-2">
                                 <Badge variant="outline" className="px-3 py-1 rounded-full border-gray-900 border-1 text-xs">
-                                    دورة
+                                    {course.contentType === "bootcamp" ? "معسكر" : "دورة"}
                                 </Badge>
+                                {(course.category?.name || course.category) && (
                                 <Badge variant="outline" className="px-3 py-1 rounded-full border-gray-900 border-1 text-xs">
-                                    برمجة
+                                    {course.category?.name || "برمجة"}
                                 </Badge>
+                                )}
                             </div>
                         </div>
 
@@ -59,32 +81,34 @@ const LibraryContent = () => {
 
                         {/* Instructor */}
                         <div className="flex items-center gap-2">
-                            <Link href={`/teacher/${course.instructorId || 1}`}>
+                            <Link href={`/teacher/${course.instructor?._id || course.instructorId || 1}`}>
                                 <Image className="rounded-full bg-gray-100 cursor-pointer" src={courseProfile} alt="Instructor avatar" width={32} height={32} />
                             </Link>
-                            <p className="text-base font-light">{course.instructor}</p>
+                            <p className="text-base font-light">{course.instructor?.name || course.instructor || "ولاء القحطاني"}</p>
                         </div>
                         <div className="space-y-2 mt-3">
                             <div className="w-full bg-gray-200 rounded-full h-1">
                                 <div 
                                     className="bg-primary h-1 rounded-full transition-all duration-1000"
-                                    style={{ width: `${20}%` }}
+                                    style={{ width: `${progress}%` }}
                                 ></div>
                             </div>
                             <div className="flex items-center justify-between text-muted-foreground">
                                 <span className="text-sm font-medium">التقدم</span>
-                                <span className="text-sm font-bold">{20}%</span>
+                                <span className="text-sm font-bold">{progress}%</span>
                             </div>
                         </div>
                         {/* Price and CTA */}
                         <div className="flex items-center justify-between w-full">
-                            <Button variant="outline" className="rounded-full cursor-pointer max-xl:text-sm px-3 xl:px-8 py-4 w-full">اكمل التعلم</Button>
+                            <Link href={`/course-page/${course._id}`} className="w-full">
+                                <Button variant="outline" className="rounded-full cursor-pointer max-xl:text-sm px-3 xl:px-8 py-4 w-full">اكمل التعلم</Button>
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
         </Card>
-    );
+    )};
 
     return (
         <div className="space-y-6">
@@ -195,14 +219,6 @@ const LibraryContent = () => {
                     </div>
                 </div>
             </div>
-                <div>
-                    <h3 className="text-lg font-semibold">ما تتعلمه الان</h3>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-                        {filteredCourses.map((course) => (
-                            <CourseCard key={course.id} course={course} />
-                        ))}
-                    </div>
-                </div>
             <div className="mt-3">
                 <h3 className="text-lg font-semibold">المحتوى</h3>
                 <div className="mt-4 flex items-center justify-between gap-4 w-full">
@@ -239,9 +255,19 @@ const LibraryContent = () => {
                 </div>
                 <div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-                        {filteredCourses.map((course) => (
-                            <CourseCard key={course.id} course={course} />
-                        ))}
+                        {loading ? (
+                            <div className="col-span-2 flex justify-center py-10">
+                                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                            </div>
+                        ) : filteredCourses.length > 0 ? (
+                            filteredCourses.map((item, index) => (
+                                <CourseCard key={item._id || index} item={item} />
+                            ))
+                        ) : (
+                            <div className="col-span-2 text-center py-10 text-gray-500">
+                                لا يوجد محتوى متاح حاليا
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

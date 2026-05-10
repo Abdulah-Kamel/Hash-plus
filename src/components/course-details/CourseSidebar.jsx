@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import {Card, CardContent, CardFooter, CardHeader} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,17 +11,60 @@ import {
 import Image from "next/image";
 import courseImage from "@/assets/course1.png"
 
+import { useRouter } from 'next/navigation';
+import { useCartStore } from '@/store/useCartStore';
+import { toast } from 'sonner';
+import { addToCart } from '@/actions/cartActions';
+
 const languageLabels = {
   ar: "اللغة العربية",
   en: "اللغة الإنجليزية",
 };
 
 const CourseSidebar = ({ courseDetails }) => {
+  const router = useRouter();
+  const addItem = useCartStore((state) => state.addItem);
+
   const price = courseDetails?.price?.amount ?? 0;
   const duration = courseDetails?.metadata?.duration ?? 0;
   const materialsCount = courseDetails?.materials?.length ?? 0;
   const language = languageLabels[courseDetails?.language] || courseDetails?.language;
   const thumbnail = courseDetails?.thumbnail;
+
+  const handleSubscribe = async () => {
+    if (!courseDetails?._id && !courseDetails?.id) {
+      toast.error("بيانات الدورة غير مكتملة");
+      return;
+    }
+
+    const contentType = courseDetails.contentType || "course";
+    if (contentType !== "bootcamp") {
+      toast.info("الدورات ستكون متاحة قريباً عبر نظام الاشتراكات");
+      return;
+    }
+    
+    // Add to local state optimistically
+    const contentId = courseDetails._id || courseDetails.id;
+    addItem({
+      id: contentId,
+      title: courseDetails.title || "دورة تدريبية",
+      price: price,
+      thumbnail: thumbnail || null,
+      contentType: contentType,
+      instructor: courseDetails.instructor?.name || courseDetails.instructor || "ولاء القحطاني",
+      instructorId: courseDetails.instructor?._id || courseDetails.instructorId || 1,
+      rating: courseDetails.metadata?.avgRatings || 0,
+      duration: duration,
+      level: courseDetails.level || "beginner",
+    });
+    
+    toast.success("تم الإضافة إلى السلة");
+    
+    // Add to backend cart
+    await addToCart(contentId);
+    
+    router.push("/cart");
+  };
 
   return (
     <div className="space-y-6">
@@ -36,7 +80,7 @@ const CourseSidebar = ({ courseDetails }) => {
           </CardHeader>
         <CardContent className="p-4 space-y-3">
             <div className="grid grid-cols-4 gap-3 items-center">
-            <Button className="col-span-3 w-full bg-primary hover:bg-primary/90 text-white cursor-pointer py-5 text-lg font-medium rounded-lg">
+            <Button onClick={handleSubscribe} className="col-span-3 w-full bg-primary hover:bg-primary/90 text-white cursor-pointer py-5 text-lg font-medium rounded-lg">
                 اشترك الآن
             </Button>
             <div className="col-span-1 flex justify-center">

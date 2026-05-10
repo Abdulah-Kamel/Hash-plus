@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { Trash2, RefreshCw, Film } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import VideoUploader from "./VideoUploader";
+import { uploadAsset } from "@/actions/uploadActions";
 
 const tips = [
   {
@@ -33,26 +33,66 @@ const tips = [
 ];
 
 const IntroVideoSection = ({ contentId, welcomeVideo, onUpdate }) => {
-  const [uploadResult, setUploadResult] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef(null);
 
-  const handleUploadComplete = async (result) => {
-    setUploadResult(result);
-    try {
-      await onUpdate({
-        welcomeVideo: {
-          key: result.key,
-          uploadId: result.uploadId,
-          url: result.url || "",
-        },
-      });
-      toast.success("تم رفع الفيديو التعريفي بنجاح");
-    } catch {
-      toast.error("فشل حفظ بيانات الفيديو");
+  const handleVideoUpload = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (!file.type.startsWith('video/')) {
+        toast.error("يرجى اختيار ملف فيديو صحيح");
+        return;
+      }
+
+      setIsUploading(true);
+
+      // Extract duration
+      const videoElement = document.createElement('video');
+      videoElement.preload = 'metadata';
+      
+      const performUpload = async (duration) => {
+        try {
+          const formData = new FormData();
+          formData.append("file", file);
+          
+          const res = await uploadAsset(formData);
+          
+          if (res.success && res.data?.url) {
+            const videoData = { 
+              url: res.data.url, 
+              key: res.data.key, 
+              uploadId: res.data.uploadId || res.data.id || null,
+              size: file.size,
+              duration: Math.round(duration)
+            };
+            
+            await onUpdate({ welcomeVideo: videoData });
+            toast.success("تم رفع الفيديو التعريفي بنجاح");
+          } else {
+            toast.error(res.error || "فشل رفع الفيديو");
+          }
+        } catch (err) {
+          toast.error("حدث خطأ أثناء حفظ الفيديو");
+        } finally {
+          setIsUploading(false);
+        }
+      };
+
+      videoElement.onloadedmetadata = async () => {
+        window.URL.revokeObjectURL(videoElement.src);
+        await performUpload(videoElement.duration || 0);
+      };
+      
+      videoElement.onerror = async () => {
+        window.URL.revokeObjectURL(videoElement.src);
+        await performUpload(0);
+      };
+
+      videoElement.src = URL.createObjectURL(file);
     }
   };
 
   const handleRemove = async () => {
-    setUploadResult(null);
     try {
       await onUpdate({ welcomeVideo: null });
       toast.success("تم حذف الفيديو");
@@ -61,7 +101,7 @@ const IntroVideoSection = ({ contentId, welcomeVideo, onUpdate }) => {
     }
   };
 
-  const hasVideo = uploadResult || welcomeVideo;
+  const hasVideo = !!welcomeVideo;
 
   return (
     <div className="space-y-8">
@@ -95,8 +135,8 @@ const IntroVideoSection = ({ contentId, welcomeVideo, onUpdate }) => {
             <Film className="w-8 h-8 text-primary" />
           </div>
           <div className="flex-1 text-right">
-            <p className="text-sm font-medium text-gray-900">
-              {uploadResult?.key || welcomeVideo?.key || welcomeVideo?.url || "فيديو تعريفي"}
+            <p className="text-sm font-medium text-gray-900 truncate">
+              {welcomeVideo?.key || welcomeVideo?.url || "فيديو تعريفي"}
             </p>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
@@ -116,11 +156,38 @@ const IntroVideoSection = ({ contentId, welcomeVideo, onUpdate }) => {
 
       {/* Upload Area */}
       {!hasVideo && (
-        <VideoUploader
-          onUploadComplete={handleUploadComplete}
-          label="اسحب الفيديو التعريفي هنا أو اضغط للاختيار"
-          maxSizeMB={500}
-        />
+        <div className="space-y-2">
+          {isUploading ? (
+            <div className="border border-gray-200 rounded-xl p-8 flex flex-col items-center justify-center gap-4 bg-gray-50">
+              <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center animate-pulse">
+                <Film className="w-5 h-5 text-primary" />
+              </div>
+              <span className="text-sm font-medium text-gray-600">
+                جاري رفع الفيديو التعريفي...
+              </span>
+            </div>
+          ) : (
+            <div 
+              onClick={() => fileInputRef.current?.click()}
+              className="border-2 border-dashed border-gray-300 hover:border-primary/50 hover:bg-primary/5 rounded-xl p-8 flex flex-col items-center justify-center gap-3 cursor-pointer transition-colors"
+            >
+              <Film className="w-8 h-8 text-gray-400" />
+              <span className="text-primary font-medium text-sm">
+                اضغط لاختيار فيديو من جهازك
+              </span>
+              <p className="text-xs text-gray-400 mt-1">
+                يفضل ألا يتجاوز الحجم 100 ميجابايت (يتم الرفع مباشرة)
+              </p>
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                className="hidden" 
+                accept="video/*"
+                onChange={handleVideoUpload}
+              />
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

@@ -139,8 +139,11 @@ export function useMultipartUpload() {
         const xhrRef = { current: null };
         activeXHRsRef.current.push(xhrRef);
 
+        // urls[i] is { partNumber, url } — extract the actual URL string
+        const presignedUrl = typeof urls[i] === "string" ? urls[i] : urls[i].url;
+
         const partResult = await uploadPartXHR(
-          urls[i],
+          presignedUrl,
           blob,
           partNumber,
           (pn, loaded) => {
@@ -150,6 +153,7 @@ export function useMultipartUpload() {
           xhrRef
         );
 
+        console.log(`[Upload] Part ${partNumber} done:`, partResult);
         completedParts.push(partResult);
       }
     } catch (err) {
@@ -167,6 +171,9 @@ export function useMultipartUpload() {
 
     // ── Step 4: Complete multipart upload ─────────────────────
     setStatus("completing");
+
+    console.log("[Upload] All parts completed:", completedParts);
+    console.log("[Upload] Calling complete with:", { key, uploadId, parts: completedParts });
 
     const completeRes = await completeMultipartUpload({
       key,

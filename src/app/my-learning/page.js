@@ -1,11 +1,25 @@
-import React from 'react';
+import { NavBar } from "@/components/navbar";
+import Footer from "@/components/footer";
+import LibraryHeader from "@/components/library/LibraryHeader";
+import LibraryContent from "@/components/library/LibraryContent";
 
 const LearningPage = () => {
     return (
-        <div>
-            
+      <div>
+        <div className="bg-white min-h-screen">
+          <LibraryHeader />
+          <div className="px-4 lg:px-8 py-6">
+            <div className="max-w-7xl mx-auto">
+              <div className="">
+                <div className="">
+                  <LibraryContent />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     );
-};
+}
 
 export default LearningPage;

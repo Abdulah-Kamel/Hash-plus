@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,8 +7,44 @@ import Rating from '../shared/Rating';
 import courseProfile from "../../assets/courseProfile.png";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/store/useCartStore";
+import { toast } from "sonner";
+import { addToCart } from "@/actions/cartActions";
 
 const OnlineCourseCard = ({ course }) => {
+  const addItem = useCartStore((state) => state.addItem);
+
+  const handleSubscribe = async () => {
+    if (!course._id && !course.id) {
+      toast.error("بيانات الدورة غير مكتملة");
+      return;
+    }
+
+    const contentType = course.contentType || "course";
+    if (contentType !== "bootcamp") {
+      toast.info("الدورات ستكون متاحة قريباً عبر نظام الاشتراكات");
+      return;
+    }
+
+    const contentId = course._id || course.id;
+    addItem({
+      id: contentId,
+      title: course.title || "دورة تدريبية",
+      price: typeof course.price === 'object' ? (course.price.amount ?? 0) : (course.price ?? 0),
+      thumbnail: course.image || null,
+      contentType: contentType,
+      instructor: course.instructor?.name || course.instructor || "ولاء القحطاني",
+      instructorId: course.instructorId || 1,
+      rating: course.rating || 0,
+      duration: parseInt(course.duration) || 0,
+      level: course.level || "beginner",
+    });
+    toast.success("تم الإضافة إلى السلة");
+    
+    // Add to backend cart
+    await addToCart(contentId);
+  };
+
   return (
     <Card className="w-full max-w-sm flex flex-col overflow-hidden rounded-3xl shadow-lg p-4 first:z-8 md:first:rotate-z-12 md:last:-rotate-z-12">
       <Link href={`/course`} className="block">
@@ -58,7 +95,7 @@ const OnlineCourseCard = ({ course }) => {
             <span>{course.price}</span>
            <SaudiRiyal className="w-5 h-5"/>
           </div>
-            <Button variant="outline" className="px-5 md:px-10 py-6 rounded-full cursor-pointer">اشترك الآن</Button>
+            <Button onClick={handleSubscribe} variant="outline" className="px-5 md:px-10 py-6 rounded-full cursor-pointer">اشترك الآن</Button>
         </div>
       </CardFooter>
     </Card>

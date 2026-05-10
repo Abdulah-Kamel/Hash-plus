@@ -132,3 +132,55 @@ export async function deleteUpload({ key, uploadId }) {
     return { success: false, error: "حدث خطأ: " + err.message };
   }
 }
+
+/**
+ * Get signed stream url for a video
+ */
+export async function getStreamUrl(contentId, key, contentType = "course") {
+  const token = await getToken();
+  if (!token) return { success: false, error: "غير مصرح" };
+
+  try {
+    const route = contentType === "bootcamp" ? "stream-bootcamp" : "stream-course";
+    const res = await fetch(`${BASE}/api/v1/uploads/${route}/${contentId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ key, expiresIn: 3600 }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) return { success: false, error: data.message || data.error || "فشل جلب رابط الفيديو" };
+    return { success: true, url: data.data || data.url };
+  } catch (err) {
+    return { success: false, error: "حدث خطأ: " + err.message };
+  }
+}
+
+/**
+ * Upload a public asset (like thumbnails or materials).
+ * Accepts FormData containing the 'file'.
+ */
+export async function uploadAsset(formData) {
+  const token = await getToken();
+  if (!token) return { success: false, error: "غير مصرح" };
+
+  try {
+    const res = await fetch(`${BASE}/api/v1/uploads/assets`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        // Fetch will automatically set Content-Type to multipart/form-data with boundary
+      },
+      body: formData,
+    });
+
+    const data = await res.json();
+    if (!res.ok) return { success: false, error: data.message || "فشل رفع الملف" };
+    return { success: true, data: data.data };
+  } catch (err) {
+    return { success: false, error: "حدث خطأ: " + err.message };
+  }
+}

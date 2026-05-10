@@ -11,7 +11,11 @@ import {
     BookHeart,
     GraduationCap,
     SquarePlay,
-    ChevronDown, StarHalf
+    ChevronDown, StarHalf,
+    FileQuestion,
+    Radio,
+    Link2,
+    FileText,
 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Link from "next/link";
@@ -29,6 +33,74 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select";
+
+// ─── Module type icon mapping ─────────────────────────────────────────────────
+const MODULE_ICON = {
+  video: Play,
+  quiz: FileQuestion,
+  task: FileText,
+  liveSession: Radio,
+  link: Link2,
+};
+
+// ─── ModuleRow — single module inside a section ───────────────────────────────
+const ModuleRow = ({ module, moduleType, courseId, isBootcamp }) => {
+  const Icon = MODULE_ICON[moduleType] || Play;
+
+  // Duration or question count display
+  let metaText = "";
+  if (moduleType === "liveSession" && module.liveSession) {
+    const ls = module.liveSession;
+    if (ls.startTime && ls.endTime) metaText = `${ls.startTime} - ${ls.endTime}`;
+  } else if (moduleType === "video") {
+    const dur = module.video?.duration || module.videoData?.duration;
+    if (dur) metaText = `${Math.ceil(dur / 60)} دقيقة`;
+  } else if (moduleType === "quiz") {
+    const count = module.quiz?.length || module.quizData?.length || 0;
+    if (count) metaText = `${count} سؤال`;
+  }
+
+  return (
+    <div className="flex items-center justify-between px-6 py-3.5 border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors">
+      {/* Right side: icon + title + badges */}
+      <div className="flex items-center gap-3 min-w-0 flex-1">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
+          <Icon className="w-4 h-4 text-white" />
+        </div>
+        <span className="text-sm text-gray-800 truncate">{module.title}</span>
+        {module.isFree && (
+          <Link
+            href={`/course-page/${courseId}`}
+            className="text-primary text-xs ms-1 hover:underline flex-shrink-0"
+          >
+            مشاهدة
+          </Link>
+        )}
+        {isBootcamp && module.liveSession?.meetLink && (
+          <span className="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full ms-1 flex-shrink-0">
+            بث مباشر
+          </span>
+        )}
+        {isBootcamp && module.projects?.length > 0 && (
+          <span className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full ms-1 flex-shrink-0">
+            {module.projects.length} مشروع
+          </span>
+        )}
+      </div>
+
+      {/* Left side: meta info + lock icon */}
+      <div className="flex items-center gap-2 flex-shrink-0 ms-4">
+        {metaText && (
+          <span className="text-xs text-muted-foreground">{metaText}</span>
+        )}
+        {!module.isFree && (
+          <LockKeyhole className="w-4 h-4 text-gray-400" />
+        )}
+      </div>
+    </div>
+  );
+};
+
 const CourseContent = ({ courseDetails, courses }) => {
   return (
     <div className="space-y-6">
@@ -72,80 +144,92 @@ const CourseContent = ({ courseDetails, courses }) => {
                 <div className="mt-6">
                   <h3 className="text-xl font-bold">محتوى الدوره</h3>
                   <p className="text-muted-foreground mt-3">
-                    {courseDetails?.metadata?.modulesCount} قسم .{" "}
-                    {courseDetails?.metadata?.duration} ساعة
+                    {courseDetails?.sections?.length || 1} قسم .{" "}
+                    {courseDetails?.sections?.reduce((acc, s) => acc + (s.modules?.length || 0), 0) || courseDetails?.metadata?.modulesCount || 0} محاضرة .{" "}
+                    {courseDetails?.metadata?.duration || 0} ساعة
                   </p>
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="w-full mt-3 border-2 rounded-lg"
-                    defaultValue="item-1"
-                  >
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger className="bg-gray-100 px-6 flex items-center first:rounded-b-none last:rounded-t-none hover:no-underline">
-                        <div className="w-full flex items-center justify-between">
-                          <span>{courseDetails?.title}</span>
-                          <span>
-                            {courseDetails?.metadata?.modulesCount} محاضرة .{" "}
-                            {courseDetails?.metadata?.duration} ساعة
-                          </span>
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="flex flex-col gap-6 text-balance p-4">
-                        {courseDetails?.modules?.map((module) => {
-                          const isBootcamp = courseDetails?.contentType === "bootcamp";
-                          // Determine icon based on module type
-                          const ModuleIcon = isBootcamp
-                            ? (module.liveSession?.url ? Play : Play)
-                            : (module.moduleType === "quiz" ? LockKeyhole
-                              : module.moduleType === "task" ? BookHeart
-                              : Play);
-                          // Determine duration display
-                          const durationDisplay = isBootcamp
-                            ? (module.timeStart && module.timeEnd
-                              ? `${module.timeStart} - ${module.timeEnd}`
-                              : module.video?.duration ? `${module.video.duration} دقيقة` : "")
-                            : (module.videoData?.duration
-                              ? `${Math.floor(module.videoData.duration / 60)} دقيقة`
-                              : module.quizData?.length ? `${module.quizData.length} سؤال` : "");
 
-                          return (
-                            <div className="flex justify-between items-center" key={module._id || module.title}>
-                              <div className="flex items-center gap-1">
-                                <ModuleIcon className="text-white bg-secondary p-1 rounded-full w-8 h-8" />
-                                <span>{module.title}</span>
-                                {module.isFree && (
-                                  <Link
-                                    href={`/course-page/${courseDetails?._id}`}
-                                    className="text-primary ms-3 hover:underline hover:text-primary/80"
-                                  >
-                                    مشاهدة
-                                  </Link>
-                                )}
-                                {isBootcamp && module.liveSession?.url && (
-                                  <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full ms-2">
-                                    بث مباشر
-                                  </span>
-                                )}
-                                {isBootcamp && module.projects?.length > 0 && (
-                                  <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full ms-2">
-                                    {module.projects.length} مشروع
-                                  </span>
-                                )}
-                              </div>
-                              <div className="flex items-center gap-1">
-                                {durationDisplay && (
-                                  <span className="text-muted-foreground">
-                                    {durationDisplay}
-                                  </span>
-                                )}
-                              </div>
+                  {/* Sections-based accordion */}
+                  {courseDetails?.sections?.length > 0 ? (
+                    <Accordion
+                      type="multiple"
+                      className="w-full mt-3 space-y-3"
+                      defaultValue={[`section-0`]}
+                    >
+                      {courseDetails.sections.map((section, sIndex) => (
+                        <AccordionItem
+                          key={section._id || sIndex}
+                          value={`section-${sIndex}`}
+                          className="border-2 rounded-lg overflow-hidden"
+                        >
+                          <AccordionTrigger className="bg-gray-100 px-6 flex items-center hover:no-underline">
+                            <div className="w-full flex items-center justify-between">
+                              <span className="font-semibold text-sm">
+                                القسم {sIndex + 1} - {section.title}
+                              </span>
+                              <span className="text-muted-foreground text-xs flex-shrink-0 ms-4">
+                                {section.modules?.length || 0} محاضرة
+                              </span>
                             </div>
-                          );
-                        })}
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
+                          </AccordionTrigger>
+                          <AccordionContent className="flex flex-col gap-0 p-0">
+                            {section.modules?.map((module, mIndex) => {
+                              const moduleType = module.moduleType || "video";
+                              return (
+                                <ModuleRow
+                                  key={module._id || module.id || mIndex}
+                                  module={module}
+                                  moduleType={moduleType}
+                                  courseId={courseDetails?._id}
+                                  isBootcamp={courseDetails?.contentType === "bootcamp"}
+                                />
+                              );
+                            })}
+                            {(!section.modules || section.modules.length === 0) && (
+                              <div className="px-6 py-4 text-sm text-muted-foreground text-center">
+                                لا يوجد محتوى بعد
+                              </div>
+                            )}
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  ) : courseDetails?.modules?.length > 0 ? (
+                    /* Legacy flat modules fallback */
+                    <Accordion
+                      type="single"
+                      collapsible
+                      className="w-full mt-3 border-2 rounded-lg"
+                      defaultValue="item-1"
+                    >
+                      <AccordionItem value="item-1">
+                        <AccordionTrigger className="bg-gray-100 px-6 flex items-center hover:no-underline">
+                          <div className="w-full flex items-center justify-between">
+                            <span className="font-semibold text-sm">{courseDetails?.title}</span>
+                            <span className="text-muted-foreground text-xs flex-shrink-0 ms-4">
+                              {courseDetails?.modules?.length} محاضرة
+                            </span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="flex flex-col gap-0 p-0">
+                          {courseDetails.modules.map((module, mIndex) => {
+                            const moduleType = module.moduleType || "video";
+                            return (
+                              <ModuleRow
+                                key={module._id || module.id || mIndex}
+                                module={module}
+                                moduleType={moduleType}
+                                courseId={courseDetails?._id}
+                                isBootcamp={courseDetails?.contentType === "bootcamp"}
+                              />
+                            );
+                          })}
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  ) : (
+                    <p className="text-muted-foreground mt-3 text-sm">لا يوجد محتوى بعد</p>
+                  )}
                 </div>
                 <div className="mt-6 bg-gray-50 p-6 rounded-lg">
                   <h3 className="text-xl font-bold">متطلبات البدء فى الدورة</h3>

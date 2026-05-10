@@ -6,8 +6,6 @@ import {
   FileText,
   ClipboardList,
   X,
-  ListChecks,
-  PenLine,
   Radio,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,22 +29,7 @@ const CONTENT_TYPES = [
   { id: "liveSession", label: "بث مباشر", icon: Radio,        forBootcamp: true  },
 ];
 
-const QUIZ_SUBTYPES = [
-  {
-    id: "mcq",
-    label: "اختيارات",
-    description: "أسئلة متعددة الخيارات",
-    icon: ListChecks,
-  },
-  {
-    id: "writing",
-    label: "مقالي",
-    description: "أسئلة إجابة مفتوحة",
-    icon: PenLine,
-  },
-];
-
-const STEP = { TYPE: "type", QUIZ_TYPE: "quiz_type", FORM: "form" };
+const STEP = { TYPE: "type", FORM: "form" };
 const EMPTY_FORM = {
   title: "",
   description: "",
@@ -104,56 +87,7 @@ const TypeSelector = ({ selected, onSelect, contentType }) => {
   );
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Step 1.5 — Quiz subtype picker (MCQ vs Writing)
-// ─────────────────────────────────────────────────────────────────────────────
-const QuizTypeSelector = ({ selected, onSelect }) => (
-  <div className="flex flex-col gap-3 py-2" dir="rtl">
-    {QUIZ_SUBTYPES.map(({ id, label, description, icon: Icon }) => (
-      <button
-        key={id}
-        type="button"
-        onClick={() => onSelect(id)}
-        className={`flex items-center gap-4 rounded-xl border-2 p-4 transition-all cursor-pointer text-right
-          ${
-            selected === id
-              ? "border-primary bg-primary/5"
-              : "border-gray-200 hover:border-primary/40 hover:bg-gray-50"
-          }`}
-      >
-        {/* Icon box */}
-        <div
-          className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors
-            ${selected === id ? "bg-primary/10 text-primary" : "bg-gray-100 text-gray-500"}`}
-        >
-          <Icon className="w-6 h-6" />
-        </div>
 
-        {/* Labels */}
-        <div className="flex-1">
-          <p
-            className={`text-sm font-semibold ${
-              selected === id ? "text-primary" : "text-gray-900"
-            }`}
-          >
-            {label}
-          </p>
-          <p className="text-xs text-gray-400 mt-0.5">{description}</p>
-        </div>
-
-        {/* Selection indicator */}
-        <div
-          className={`w-5 h-5 rounded-full border-2 flex-shrink-0 transition-colors flex items-center justify-center
-            ${selected === id ? "border-primary bg-primary" : "border-gray-300"}`}
-        >
-          {selected === id && (
-            <div className="w-2 h-2 rounded-full bg-white" />
-          )}
-        </div>
-      </button>
-    ))}
-  </div>
-);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Step 2 — Forms per content type
@@ -176,13 +110,17 @@ const TitleField = ({ value, onChange }) => (
 
 const VideoForm = ({ formData, onChange }) => {
   const handleUploadComplete = (result) => {
+    // result comes from useMultipartUpload — contains { key, uploadId, url, Location, ... }
+    const videoUrl = result.url || result.Location || result.location || "";
+    console.log("[VideoForm] Upload result:", result);
+    console.log("[VideoForm] Resolved URL:", videoUrl);
     onChange({
       ...formData,
       videoData: {
         key: result.key,
         uploadId: result.uploadId,
-        url: result.url || "",
-        size: 0,
+        url: videoUrl,
+        size: result.size || 0,
         duration: 0,
       },
     });
@@ -345,14 +283,13 @@ const LiveSessionForm = ({ formData, onChange }) => (
 );
 
 // ─── Quiz form — full question builder ───────────────────────────────────────
-const QuizForm = ({ formData, onChange, quizSubType }) => {
-  const isMcq      = quizSubType === "mcq";
-  const questions  = formData.questions?.length ? formData.questions : [mkQuestion(isMcq)];
+const QuizForm = ({ formData, onChange }) => {
+  const questions  = formData.questions?.length ? formData.questions : [mkQuestion(true)];
 
   const update = (qs) => onChange({ ...formData, questions: qs });
 
   // Question helpers
-  const addQuestion = () => update([...questions, mkQuestion(isMcq)]);
+  const addQuestion = () => update([...questions, mkQuestion(true)]);
   const removeQuestion = (qId) => update(questions.filter((q) => q.id !== qId));
   const updateQText = (qId, text) =>
     update(questions.map((q) => (q.id === qId ? { ...q, text } : q)));
@@ -423,13 +360,13 @@ const QuizForm = ({ formData, onChange, quizSubType }) => {
             <Input
               value={q.text}
               onChange={(e) => updateQText(q.id, e.target.value)}
-              placeholder={isMcq ? "ما هو..." : "اكتب سؤالك هنا..."}
+              placeholder="ما هو..."
               className="text-right h-10 border-gray-200 rounded-lg focus-visible:ring-primary focus-visible:border-primary text-sm"
               dir="rtl"
             />
 
             {/* MCQ answers */}
-            {isMcq && (
+            {(
               <div className="flex flex-col gap-2 pr-2 border-r-2 border-gray-100">
                 <span className="text-xs text-gray-500 text-right">الإجابات</span>
 
@@ -495,38 +432,36 @@ const QuizForm = ({ formData, onChange, quizSubType }) => {
 };
 
 // Dispatcher — works for both course and bootcamp types
-const ContentForm = ({ formData, onChange, selectedType, quizSubType }) => {
+const ContentForm = ({ formData, onChange, selectedType }) => {
   switch (selectedType) {
     case "video":       return <VideoForm       formData={formData} onChange={onChange} />;
     case "link":        return <LinkForm        formData={formData} onChange={onChange} />;
     case "task":        return <TaskForm        formData={formData} onChange={onChange} />;
-    case "quiz":        return <QuizForm        formData={formData} onChange={onChange} quizSubType={quizSubType} />;
+    case "quiz":        return <QuizForm        formData={formData} onChange={onChange} />;
     case "liveSession": return <LiveSessionForm formData={formData} onChange={onChange} />;
     default:            return <VideoForm       formData={formData} onChange={onChange} />;
   }
 };
 
 // Validation
-const isQuizValid = (formData, quizSubType) => {
+const isQuizValid = (formData) => {
   const questions = formData.questions;
   if (!questions?.length) return false;
   return questions.every((q) => {
     if (!q.text.trim()) return false;
-    if (quizSubType === "mcq") {
-      if (q.answers.length < 2) return false;
-      if (!q.answers.every((a) => a.text.trim())) return false;
-      if (!q.answers.some((a) => a.isCorrect)) return false;
-    }
+    if (q.answers.length < 2) return false;
+    if (!q.answers.every((a) => a.text.trim())) return false;
+    if (!q.answers.some((a) => a.isCorrect)) return false;
     return true;
   });
 };
 
-const isFormValid = (formData, type, quizSubType) => {
+const isFormValid = (formData, type) => {
   if (!formData.title.trim()) return false;
   if (type === "video")       return !!formData.videoData?.key;
   if (type === "link")        return !!formData.linkUrl?.trim() && !!formData.linkDate?.trim();
   if (type === "task")        return !!formData.taskUrl?.trim();
-  if (type === "quiz")        return isQuizValid(formData, quizSubType);
+  if (type === "quiz")        return isQuizValid(formData);
   if (type === "liveSession") return !!formData.liveDate?.trim();
   return true;
 };
@@ -544,7 +479,6 @@ const AddContentDialog = ({
 }) => {
   const [step, setStep] = useState(initialType ? STEP.FORM : STEP.TYPE);
   const [selectedType, setSelectedType] = useState(initialType ?? "video");
-  const [quizSubType, setQuizSubType] = useState("mcq");
   const [formData, setFormData] = useState(EMPTY_FORM);
 
   // Reset when dialog re-opens
@@ -552,7 +486,6 @@ const AddContentDialog = ({
     if (isOpen) {
       setStep(initialType ? STEP.FORM : STEP.TYPE);
       setSelectedType(initialType ?? "video");
-      setQuizSubType("mcq");
       setFormData(EMPTY_FORM);
     }
     onOpenChange(isOpen);
@@ -560,26 +493,11 @@ const AddContentDialog = ({
 
   const handleTypeConfirm = () => {
     setFormData(EMPTY_FORM);
-    // Quiz gets an extra sub-type selection step
-    if (selectedType === "quiz") {
-      setStep(STEP.QUIZ_TYPE);
-    } else {
-      setStep(STEP.FORM);
-    }
-  };
-
-  const handleQuizTypeConfirm = () => {
     setStep(STEP.FORM);
   };
 
   const handleBack = () => {
-    if (step === STEP.FORM && selectedType === "quiz") {
-      setStep(STEP.QUIZ_TYPE);
-    } else if (step === STEP.QUIZ_TYPE) {
-      setStep(STEP.TYPE);
-    } else {
-      setStep(STEP.TYPE);
-    }
+    setStep(STEP.TYPE);
     setFormData(EMPTY_FORM);
   };
 
@@ -587,18 +505,17 @@ const AddContentDialog = ({
     onSave({
       ...formData,
       moduleType: selectedType,
-      quizSubType: selectedType === "quiz" ? quizSubType : undefined,
+      quizSubType: selectedType === "quiz" ? "mcq" : undefined,
     });
   };
 
   const dialogTitle = () => {
     if (contentType === "bootcamp") return "إضافة محتوى للمعسكر";
     if (step === STEP.TYPE)      return "اختر نوع المحتوى";
-    if (step === STEP.QUIZ_TYPE) return "اختر نوع الاختبار";
     return `إضافة محتوى — ${typeLabel(selectedType)}`;
   };
 
-  const canSave = !isSaving && isFormValid(formData, selectedType, quizSubType);
+  const canSave = !isSaving && isFormValid(formData, selectedType);
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -640,29 +557,7 @@ const AddContentDialog = ({
           </>
         )}
 
-        {/* Step 1.5: Quiz subtype (MCQ vs Writing) */}
-        {step === STEP.QUIZ_TYPE && (
-          <>
-            <QuizTypeSelector selected={quizSubType} onSelect={setQuizSubType} />
-            <div className="flex justify-between gap-3 pt-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleBack}
-                className="rounded-full px-6 border-gray-300 text-gray-700 cursor-pointer"
-              >
-                رجوع
-              </Button>
-              <Button
-                type="button"
-                onClick={handleQuizTypeConfirm}
-                className="rounded-full px-6 bg-primary text-white hover:bg-primary/90 cursor-pointer"
-              >
-                التالي
-              </Button>
-            </div>
-          </>
-        )}
+
 
         {/* Step 2: Form for the selected content type */}
         {step === STEP.FORM && (
@@ -671,7 +566,6 @@ const AddContentDialog = ({
               formData={formData}
               onChange={setFormData}
               selectedType={selectedType}
-              quizSubType={quizSubType}
             />
             <div className="flex justify-between gap-3 pt-2">
               <Button

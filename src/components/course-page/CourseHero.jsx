@@ -5,16 +5,62 @@ import CourseTabs from './CourseTabs';
 import { Link as LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 
-const CourseHero = ({ courseDetails }) => {
+// Import Viewers
+import VideoViewer from './viewers/VideoViewer';
+import QuizViewer from './viewers/QuizViewer';
+import LinkViewer from './viewers/LinkViewer';
+import TaskViewer from './viewers/TaskViewer';
+import LiveSessionViewer from './viewers/LiveSessionViewer';
+
+const CourseHero = ({ courseDetails, activeModule }) => {
     const isBootcamp = courseDetails?.contentType === "bootcamp";
     const welcomeVideoUrl = courseDetails?.welcomeVideo?.url;
+
+    const thumbnailUrl = courseDetails?.thumbnail?.url || courseDetails?.image;
+
+    const renderViewer = () => {
+        if (!activeModule) {
+            if (welcomeVideoUrl && !isBootcamp) {
+                return <CourseVideo 
+                            videoUrl={welcomeVideoUrl} 
+                            videoKey={courseDetails?.welcomeVideo?.key} 
+                            thumbnailUrl={thumbnailUrl} 
+                            contentId={courseDetails?._id}
+                            contentType={courseDetails?.contentType}
+                        />;
+            }
+            return null;
+        }
+
+        const type = activeModule.moduleType || "video";
+
+        switch (type) {
+            case "video":
+                return <VideoViewer module={activeModule} thumbnailUrl={thumbnailUrl} contentId={courseDetails?._id || courseDetails?.id} contentType={courseDetails?.contentType} />;
+            case "quiz":
+                return <QuizViewer module={activeModule} courseId={courseDetails?._id || courseDetails?.id} contentType={courseDetails?.contentType} />;
+            case "link":
+                return <LinkViewer module={activeModule} />;
+            case "task":
+                return <TaskViewer module={activeModule} courseId={courseDetails?._id || courseDetails?.id} contentType={courseDetails?.contentType} />;
+            case "liveSession":
+                return <LiveSessionViewer module={activeModule} />;
+            default:
+                // Fallback to VideoViewer or depending on data inside module
+                if (activeModule.liveSession) return <LiveSessionViewer module={activeModule} />;
+                if (activeModule.task || activeModule.taskData) return <TaskViewer module={activeModule} courseId={courseDetails?._id || courseDetails?.id} contentType={courseDetails?.contentType} />;
+                if (activeModule.link || activeModule.linkData) return <LinkViewer module={activeModule} />;
+                if (activeModule.quiz || activeModule.quizData) return <QuizViewer module={activeModule} courseId={courseDetails?._id || courseDetails?.id} contentType={courseDetails?.contentType} />;
+                return <VideoViewer module={activeModule} thumbnailUrl={thumbnailUrl} contentId={courseDetails?._id || courseDetails?.id} contentType={courseDetails?.contentType} />;
+        }
+    };
 
     return (
         <div className="">
             <div className="px-2 lg:px-4 py-4">
                 <div className="mx-auto flex flex-col gap-4">
                     {/* Meeting Link for Bootcamps */}
-                    {isBootcamp && (
+                    {isBootcamp && !activeModule && (
                         <Link 
                             href={courseDetails?.meetingLink || "#"} 
                             target="_blank"
@@ -27,10 +73,8 @@ const CourseHero = ({ courseDetails }) => {
                         </Link>
                     )}
 
-                    {/* Course Video (if exists) */}
-                    {welcomeVideoUrl && !isBootcamp && (
-                        <CourseVideo video={welcomeVideoUrl} />
-                    )}
+                    {/* Module Viewer or Course Video */}
+                    {renderViewer()}
 
                     <CourseTabs courseData={courseDetails}/>
                 </div>
@@ -40,3 +84,4 @@ const CourseHero = ({ courseDetails }) => {
 };
 
 export default CourseHero;
+

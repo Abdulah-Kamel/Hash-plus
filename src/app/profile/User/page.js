@@ -25,21 +25,36 @@ import {
   Facebook,
   Youtube,
   Music,
+  Loader2,
 } from "lucide-react";
+import { getMyProfile, updateMyProfile, getProfileImage } from "@/actions/profileActions";
+import { toast } from "sonner";
+
+// Social media link names as sent to the API
+const SOCIAL_LINK_NAMES = {
+  twitter: "twitter",
+  instagram: "instagram",
+  linkedin: "linkedin",
+  facebook: "facebook",
+  youtube: "youtube",
+  tiktok: "tiktok",
+};
 
 const UserProfile = () => {
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
+  const [profileImageUrl, setProfileImageUrl] = useState(null);
 
   const formSchema = z.object({
     name: z.string("الاسم غير صحيح").min(1, "الاسم مطلوب"),
-    description: z.string("الوصف غير صحيح").min(1, "الوصف مطلوب"),
+    description: z.string().optional().default(""),
     lang: z.string().default("ar"),
-    twitter: z.string().optional(),
-    instagram: z.string().optional(),
-    linkedin: z.string().optional(),
-    facebook: z.string().optional(),
-    youtube: z.string().optional(),
-    tiktok: z.string().optional(),
+    twitter: z.string().optional().default(""),
+    instagram: z.string().optional().default(""),
+    linkedin: z.string().optional().default(""),
+    facebook: z.string().optional().default(""),
+    youtube: z.string().optional().default(""),
+    tiktok: z.string().optional().default(""),
   });
 
   const { handleSubmit, control, reset } = useForm({
@@ -57,23 +72,88 @@ const UserProfile = () => {
     },
   });
 
+  // Fetch profile data on mount
   useEffect(() => {
-    reset({
-      name: "",
-      description: "",
-      lang: "ar",
-      twitter: "",
-      instagram: "",
-      linkedin: "",
-      facebook: "",
-      youtube: "",
-      tiktok: "",
-    });
+    async function loadProfile() {
+      setFetching(true);
+      try {
+        const [profileRes, imageRes] = await Promise.all([
+          getMyProfile(),
+          getProfileImage(),
+        ]);
+
+        if (profileRes.success && profileRes.data) {
+          const profile = profileRes.data;
+
+          // Map API links array to flat form fields
+          const linksMap = {};
+          if (profile.links?.length) {
+            profile.links.forEach((link) => {
+              const key = link.name?.toLowerCase();
+              if (key && SOCIAL_LINK_NAMES[key] !== undefined) {
+                linksMap[key] = link.url || "";
+              }
+            });
+          }
+
+          reset({
+            name: profile.name || "",
+            description: profile.bio || "",
+            lang: profile.languages?.[0]?.language || "ar",
+            twitter: linksMap.twitter || "",
+            instagram: linksMap.instagram || "",
+            linkedin: linksMap.linkedin || "",
+            facebook: linksMap.facebook || "",
+            youtube: linksMap.youtube || "",
+            tiktok: linksMap.tiktok || "",
+          });
+        }
+
+        if (imageRes.success && imageRes.data?.url) {
+          setProfileImageUrl(imageRes.data.url);
+        }
+      } catch (err) {
+        console.error("Failed to load profile:", err);
+      } finally {
+        setFetching(false);
+      }
+    }
+    loadProfile();
   }, [reset]);
 
   async function onSubmit(data) {
     setLoading(true);
-    setLoading(false);
+    try {
+      // Build the links array from flat form fields
+      const links = Object.entries(SOCIAL_LINK_NAMES)
+        .filter(([key]) => data[key]?.trim())
+        .map(([key]) => ({
+          name: key,
+          url: data[key].trim(),
+        }));
+
+      const payload = {
+        name: data.name,
+        bio: data.description || "",
+        links,
+      };
+
+      // Only send languages if changed from default
+      if (data.lang) {
+        payload.languages = [{ language: data.lang, proficiency: "native" }];
+      }
+
+      const res = await updateMyProfile(payload);
+      if (res.success) {
+        toast.success("تم حفظ الملف الشخصي بنجاح");
+      } else {
+        toast.error(res.error || "فشل حفظ الملف الشخصي");
+      }
+    } catch {
+      toast.error("حدث خطأ أثناء الحفظ");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const socialMediaFields = [
@@ -115,12 +195,27 @@ const UserProfile = () => {
     },
   ];
 
+  if (fetching) {
+    return (
+      <section className="space-y-4">
+        <Card className="gap-3 p-4 grid grid-cols-1 lg:grid-cols-3">
+          <div className="col-span-full flex items-center justify-center py-16">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        </Card>
+      </section>
+    );
+  }
+
   return (
     <section className="space-y-4">
       <Card className="gap-3 p-4 grid grid-cols-1 lg:grid-cols-3">
         <div className="col-span-1 space-y-4">
           <h2 className="font-semibold text-xl">الصورة الشخصية</h2>
-          <ProfileImageInput />
+          <ProfileImageInput
+            currentImageUrl={profileImageUrl}
+            onImageChange={(url) => setProfileImageUrl(url)}
+          />
         </div>
         <div className="col-span-1 lg:col-span-2">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -229,7 +324,14 @@ const UserProfile = () => {
                 disabled={loading}
                 className="bg-primary hover:bg-primary/90 text-white px-12 py-4 rounded-full font-medium cursor-pointer"
               >
-                {loading ? "جاري الحفظ..." : "حفظ"}
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    جاري الحفظ...
+                  </>
+                ) : (
+                  "حفظ"
+                )}
               </Button>
             </div>
           </form>

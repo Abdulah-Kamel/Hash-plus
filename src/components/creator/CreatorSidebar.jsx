@@ -192,6 +192,7 @@ export function CreatorSidebar({ ...props }) {
           <div className="flex flex-col gap-2">
             {data.map((item) => (
               <Link
+              key={item.title}
                 href={item.url}
                 className={`flex flex-col gap-1 items-center justify-center p-3 cursor-pointer rounded-lg text-muted-foreground ${
                   item.isActive ? "bg-gray-50 border text-primary" : ""

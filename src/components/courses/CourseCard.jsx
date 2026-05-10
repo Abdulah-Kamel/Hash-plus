@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,6 +10,9 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import {Badge} from "@/components/ui/badge";
 import course1 from "@/assets/course1.png";
+import { useCartStore } from "@/store/useCartStore";
+import { toast } from "sonner";
+import { addToCart } from "@/actions/cartActions";
 
 const contentTypeLabels = {
   course: "كورس",
@@ -16,6 +20,8 @@ const contentTypeLabels = {
 };
 
 const CourseCard = ({ course }) => {
+  const addItem = useCartStore((state) => state.addItem);
+
   const price = course.price?.amount;
   const currency = course.price?.currency ?? "SAR";
   const duration = course.metadata?.duration ?? 0;
@@ -24,7 +30,38 @@ const CourseCard = ({ course }) => {
   const ratingsCount = course.metadata?.ratingsCount ?? 0;
   const thumbnail = course.thumbnail;
   const contentTypeLabel = contentTypeLabels[course.contentType] || course.contentType;
-console.log(course);
+
+  const handleSubscribe = async () => {
+    if (!course._id && !course.id) {
+      toast.error("بيانات الدورة غير مكتملة");
+      return;
+    }
+
+    const contentType = course.contentType || "course";
+    if (contentType !== "bootcamp") {
+      toast.info("الدورات ستكون متاحة قريباً عبر نظام الاشتراكات");
+      return;
+    }
+
+    const contentId = course._id || course.id;
+    addItem({
+      id: contentId,
+      title: course.title || "دورة تدريبية",
+      price: price ?? 0,
+      thumbnail: thumbnail || null,
+      contentType: contentType,
+      instructor: course.instructor?.name || course.instructor || "ولاء القحطاني",
+      instructorId: course.instructor?._id || course.instructorId || 1,
+      rating: avgRatings,
+      duration: duration,
+      level: course.level || "beginner",
+    });
+    toast.success("تم الإضافة إلى السلة");
+    
+    // Add to backend cart
+    await addToCart(contentId);
+  };
+
   return (
     <Card className="w-full max-w-sm flex flex-col overflow-hidden rounded-2xl pt-0 gap-1 p-4">
       <Link href={`/course/${course._id}`} className="block">
@@ -74,7 +111,6 @@ console.log(course);
               width={40}
               height={40}
             />
-            {/* <p>{course.instructor || "instructor"}</p> */}
             <p>{"instructor"}</p>
           </Link>
         </div>
@@ -86,6 +122,7 @@ console.log(course);
             <Image src={saRyal} alt="سعر الدورة" width={24} height={24} />
           </div>
           <Button
+            onClick={handleSubscribe}
             variant="outline"
             className="px-5 md:px-10 py-6 rounded-full cursor-pointer"
           >
